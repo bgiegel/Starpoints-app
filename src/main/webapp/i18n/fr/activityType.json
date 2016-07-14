@@ -1,0 +1,10 @@
+{
+    "starPointsApp": {
+        "ActivityType" : {
+            "null": "",
+            "BLOG_POST": "BLOG_POST",
+            "BROWN_BAG_LUNCH": "BROWN_BAG_LUNCH",
+            "TRAINING": "TRAINING"
+        }
+    }
+}

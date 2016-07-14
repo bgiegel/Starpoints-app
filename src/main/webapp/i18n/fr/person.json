@@ -1,0 +1,26 @@
+{
+    "starPointsApp": {
+        "person" : {
+            "home": {
+                "title": "People",
+                "createLabel": "Créer un nouveau Person",
+                "createOrEditLabel": "Créer ou éditer un Person",
+                "search": "Recherche pour Person"
+            },
+            "created": "Un nouveau Person a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Person avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Person avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Person {{ id }} ?"
+            },
+            "detail": {
+                "title": "Person"
+            },
+            "email": "Email",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "entryDate": "Entry Date",
+            "communities": "Communities"
+        }
+    }
+}

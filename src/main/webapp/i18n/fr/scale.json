@@ -1,0 +1,25 @@
+{
+    "starPointsApp": {
+        "scale" : {
+            "home": {
+                "title": "Scales",
+                "createLabel": "Créer un nouveau Scale",
+                "createOrEditLabel": "Créer ou éditer un Scale",
+                "search": "Recherche pour Scale"
+            },
+            "created": "Un nouveau Scale a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Scale avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Scale avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Scale {{ id }} ?"
+            },
+            "detail": {
+                "title": "Scale"
+            },
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "value": "Value",
+            "activity": "Activity"
+        }
+    }
+}

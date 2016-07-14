@@ -1,0 +1,37 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "level",
+      "otherEntityName": "level",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "activity"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "type",
+      "fieldType": "ActivityType",
+      "fieldValues": "BLOG_POST,BROWN_BAG_LUNCH,TRAINING"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "deliverableDefinition",
+      "javadoc": "Définition du livrable",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160620202522",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "activity"
+}

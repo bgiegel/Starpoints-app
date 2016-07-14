@@ -1,0 +1,64 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "activity",
+      "otherEntityName": "activity",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "contribution"
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "community",
+      "otherEntityName": "community",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "contribution"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "deliverableDate",
+      "javadoc": "Date de rédaction de l’article, date de la vraie présentation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "deliverableUrl",
+      "javadoc": "Lien de l'article du blog par exemple",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "deliverableName",
+      "javadoc": "Nom de l'article ou de la présentation",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 4,
+      "fieldName": "comment",
+      "fieldType": "String"
+    },
+    {
+      "fieldId": 5,
+      "fieldName": "preparatoryDate1",
+      "javadoc": "Date pour le plan / Teaser",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldId": 6,
+      "fieldName": "preparatoryDate2",
+      "javadoc": "Date pour la presentation a blanc",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20160620202525",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "contribution"
+}

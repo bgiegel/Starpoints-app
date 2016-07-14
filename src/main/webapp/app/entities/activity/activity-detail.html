@@ -1,0 +1,30 @@
+
+<div>
+    <h2><span translate="starPointsApp.activity.detail.title">Activity</span> {{vm.activity.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="starPointsApp.activity.name">Name</span></dt>
+        <dd>
+            <span>{{vm.activity.name}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.activity.type">Type</span></dt>
+        <dd>
+            <span translate="{{'starPointsApp.ActivityType.' + vm.activity.type}}">{{vm.activity.type}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.activity.deliverableDefinition">Deliverable Definition</span></dt>
+        <dd>
+            <span>{{vm.activity.deliverableDefinition}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.activity.level">Level</span></dt>
+        <dd>
+            <a ui-sref="level-detail({id:vm.activity.level.id})">{{vm.activity.level.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,33 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "many-to-many",
+      "relationshipName": "members",
+      "otherEntityName": "person",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipId": 2,
+      "relationshipType": "one-to-one",
+      "relationshipName": "leader",
+      "otherEntityName": "person",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "community"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160620202524",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "community"
+}

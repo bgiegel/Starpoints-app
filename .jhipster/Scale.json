@@ -1,0 +1,37 @@
+{
+  "relationships": [
+    {
+      "relationshipId": 1,
+      "relationshipType": "one-to-one",
+      "relationshipName": "activity",
+      "otherEntityName": "activity",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "scale"
+    }
+  ],
+  "fields": [
+    {
+      "fieldId": 1,
+      "fieldName": "startDate",
+      "javadoc": "Date de début incluse",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldId": 2,
+      "fieldName": "endDate",
+      "javadoc": "Date de fin incluse",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldId": 3,
+      "fieldName": "value",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20160620202521",
+  "dto": "no",
+  "pagination": "no",
+  "service": "no",
+  "entityTableName": "scale"
+}

@@ -1,0 +1,46 @@
+
+<div>
+    <h2><span translate="starPointsApp.contribution.detail.title">Contribution</span> {{vm.contribution.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span translate="starPointsApp.contribution.deliverableDate">Deliverable Date</span></dt>
+        <dd>
+            <span>{{vm.contribution.deliverableDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></dt>
+        <dd>
+            <span>{{vm.contribution.deliverableUrl}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></dt>
+        <dd>
+            <span>{{vm.contribution.deliverableName}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.comment">Comment</span></dt>
+        <dd>
+            <span>{{vm.contribution.comment}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.preparatoryDate1">Preparatory Date 1</span></dt>
+        <dd>
+            <span>{{vm.contribution.preparatoryDate1 | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></dt>
+        <dd>
+            <span>{{vm.contribution.preparatoryDate2 | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.activity">Activity</span></dt>
+        <dd>
+            <a ui-sref="activity-detail({id:vm.contribution.activity.id})">{{vm.contribution.activity.id}}</a>
+        </dd>
+        <dt><span translate="starPointsApp.contribution.community">Community</span></dt>
+        <dd>
+            <a ui-sref="community-detail({id:vm.contribution.community.id})">{{vm.contribution.community.id}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

@@ -1,0 +1,64 @@
+<div>
+    <h2 translate="starPointsApp.activity.home.title">Activities</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="activity.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="starPointsApp.activity.home.createLabel">
+                        Create new Activity
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="starPointsApp.activity.name">Name</span></th>
+                    <th><span translate="starPointsApp.activity.type">Type</span></th>
+                    <th><span translate="starPointsApp.activity.deliverableDefinition">Deliverable Definition</span></th>
+                    <th><span translate="starPointsApp.activity.level">Level</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="activity in vm.activities track by activity.id">
+                    <td><a ui-sref="activity-detail({id:activity.id})">{{activity.id}}</a></td>
+                    <td>{{activity.name}}</td>
+                    <td translate="{{'starPointsApp.ActivityType.' + activity.type}}">{{activity.type}}</td>
+                    <td>{{activity.deliverableDefinition}}</td>
+                    <td>
+                        <a ui-sref="level-detail({id:activity.level.id})">{{activity.level.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="activity-detail({id:activity.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="activity.edit({id:activity.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="activity.delete({id:activity.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

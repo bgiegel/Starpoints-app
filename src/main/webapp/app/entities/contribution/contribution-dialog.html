@@ -1,0 +1,86 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myContributionLabel" translate="starPointsApp.contribution.home.createOrEditLabel">Create or edit a Contribution</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.contribution.id">
+            <label for="id" translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.contribution.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.deliverableDate" for="field_deliverableDate">Deliverable Date</label>
+                <div class="input-group">
+                    <input id="field_deliverableDate" type="text" class="form-control" name="deliverableDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.deliverableDate" is-open="vm.datePickerOpenStatus.deliverableDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('deliverableDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.deliverableUrl" for="field_deliverableUrl">Deliverable Url</label>
+            <input type="text" class="form-control" name="deliverableUrl" id="field_deliverableUrl"
+                    ng-model="vm.contribution.deliverableUrl"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.deliverableName" for="field_deliverableName">Deliverable Name</label>
+            <input type="text" class="form-control" name="deliverableName" id="field_deliverableName"
+                    ng-model="vm.contribution.deliverableName"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.comment" for="field_comment">Comment</label>
+            <input type="text" class="form-control" name="comment" id="field_comment"
+                    ng-model="vm.contribution.comment"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.preparatoryDate1" for="field_preparatoryDate1">Preparatory Date 1</label>
+                <div class="input-group">
+                    <input id="field_preparatoryDate1" type="text" class="form-control" name="preparatoryDate1" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.preparatoryDate1" is-open="vm.datePickerOpenStatus.preparatoryDate1"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('preparatoryDate1')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" translate="starPointsApp.contribution.preparatoryDate2" for="field_preparatoryDate2">Preparatory Date 2</label>
+                <div class="input-group">
+                    <input id="field_preparatoryDate2" type="text" class="form-control" name="preparatoryDate2" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.preparatoryDate2" is-open="vm.datePickerOpenStatus.preparatoryDate2"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('preparatoryDate2')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label translate="starPointsApp.contribution.activity" for="field_activity">Activity</label>
+            <select class="form-control" id="field_activity" name="activity" ng-model="vm.contribution.activity" ng-options="activity as activity.id for activity in vm.activities | orderBy:'id' track by activity.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label translate="starPointsApp.contribution.community" for="field_community">Community</label>
+            <select class="form-control" id="field_community" name="community" ng-model="vm.contribution.community" ng-options="community as community.id for community in vm.communities | orderBy:'id' track by community.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

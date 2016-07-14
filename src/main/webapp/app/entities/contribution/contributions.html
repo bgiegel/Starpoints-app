@@ -1,0 +1,74 @@
+<div>
+    <h2 translate="starPointsApp.contribution.home.title">Contributions</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="contribution.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  translate="starPointsApp.contribution.home.createLabel">
+                        Create new Contribution
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span translate="global.field.id">ID</span></th>
+                    <th><span translate="starPointsApp.contribution.deliverableDate">Deliverable Date</span></th>
+                    <th><span translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
+                    <th><span translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
+                    <th><span translate="starPointsApp.contribution.comment">Comment</span></th>
+                    <th><span translate="starPointsApp.contribution.preparatoryDate1">Preparatory Date 1</span></th>
+                    <th><span translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></th>
+                    <th><span translate="starPointsApp.contribution.activity">Activity</span></th>
+                    <th><span translate="starPointsApp.contribution.community">Community</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="contribution in vm.contributions track by contribution.id">
+                    <td><a ui-sref="contribution-detail({id:contribution.id})">{{contribution.id}}</a></td>
+                        <td>{{contribution.deliverableDate | date:'mediumDate'}}</td>
+                    <td>{{contribution.deliverableUrl}}</td>
+                    <td>{{contribution.deliverableName}}</td>
+                    <td>{{contribution.comment}}</td>
+                        <td>{{contribution.preparatoryDate1 | date:'mediumDate'}}</td>
+                        <td>{{contribution.preparatoryDate2 | date:'mediumDate'}}</td>
+                    <td>
+                        <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.id}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.id}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="contribution-detail({id:contribution.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="contribution.edit({id:contribution.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="contribution.delete({id:contribution.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

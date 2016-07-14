@@ -1,0 +1,25 @@
+{
+    "starPointsApp": {
+        "activity" : {
+            "home": {
+                "title": "Activities",
+                "createLabel": "Créer un nouveau Activity",
+                "createOrEditLabel": "Créer ou éditer un Activity",
+                "search": "Recherche pour Activity"
+            },
+            "created": "Un nouveau Activity a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Activity avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Activity avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Activity {{ id }} ?"
+            },
+            "detail": {
+                "title": "Activity"
+            },
+            "name": "Name",
+            "type": "Type",
+            "deliverableDefinition": "Deliverable Definition",
+            "level": "Level"
+        }
+    }
+}
