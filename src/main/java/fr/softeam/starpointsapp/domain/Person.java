@@ -50,6 +50,11 @@ public class Person implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Community> communities = new HashSet<>();
 
+    @OneToMany(mappedBy = "author")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contribution> contributions = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -96,6 +101,14 @@ public class Person implements Serializable {
 
     public void setCommunities(Set<Community> communities) {
         this.communities = communities;
+    }
+
+    public Set<Contribution> getContributions() {
+        return contributions;
+    }
+
+    public void setContributions(Set<Contribution> contributions) {
+        this.contributions = contributions;
     }
 
     @Override

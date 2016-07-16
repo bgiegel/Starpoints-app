@@ -84,6 +84,9 @@ public class Contribution implements Serializable {
     @JoinColumn(unique = true)
     private Community community;
 
+    @ManyToOne
+    private Person author;
+
     public Long getId() {
         return id;
     }
@@ -154,6 +157,14 @@ public class Contribution implements Serializable {
 
     public void setCommunity(Community community) {
         this.community = community;
+    }
+
+    public Person getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Person person) {
+        this.author = person;
     }
 
     @Override

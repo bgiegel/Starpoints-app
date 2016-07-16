@@ -20,7 +20,8 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "entryDate": "Entry Date",
-            "communities": "Communities"
+            "communities": "Communities",
+            "contributions": "Contributions"
         }
     }
 }

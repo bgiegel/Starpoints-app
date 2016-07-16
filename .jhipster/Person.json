@@ -1,40 +1,46 @@
 {
-  "relationships": [
-    {
-      "relationshipId": 1,
-      "relationshipType": "many-to-many",
-      "relationshipName": "communities",
-      "otherEntityName": "community",
-      "ownerSide": false,
-      "otherEntityRelationshipName": "members"
-    }
-  ],
-  "fields": [
-    {
-      "fieldId": 1,
-      "fieldName": "email",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 2,
-      "fieldName": "firstName",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 3,
-      "fieldName": "lastName",
-      "fieldType": "String"
-    },
-    {
-      "fieldId": 4,
-      "fieldName": "entryDate",
-      "javadoc": "Date d’entrée à la première communauté",
-      "fieldType": "LocalDate"
-    }
-  ],
-  "changelogDate": "20160622210114",
-  "dto": "no",
-  "pagination": "no",
-  "service": "no",
-  "entityTableName": "person"
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipType": "many-to-many",
+            "relationshipName": "communities",
+            "otherEntityName": "community",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "members"
+        },
+        {
+            "relationshipName": "contributions",
+            "otherEntityName": "contribution",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "author"
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "firstName",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 3,
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 4,
+            "fieldName": "entryDate",
+            "javadoc": "Date d’entrée à la première communauté",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20160622210114",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "person",
+    "pagination": "no"
 }

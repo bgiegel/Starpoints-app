@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('ContributionDialogController', ContributionDialogController);
 
-    ContributionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Contribution', 'Activity', 'Community'];
+    ContributionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Contribution', 'Activity', 'Community', 'Person'];
 
-    function ContributionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Contribution, Activity, Community) {
+    function ContributionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Contribution, Activity, Community, Person) {
         var vm = this;
 
         vm.contribution = entity;
@@ -15,8 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.activities = Activity.query({filter: 'contribution-is-null'});
-        $q.all([vm.contribution.$promise, vm.activities.$promise]).then(function() {
+        vm.activitys = Activity.query({filter: 'contribution-is-null'});
+        $q.all([vm.contribution.$promise, vm.activitys.$promise]).then(function() {
             if (!vm.contribution.activity || !vm.contribution.activity.id) {
                 return $q.reject();
             }
@@ -24,8 +24,8 @@
         }).then(function(activity) {
             vm.activities.push(activity);
         });
-        vm.communities = Community.query({filter: 'contribution-is-null'});
-        $q.all([vm.contribution.$promise, vm.communities.$promise]).then(function() {
+        vm.communitys = Community.query({filter: 'contribution-is-null'});
+        $q.all([vm.contribution.$promise, vm.communitys.$promise]).then(function() {
             if (!vm.contribution.community || !vm.contribution.community.id) {
                 return $q.reject();
             }
@@ -33,6 +33,7 @@
         }).then(function(community) {
             vm.communities.push(community);
         });
+        vm.people = Person.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

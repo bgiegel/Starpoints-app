@@ -23,7 +23,8 @@
             "preparatoryDate1": "Preparatory Date 1",
             "preparatoryDate2": "Preparatory Date 2",
             "activity": "Activity",
-            "community": "Community"
+            "community": "Community",
+            "author": "Author"
         }
     }
 }

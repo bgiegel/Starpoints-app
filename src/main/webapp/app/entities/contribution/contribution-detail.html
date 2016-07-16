@@ -36,6 +36,10 @@
         <dd>
             <a ui-sref="community-detail({id:vm.contribution.community.id})">{{vm.contribution.community.id}}</a>
         </dd>
+        <dt><span translate="starPointsApp.contribution.author">Author</span></dt>
+        <dd>
+            <a ui-sref="person-detail({id:vm.contribution.author.id})">{{vm.contribution.author.firstName}}</a>
+        </dd>
     </dl>
 
     <button type="submit"

@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="community"/>
 
+        <addForeignKeyConstraint baseColumnNames="author_id"
+                                 baseTableName="contribution"
+                                 constraintName="fk_contribution_author_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="person"/>
+
     </changeSet>
 </databaseChangeLog>

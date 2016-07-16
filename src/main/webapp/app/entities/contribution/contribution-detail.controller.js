@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('ContributionDetailController', ContributionDetailController);
 
-    ContributionDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Contribution', 'Activity', 'Community'];
+    ContributionDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Contribution', 'Activity', 'Community', 'Person'];
 
-    function ContributionDetailController($scope, $rootScope, $stateParams, entity, Contribution, Activity, Community) {
+    function ContributionDetailController($scope, $rootScope, $stateParams, entity, Contribution, Activity, Community, Person) {
         var vm = this;
 
         vm.contribution = entity;
