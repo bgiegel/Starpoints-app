@@ -18,16 +18,16 @@ spring:
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
     datasource:
-        url: jdbc:mysql://localhost:3306/StarPointsApp?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:h2:file:./target/h2db/db/starpointsapp;DB_CLOSE_DELAY=-1
         name:
-        username: root
+        username: StarPointsApp
         password:
     h2:
         console:
-            enabled: false
+            enabled: true
     jpa:
-        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-        database: MYSQL
+        database-platform: fr.softeam.starpointsapp.domain.util.FixedH2Dialect
+        database: H2
         show_sql: true
         properties:
             hibernate.cache.use_second_level_cache: true
