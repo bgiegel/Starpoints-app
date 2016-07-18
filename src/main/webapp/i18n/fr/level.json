@@ -2,22 +2,22 @@
     "starPointsApp": {
         "level" : {
             "home": {
-                "title": "Levels",
-                "createLabel": "Créer un nouveau Level",
-                "createOrEditLabel": "Créer ou éditer un Level",
-                "search": "Recherche pour Level"
+                "title": "Niveaux",
+                "createLabel": "Créer un nouveau niveau",
+                "createOrEditLabel": "Créer ou éditer un niveau",
+                "search": "Recherche pour un niveau"
             },
-            "created": "Un nouveau Level a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Level avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Level avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau niveau a été créé avec l'identifiant {{ param }}",
+            "updated": "Le niveau avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le niveau avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Level {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le niveau {{ id }} ?"
             },
             "detail": {
-                "title": "Level"
+                "title": "Niveau"
             },
-            "value": "Value",
-            "name": "Name"
+            "value": "Valeur",
+            "name": "Nom"
         }
     }
 }

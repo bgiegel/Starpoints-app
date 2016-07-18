@@ -5,7 +5,7 @@
             "relationshipType": "one-to-one",
             "relationshipName": "activity",
             "otherEntityName": "activity",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "contribution"
         },

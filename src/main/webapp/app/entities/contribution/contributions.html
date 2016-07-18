@@ -41,13 +41,13 @@
                         <td>{{contribution.preparatoryDate1 | date:'mediumDate'}}</td>
                         <td>{{contribution.preparatoryDate2 | date:'mediumDate'}}</td>
                     <td>
-                        <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.id}}</a>
+                        <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.name}}</a>
                     </td>
                     <td>
-                        <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.id}}</a>
+                        <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.name}}</a>
                     </td>
                     <td>
-                        <a ui-sref="person-detail({id:contribution.author.id})">{{contribution.author.firstName}}</a>
+                        <a ui-sref="person-detail({id:contribution.author.id})">{{contribution.author.firstName}} {{contribution.author.lastName}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

@@ -24,7 +24,7 @@ spring:
         password:
     h2:
         console:
-            enabled: true
+            enabled: false
     jpa:
         database-platform: fr.softeam.starpointsapp.domain.util.FixedH2Dialect
         database: H2

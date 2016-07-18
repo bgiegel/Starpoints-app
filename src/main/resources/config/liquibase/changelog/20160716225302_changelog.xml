@@ -182,21 +182,6 @@
                      constraintName="jhi_persistent_tokenPK"
                      tableName="jhi_persistent_token"/>
    </changeSet>
-   <changeSet author="bastien (generated)" id="1468709587787-19">
-      <addUniqueConstraint columnNames="leader_id"
-                           constraintName="UC_COMMUNITYLEADER_ID_COL"
-                           tableName="community"/>
-   </changeSet>
-   <changeSet author="bastien (generated)" id="1468709587787-20">
-      <addUniqueConstraint columnNames="activity_id"
-                           constraintName="UC_CONTRIBUTIONACTIVITY_ID_COL"
-                           tableName="contribution"/>
-   </changeSet>
-   <changeSet author="bastien (generated)" id="1468709587787-21">
-      <addUniqueConstraint columnNames="community_id"
-                           constraintName="UC_CONTRIBUTIONCOMMUNITY_ID_COL"
-                           tableName="contribution"/>
-   </changeSet>
    <changeSet author="bastien (generated)" id="1468709587787-22">
       <addUniqueConstraint columnNames="email"
                            constraintName="UC_JHI_USEREMAIL_COL"
@@ -206,11 +191,6 @@
       <addUniqueConstraint columnNames="login"
                            constraintName="UC_JHI_USERLOGIN_COL"
                            tableName="jhi_user"/>
-   </changeSet>
-   <changeSet author="bastien (generated)" id="1468709587787-24">
-      <addUniqueConstraint columnNames="activity_id"
-                           constraintName="UC_SCALEACTIVITY_ID_COL"
-                           tableName="scale"/>
    </changeSet>
    <changeSet author="bastien (generated)" id="1468709587787-25">
       <addForeignKeyConstraint baseColumnNames="members_id"

@@ -36,7 +36,7 @@
 
         <div class="form-group">
             <label translate="starPointsApp.activity.level" for="field_level">Level</label>
-            <select class="form-control" id="field_level" name="level" ng-model="vm.activity.level" ng-options="level as level.id for level in vm.levels | orderBy:'id' track by level.id">
+            <select class="form-control" id="field_level" name="level" ng-model="vm.activity.level" ng-options="level as level.name for level in vm.levels | orderBy:'id' track by level.id">
                 <option value=""></option>
             </select>
         </div>

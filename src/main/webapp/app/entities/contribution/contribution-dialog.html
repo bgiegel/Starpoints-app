@@ -64,19 +64,19 @@
 
         <div class="form-group">
             <label translate="starPointsApp.contribution.activity" for="field_activity">Activity</label>
-            <select class="form-control" id="field_activity" name="activity" ng-model="vm.contribution.activity" ng-options="activity as activity.id for activity in vm.activities | orderBy:'id' track by activity.id">
+            <select class="form-control" id="field_activity" name="activity" ng-model="vm.contribution.activity" ng-options="activity as activity.name for activity in vm.activities | orderBy:'name' track by activity.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="starPointsApp.contribution.community" for="field_community">Community</label>
-            <select class="form-control" id="field_community" name="community" ng-model="vm.contribution.community" ng-options="community as community.id for community in vm.communities | orderBy:'id' track by community.id">
+            <select class="form-control" id="field_community" name="community" ng-model="vm.contribution.community" ng-options="community as community.name for community in vm.communities | orderBy:'name' track by community.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="starPointsApp.contribution.author" for="field_author">Author</label>
-            <select class="form-control" id="field_author" name="author" ng-model="vm.contribution.author" ng-options="person as person.firstName for person in vm.people track by person.id">
+            <select class="form-control" id="field_author" name="author" ng-model="vm.contribution.author" ng-options="person as person.firstName+' '+person.lastName for person in vm.people track by person.id">
                 <option value=""></option>
             </select>
         </div>

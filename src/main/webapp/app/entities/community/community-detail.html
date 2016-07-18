@@ -11,12 +11,12 @@
         <dt><span translate="starPointsApp.community.members">Members</span></dt>
         <dd>
             <span ng-repeat="members in vm.community.members">
-                <a ui-sref="person-detail({id: {{members.id}}})">{{members.id}}</a>{{$last ? '' : ', '}}
+                <a ui-sref="person-detail({id: {{members.id}}})">{{members.firstName}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>
         <dt><span translate="starPointsApp.community.leader">Leader</span></dt>
         <dd>
-            <a ui-sref="person-detail({id:vm.community.leader.id})">{{vm.community.leader.id}}</a>
+            <a ui-sref="person-detail({id:vm.community.leader.id})">{{vm.community.leader.firstName}}</a>
         </dd>
     </dl>
 

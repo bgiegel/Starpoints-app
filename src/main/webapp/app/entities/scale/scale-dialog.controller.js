@@ -15,8 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.activities = Activity.query({filter: 'scale-is-null'});
-        $q.all([vm.scale.$promise, vm.activities.$promise]).then(function() {
+        vm.activitys = Activity.query({filter: 'scale-is-null'});
+        $q.all([vm.scale.$promise, vm.activitys.$promise]).then(function() {
             if (!vm.scale.activity || !vm.scale.activity.id) {
                 return $q.reject();
             }

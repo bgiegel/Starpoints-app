@@ -24,19 +24,19 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="type" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="deliverable_definition" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="level_id" type="bigint">
-                <constraints nullable="true" />
+                        <column name="level_id" type="bigint">
+                <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-
+        
     </changeSet>
 </databaseChangeLog>

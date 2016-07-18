@@ -15,24 +15,8 @@
         vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
         vm.save = save;
-        vm.activitys = Activity.query({filter: 'contribution-is-null'});
-        $q.all([vm.contribution.$promise, vm.activitys.$promise]).then(function() {
-            if (!vm.contribution.activity || !vm.contribution.activity.id) {
-                return $q.reject();
-            }
-            return Activity.get({id : vm.contribution.activity.id}).$promise;
-        }).then(function(activity) {
-            vm.activities.push(activity);
-        });
-        vm.communitys = Community.query({filter: 'contribution-is-null'});
-        $q.all([vm.contribution.$promise, vm.communitys.$promise]).then(function() {
-            if (!vm.contribution.community || !vm.contribution.community.id) {
-                return $q.reject();
-            }
-            return Community.get({id : vm.contribution.community.id}).$promise;
-        }).then(function(community) {
-            vm.communities.push(community);
-        });
+        vm.activities = Activity.query({filter: 'contribution-is-null'});
+        vm.communities = Community.query({filter: 'contribution-is-null'});
         vm.people = Person.query();
 
         $timeout(function (){

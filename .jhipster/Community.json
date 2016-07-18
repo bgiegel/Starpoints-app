@@ -5,7 +5,7 @@
       "relationshipType": "many-to-many",
       "relationshipName": "members",
       "otherEntityName": "person",
-      "otherEntityField": "id",
+      "otherEntityField": "firstName",
       "ownerSide": true
     },
     {
@@ -13,7 +13,7 @@
       "relationshipType": "one-to-one",
       "relationshipName": "leader",
       "otherEntityName": "person",
-      "otherEntityField": "id",
+      "otherEntityField": "firstName",
       "ownerSide": true,
       "otherEntityRelationshipName": "community"
     }
