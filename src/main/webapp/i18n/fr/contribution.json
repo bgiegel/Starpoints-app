@@ -3,28 +3,28 @@
         "contribution" : {
             "home": {
                 "title": "Contributions",
-                "createLabel": "Créer une nouvelle contribution",
-                "createOrEditLabel": "Créer ou éditer une contribution",
-                "search": "Recherche pour une contribution"
+                "createLabel": "Créer un nouveau Contribution",
+                "createOrEditLabel": "Créer ou éditer un Contribution",
+                "search": "Recherche pour Contribution"
             },
-            "created": "Une nouvelle contribution a été créé avec l'identifiant {{ param }}",
-            "updated": "La contribution avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "La contribution avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau Contribution a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Contribution avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Contribution avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer la contribution {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le Contribution {{ id }} ?"
             },
             "detail": {
                 "title": "Contribution"
             },
-            "deliverableDate": "Date du livrable",
-            "deliverableUrl": "Url du livrable",
-            "deliverableName": "Nom du livrable",
-            "comment": "Commentaire",
+            "deliverableDate": "Deliverable Date",
+            "deliverableUrl": "Deliverable Url",
+            "deliverableName": "Deliverable Name",
+            "comment": "Comment",
             "preparatoryDate1": "Preparatory Date 1",
             "preparatoryDate2": "Preparatory Date 2",
-            "activity": "Activité",
-            "community": "Communauté",
-            "author": "Auteur"
+            "activity": "Activity",
+            "community": "Community",
+            "author": "Author"
         }
     }
 }

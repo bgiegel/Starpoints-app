@@ -32,8 +32,8 @@ public class Activity implements Serializable {
     private ActivityType type;
 
     /**
-     * Définition du livrable
-     *
+     * Définition du livrable                                                  
+     * 
      */
     @ApiModelProperty(value = ""
         + "Définition du livrable                                             "
@@ -42,7 +42,7 @@ public class Activity implements Serializable {
     private String deliverableDefinition;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumn(unique = true)
     private Level level;
 
     public Long getId() {

@@ -5,6 +5,7 @@ import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.AuthorityRepository;
 import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.security.SecurityUtils;
 import fr.softeam.starpointsapp.service.util.RandomUtil;
 import fr.softeam.starpointsapp.web.rest.dto.ManagedUserDTO;
@@ -89,7 +90,7 @@ public class UserService {
         String langKey) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne("ROLE_USER");
+        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);

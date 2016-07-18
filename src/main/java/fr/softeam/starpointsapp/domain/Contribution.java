@@ -24,8 +24,8 @@ public class Contribution implements Serializable {
     private Long id;
 
     /**
-     * Date de rédaction de l’article, date de la vraie présentation
-     *
+     * Date de rédaction de l’article, date de la vraie présentation           
+     * 
      */
     @ApiModelProperty(value = ""
         + "Date de rédaction de l’article, date de la vraie présentation      "
@@ -34,8 +34,8 @@ public class Contribution implements Serializable {
     private LocalDate deliverableDate;
 
     /**
-     * Lien de l'article du blog par exemple
-     *
+     * Lien de l'article du blog par exemple                                   
+     * 
      */
     @ApiModelProperty(value = ""
         + "Lien de l'article du blog par exemple                              "
@@ -44,8 +44,8 @@ public class Contribution implements Serializable {
     private String deliverableUrl;
 
     /**
-     * Nom de l'article ou de la présentation
-     *
+     * Nom de l'article ou de la présentation                                  
+     * 
      */
     @ApiModelProperty(value = ""
         + "Nom de l'article ou de la présentation                             "
@@ -57,8 +57,8 @@ public class Contribution implements Serializable {
     private String comment;
 
     /**
-     * Date pour le plan / Teaser
-     *
+     * Date pour le plan / Teaser                                              
+     * 
      */
     @ApiModelProperty(value = ""
         + "Date pour le plan / Teaser                                         "
@@ -67,8 +67,8 @@ public class Contribution implements Serializable {
     private LocalDate preparatoryDate1;
 
     /**
-     * Date pour la presentation a blanc
-     *
+     * Date pour la presentation a blanc                                       
+     * 
      */
     @ApiModelProperty(value = ""
         + "Date pour la presentation a blanc                                  "
@@ -77,11 +77,11 @@ public class Contribution implements Serializable {
     private LocalDate preparatoryDate2;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumn(unique = true)
     private Activity activity;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumn(unique = true)
     private Community community;
 
     @ManyToOne

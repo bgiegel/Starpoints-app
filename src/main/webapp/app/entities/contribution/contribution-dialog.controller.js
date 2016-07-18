@@ -16,7 +16,23 @@
         vm.openCalendar = openCalendar;
         vm.save = save;
         vm.activities = Activity.query({filter: 'contribution-is-null'});
+        $q.all([vm.contribution.$promise, vm.activities.$promise]).then(function() {
+            if (!vm.contribution.activity || !vm.contribution.activity.id) {
+                return $q.reject();
+            }
+            return Activity.get({id : vm.contribution.activity.id}).$promise;
+        }).then(function(activity) {
+            vm.activities.push(activity);
+        });
         vm.communities = Community.query({filter: 'contribution-is-null'});
+        $q.all([vm.contribution.$promise, vm.communities.$promise]).then(function() {
+            if (!vm.contribution.community || !vm.contribution.community.id) {
+                return $q.reject();
+            }
+            return Community.get({id : vm.contribution.community.id}).$promise;
+        }).then(function(community) {
+            vm.communities.push(community);
+        });
         vm.people = Person.query();
 
         $timeout(function (){

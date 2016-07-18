@@ -24,32 +24,37 @@
             <column name="deliverable_date" type="date">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="deliverable_url" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="deliverable_name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="comment" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="preparatory_date_1" type="date">
                 <constraints nullable="true" />
             </column>
-
+            
             <column name="preparatory_date_2" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="activity_id" type="bigint" />
-            <column name="community_id" type="bigint" />
-            <column name="author_id" type="bigint" />
+                        <column name="activity_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>            <column name="community_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
+            <column name="author_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
 
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-
+        
     </changeSet>
 </databaseChangeLog>
