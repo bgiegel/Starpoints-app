@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <!--
+        insert data into scale table
+    -->
+    <changeSet id="loadData" author="bgiegel">
+        <loadData encoding="UTF-8"
+                  file="config/data/level.csv"
+                  separator=";"
+                  tableName="level"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/person.csv"
+                  separator=";"
+                  tableName="person"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/community.csv"
+                  separator=";"
+                  tableName="community"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/members.csv"
+                  separator=";"
+                  tableName="community_members"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/activity.csv"
+                  separator=";"
+                  tableName="activity"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/scale.csv"
+                  separator=";"
+                  tableName="scale"/>
+
+        <loadData encoding="UTF-8"
+                  file="config/data/contribution.csv"
+                  separator=";"
+                  tableName="contribution" />
+
+
+
+    </changeSet>
+</databaseChangeLog>
