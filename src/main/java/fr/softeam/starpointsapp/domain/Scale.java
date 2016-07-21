@@ -24,8 +24,8 @@ public class Scale implements Serializable {
     private Long id;
 
     /**
-     * Date de début incluse                                                   
-     * 
+     * Date de début incluse
+     *
      */
     @ApiModelProperty(value = ""
         + "Date de début incluse                                              "
@@ -34,8 +34,8 @@ public class Scale implements Serializable {
     private LocalDate startDate;
 
     /**
-     * Date de fin incluse                                                     
-     * 
+     * Date de fin incluse
+     *
      */
     @ApiModelProperty(value = ""
         + "Date de fin incluse                                                "
@@ -47,7 +47,6 @@ public class Scale implements Serializable {
     private String value;
 
     @OneToOne
-    @JoinColumn(unique = true)
     private Activity activity;
 
     public Long getId() {

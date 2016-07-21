@@ -76,12 +76,10 @@ public class Contribution implements Serializable {
     @Column(name = "preparatory_date_2")
     private LocalDate preparatoryDate2;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Activity activity;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Community community;
 
     @ManyToOne

@@ -2,7 +2,7 @@
   "relationships": [
     {
       "relationshipId": 1,
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "relationshipName": "level",
       "otherEntityName": "level",
       "otherEntityField": "name",

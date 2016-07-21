@@ -5,24 +5,15 @@
         .module('starPointsApp')
         .controller('CommunityDialogController', CommunityDialogController);
 
-    CommunityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Community', 'Person'];
+    CommunityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Community', 'Person'];
 
-    function CommunityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Community, Person) {
+    function CommunityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Community, Person) {
         var vm = this;
 
         vm.community = entity;
         vm.clear = clear;
         vm.save = save;
         vm.people = Person.query();
-        vm.leaders = Person.query({filter: 'community-is-null'});
-        $q.all([vm.community.$promise, vm.leaders.$promise]).then(function() {
-            if (!vm.community.leader || !vm.community.leader.id) {
-                return $q.reject();
-            }
-            return Person.get({id : vm.community.leader.id}).$promise;
-        }).then(function(leader) {
-            vm.leaders.push(leader);
-        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

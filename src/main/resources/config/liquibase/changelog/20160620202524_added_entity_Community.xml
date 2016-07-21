@@ -24,9 +24,11 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-                        <column name="leader_id" type="bigint">
-                <constraints unique="true" nullable="true" />
+            
+            <column name="leader_id" type="bigint">
+                <constraints nullable="true" />
             </column>
+
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         

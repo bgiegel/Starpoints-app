@@ -2,7 +2,7 @@
     "relationships": [
         {
             "relationshipId": 1,
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "activity",
             "otherEntityName": "activity",
             "otherEntityField": "name",
@@ -11,10 +11,10 @@
         },
         {
             "relationshipId": 2,
-            "relationshipType": "one-to-one",
+            "relationshipType": "many-to-one",
             "relationshipName": "community",
             "otherEntityName": "community",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "contribution"
         },

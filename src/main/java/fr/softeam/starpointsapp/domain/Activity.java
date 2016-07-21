@@ -41,8 +41,7 @@ public class Activity implements Serializable {
     @Column(name = "deliverable_definition")
     private String deliverableDefinition;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Level level;
 
     public Long getId() {

@@ -33,8 +33,7 @@ public class Community implements Serializable {
                inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="ID"))
     private Set<Person> members = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private Person leader;
 
     public Long getId() {
