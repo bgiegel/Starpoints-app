@@ -14,14 +14,6 @@
         vm.clear = clear;
         vm.save = save;
         vm.levels = Level.query({filter: 'activity-is-null'});
-        $q.all([vm.activity.$promise, vm.levels.$promise]).then(function() {
-            if (!vm.activity.level || !vm.activity.level.id) {
-                return $q.reject();
-            }
-            return Level.get({id : vm.activity.level.id}).$promise;
-        }).then(function(level) {
-            vm.levels.push(level);
-        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
