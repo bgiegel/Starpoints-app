@@ -7,8 +7,11 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entités",
-                "activity": "Activity",
-                "community": "Community",
+                "activity": "Activité",
+                "community": "Communauté",
+                "level": "Niveau",
+                "scale": "Barème",
+                "person": "Personne",
                 "contribution": "Contribution",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -122,5 +125,5 @@
         "emailexists": "E-mail is already in use!",
         "idexists": "A new {{entityName}} cannot already have an ID"
     },
-    "footer": "Ceci est votre pied de page"
+    "footer": "© 2016 SOFTEAM Cadextan. Tous droits réservés. Réalisation : Bastien Giegel"
 }

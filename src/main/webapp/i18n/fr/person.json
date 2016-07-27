@@ -11,7 +11,7 @@
             "updated": "La personne avec l'identifiant {{ param }} a été mise à jour",
             "deleted": "La personne avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer la personne{{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer {{ firstname }} {{lastname}} ?"
             },
             "detail": {
                 "title": "Personne"
