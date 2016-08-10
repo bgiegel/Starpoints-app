@@ -20,7 +20,7 @@
         },
         {
             "relationshipName": "author",
-            "otherEntityName": "person",
+            "otherEntityName": "user",
             "relationshipType": "many-to-one",
             "relationshipValidateRules": [],
             "otherEntityField": "firstName"
