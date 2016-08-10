@@ -7,16 +7,11 @@
     <!--
         insert data into scale table
     -->
-    <changeSet id="loadData" author="bgiegel">
+    <changeSet id="load_data" author="bgiegel">
         <loadData encoding="UTF-8"
                   file="config/data/level.csv"
                   separator=";"
                   tableName="level"/>
-
-        <loadData encoding="UTF-8"
-                  file="config/data/person.csv"
-                  separator=";"
-                  tableName="person"/>
 
         <loadData encoding="UTF-8"
                   file="config/data/community.csv"

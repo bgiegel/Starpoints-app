@@ -11,7 +11,7 @@
             "updated": "La communauté avec l'identifiant {{ param }} a été mise à jour",
             "deleted": "La communauté avec l'identifiant {{ param }} a été supprimée",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le communauté {{ param }} ?"
+                "question": "Etes-vous certain de vouloir supprimer la communauté {{ param }} ?"
             },
             "detail": {
                 "title": "Communauté"

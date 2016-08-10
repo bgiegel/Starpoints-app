@@ -24,7 +24,7 @@ spring:
         password:
     h2:
         console:
-            enabled: false
+            enabled: true
     jpa:
         database-platform: fr.softeam.starpointsapp.domain.util.FixedH2Dialect
         database: H2
@@ -35,10 +35,18 @@ spring:
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: starpointsapp@gmail.com
+        password: starpoints-softeam
+        protocol: smtp
+        tls: true
+        auth: false
+        from: starpointsapp@gmail.com
+        properties.mail.smtp:
+            auth: false
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:

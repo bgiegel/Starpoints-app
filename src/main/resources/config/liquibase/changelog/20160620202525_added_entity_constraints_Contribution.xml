@@ -7,7 +7,7 @@
         Added the constraints for entity Contribution.
     -->
     <changeSet id="20160620202525-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="activity_id"
                                  baseTableName="contribution"
                                  constraintName="fk_contribution_activity_id"
@@ -24,7 +24,7 @@
                                  baseTableName="contribution"
                                  constraintName="fk_contribution_author_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="person"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>
