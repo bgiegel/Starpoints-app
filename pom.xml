@@ -5,7 +5,7 @@
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-        <version>1.3.5.RELEASE</version>
+        <version>1.3.6.RELEASE</version>
         <relativePath />
     </parent>
 
@@ -35,6 +35,8 @@
         <liquibase-hibernate4.version>3.5</liquibase-hibernate4.version>
         <liquibase-slf4j.version>1.2.1</liquibase-slf4j.version>
         <liquibase.version>3.4.2</liquibase.version>
+
+        <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
         <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
         <mapstruct.version>1.0.0.Final</mapstruct.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
@@ -44,11 +46,13 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <metrics-spark-reporter.version>1.2</metrics-spark-reporter.version>
         <metrics-spring.version>3.1.3</metrics-spring.version>
+
         <!-- These remain empty unless the corresponding profile is active -->
         <profile.no-liquibase />
-        <profile.no-swagger />
+        <profile.swagger />
         <!-- Sonar properties -->
         <project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
+        <run.addResources>false</run.addResources>
         <run.addResources>false</run.addResources>
         <sonar-maven-plugin.version>3.0.2</sonar-maven-plugin.version>
         <sonar.exclusions>src/main/webapp/content/**/*.*, src/main/webapp/bower_components/**/*.*, target/www/**/*.*</sonar.exclusions>
@@ -62,9 +66,12 @@
         <sonar.sources>${project.basedir}/src/main/</sonar.sources>
         <sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>
         <sonar.tests>${project.basedir}/src/test/</sonar.tests>
+
         <sortpom-maven-plugin.version>2.5.0</sortpom-maven-plugin.version>
         <spring-security.version>4.1.0.RELEASE</spring-security.version>
-        <springfox.version>2.4.0</springfox.version>
+        <spring-security.version>4.1.0.RELEASE</spring-security.version>
+        <springfox.version>2.5.0</springfox.version>
+        <springfox.version>2.5.0</springfox.version>
     </properties>
 
     <dependencies>
@@ -449,7 +456,7 @@
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.5</version>
+                <version>0.4.10</version>
                 <configuration>
                     <imageName>starpointsapp</imageName>
                     <dockerDirectory>src/main/docker</dockerDirectory>
@@ -660,6 +667,11 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -682,9 +694,9 @@
             </properties>
         </profile>
         <profile>
-            <id>no-swagger</id>
+            <id>swagger</id>
             <properties>
-                <profile.no-swagger>,no-swagger</profile.no-swagger>
+                <profile.swagger>,swagger</profile.swagger>
             </properties>
         </profile>
         <profile>
@@ -708,7 +720,7 @@
                 <!-- log configuration -->
                 <logback.loglevel>DEBUG</logback.loglevel>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>dev${profile.no-liquibase}${profile.no-swagger}</spring.profiles.active>
+                <spring.profiles.active>dev${profile.no-liquibase}</spring.profiles.active>
             </properties>
             <dependencies>
                 <dependency>
@@ -737,8 +749,8 @@
                                     <goal>install-node-and-npm</goal>
                                 </goals>
                                 <configuration>
-                                    <nodeVersion>v4.4.3</nodeVersion>
-                                    <npmVersion>3.8.3</npmVersion>
+                                    <nodeVersion>v4.4.7</nodeVersion>
+                                    <npmVersion>3.10.5</npmVersion>
                                 </configuration>
                             </execution>
                             <execution>
@@ -821,7 +833,7 @@
                 <!-- log configuration -->
                 <logback.loglevel>INFO</logback.loglevel>
                 <!-- default Spring profiles -->
-                <spring.profiles.active>prod${profile.no-liquibase}${profile.no-swagger}</spring.profiles.active>
+                <spring.profiles.active>prod${profile.swagger}${profile.no-liquibase}</spring.profiles.active>
             </properties>
             <dependencies>
                 <dependency>

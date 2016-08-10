@@ -52,8 +52,41 @@
                 }],
                 entity: ['$stateParams', 'Contribution', function($stateParams, Contribution) {
                     return Contribution.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'contribution',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('contribution-detail.edit', {
+            parent: 'contribution-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/contribution/contribution-dialog.html',
+                    controller: 'ContributionDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Contribution', function(Contribution) {
+                            return Contribution.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('contribution.new', {
             parent: 'contribution',

@@ -52,8 +52,41 @@
                 }],
                 entity: ['$stateParams', 'Scale', function($stateParams, Scale) {
                     return Scale.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'scale',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('scale-detail.edit', {
+            parent: 'scale-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/scale/scale-dialog.html',
+                    controller: 'ScaleDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Scale', function(Scale) {
+                            return Scale.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('scale.new', {
             parent: 'scale',
