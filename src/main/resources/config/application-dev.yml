@@ -17,8 +17,6 @@ spring:
             enabled: true
         livereload:
             enabled: false # we use gulp + BrowserSync for livereload
-    jackson:
-        serialization.indent_output: true
     datasource:
         url: jdbc:h2:mem:starpointsapp;DB_CLOSE_DELAY=-1
         name:
@@ -26,27 +24,33 @@ spring:
         password:
     h2:
         console:
-            enabled: false
+            enabled: true
     jpa:
         database-platform: fr.softeam.starpointsapp.domain.util.FixedH2Dialect
         database: H2
-        show-sql: true
+        show_sql: true
         properties:
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: starpointsapp@gmail.com
+        password: starpoints-softeam
+        protocol: smtp
+        tls: true
+        auth: false
+        from: starpointsapp@gmail.com
+        properties.mail.smtp:
+            auth: false
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
         cache: false
-    profiles:
-        include: swagger # automatically set the 'swagger' profile
 
 liquibase:
     contexts: dev
@@ -89,3 +93,5 @@ jhipster:
             host: localhost
             port: 5000
             queueSize: 512
+    swagger: # swagger is enabled. It can be disabled by pasing 'no-swagger' profile at run time as well
+        enabled: true

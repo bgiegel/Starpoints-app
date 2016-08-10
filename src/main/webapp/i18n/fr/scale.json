@@ -2,24 +2,24 @@
     "starPointsApp": {
         "scale" : {
             "home": {
-                "title": "Scales",
-                "createLabel": "Créer un nouveau Scale",
-                "createOrEditLabel": "Créer ou éditer un Scale",
-                "search": "Recherche pour Scale"
+                "title": "Barème",
+                "createLabel": "Créer un nouveau barème",
+                "createOrEditLabel": "Créer ou éditer un barème",
+                "search": "Recherche pour un barème"
             },
-            "created": "Un nouveau Scale a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Scale avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Scale avec l'identifiant {{ param }} a été supprimé",
+            "created": "Un nouveau barème a été créé avec l'identifiant {{ param }}",
+            "updated": "Le barème avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le barème avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Scale {{ id }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le barème {{ id }} ?"
             },
             "detail": {
-                "title": "Scale"
+                "title": "Barème"
             },
-            "startDate": "Start Date",
-            "endDate": "End Date",
-            "value": "Value",
-            "activity": "Activity"
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "value": "Valeur",
+            "activity": "Activité"
         }
     }
 }

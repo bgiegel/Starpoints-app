@@ -5,13 +5,12 @@
         .module('starPointsApp')
         .controller('ContributionDetailController', ContributionDetailController);
 
-    ContributionDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Contribution', 'Activity', 'Community', 'Person'];
+    ContributionDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Contribution', 'Activity', 'Community', 'User'];
 
-    function ContributionDetailController($scope, $rootScope, $stateParams, previousState, entity, Contribution, Activity, Community, Person) {
+    function ContributionDetailController($scope, $rootScope, $stateParams, entity, Contribution, Activity, Community, User) {
         var vm = this;
 
         vm.contribution = entity;
-        vm.previousState = previousState.name;
 
         var unsubscribe = $rootScope.$on('starPointsApp:contributionUpdate', function(event, result) {
             vm.contribution = result;

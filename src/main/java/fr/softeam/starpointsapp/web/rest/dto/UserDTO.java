@@ -8,6 +8,8 @@ import fr.softeam.starpointsapp.domain.User;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 /**
@@ -30,6 +32,8 @@ public class UserDTO {
     @Size(min = 5, max = 100)
     private String email;
 
+    private LocalDate entryDate;
+
     private boolean activated = false;
 
     @Size(min = 2, max = 5)
@@ -44,16 +48,18 @@ public class UserDTO {
         this(user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()), user.getEntryDate());
     }
 
     public UserDTO(String login, String firstName, String lastName,
-        String email, boolean activated, String langKey, Set<String> authorities) {
+                   String email, boolean activated, String langKey,
+                   Set<String> authorities, LocalDate entryDate) {
 
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.entryDate = entryDate;
         this.activated = activated;
         this.langKey = langKey;
         this.authorities = authorities;
@@ -87,6 +93,14 @@ public class UserDTO {
         return authorities;
     }
 
+    public LocalDate getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDate entryDate) {
+        this.entryDate = entryDate;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -94,6 +108,7 @@ public class UserDTO {
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
+            ", entryDate='" + entryDate + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
             ", authorities=" + authorities +

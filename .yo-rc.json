@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.5.1",
+    "jhipsterVersion": "3.4.2",
     "baseName": "StarPointsApp",
     "packageName": "fr.softeam.starpointsapp",
     "packageFolder": "fr/softeam/starpointsapp",

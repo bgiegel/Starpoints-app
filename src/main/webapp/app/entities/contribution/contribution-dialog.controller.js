@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('ContributionDialogController', ContributionDialogController);
 
-    ContributionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Contribution', 'Activity', 'Community', 'Person'];
+    ContributionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Contribution', 'Activity', 'Community', 'User'];
 
-    function ContributionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Contribution, Activity, Community, Person) {
+    function ContributionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Contribution, Activity, Community, User) {
         var vm = this;
 
         vm.contribution = entity;
@@ -17,7 +17,7 @@
         vm.save = save;
         vm.activities = Activity.query();
         vm.communities = Community.query();
-        vm.people = Person.query();
+        vm.members = User.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

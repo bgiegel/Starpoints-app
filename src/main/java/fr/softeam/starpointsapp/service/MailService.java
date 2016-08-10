@@ -15,6 +15,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
 
+
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
 import java.util.Locale;
@@ -29,7 +30,7 @@ import java.util.Locale;
 public class MailService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
-
+    
     private static final String USER = "user";
     private static final String BASE_URL = "baseUrl";
 
@@ -100,4 +101,5 @@ public class MailService {
         String subject = messageSource.getMessage("email.reset.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
+    
 }

@@ -1,5 +1,9 @@
-id;login;password_hash;first_name;last_name;email;activated;lang_key;created_by;last_modified_by
-1;system;$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG;System;System;system@localhost;true;fr;system;system
-2;anonymoususer;$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO;Anonymous;User;anonymous@localhost;true;fr;system;system
-3;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;true;fr;system;system
-4;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;true;fr;system;system
+ID;LOGIN;PASSWORD_HASH;FIRST_NAME;LAST_NAME;EMAIL;ACTIVATED;LANG_KEY;ACTIVATION_KEY;RESET_KEY;CREATED_BY;LAST_MODIFIED_BY;ENTRY_DATE
+1;system;$2a$10$mE.qmcV0mFU5NcKh73TZx.z4ueI/.bDWbj0T1BYyqP481kGGarKLG;System;System;system@localhost;TRUE;fr;;;system;;2011-02-04
+2;anonymoususer;$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO;Anonymous;User;anonymous@localhost;TRUE;fr;;;system;;2011-02-04
+3;admin;$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC;Administrator;Administrator;admin@localhost;TRUE;fr;;;system;;2011-02-04
+4;user;$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K;User;User;user@localhost;TRUE;fr;;;system;;2011-02-04
+6;tschwender;$2a$10$hdZIk3Smjy28fjY5SPFJ.eO2R60PnodcsmD4Mj.Rp3LFA6x5wdzIa;Thomas;Schwender;tschwender@gmail.com;TRUE;fr;;;;;2014-02-04
+7;pleplay;$2a$10$cz3.zL7fj6g5gTByrps1KuWqmRI.UUtv8q4O.MOHRCdhpDC9h5MT.;Pierre;Leplay;pleplay@gmail.com;TRUE;fr;;;;;2014-02-04
+5;bgiegel;$2a$10$WGW1mRkah133EMBcJGQnf.2yHpO7gTbxQKVK2sVPVgmr3G.lFKcFO;Bastien;Giegel;bastien.giegel@laposte.net;TRUE;fr;;;;anonymousUser;2014-02-04
+8;ksoufiane;$2a$10$sEz5bNa6S2hEu5LM7m3ueu.afR0zF9doJsHlPxpHzZDA/ZYhnZ7Ey;Soufiane;Khattab;bastien.giegel@softeam.fr;TRUE;fr;;;anonymousUser;admin;2014-02-04

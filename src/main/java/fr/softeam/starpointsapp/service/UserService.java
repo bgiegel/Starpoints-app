@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import javax.inject.Inject;
@@ -30,9 +31,9 @@ public class UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
+
     @Inject
     private PasswordEncoder passwordEncoder;
-
 
     @Inject
     private UserRepository userRepository;
@@ -85,7 +86,7 @@ public class UserService {
     }
 
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,
-        String langKey) {
+                                      String langKey, LocalDate entryDate) {
 
         User newUser = new User();
         Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
@@ -97,6 +98,7 @@ public class UserService {
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setEmail(email);
+        newUser.setEntryDate(entryDate);
         newUser.setLangKey(langKey);
         // new user is not active
         newUser.setActivated(false);
@@ -115,6 +117,7 @@ public class UserService {
         user.setFirstName(managedUserDTO.getFirstName());
         user.setLastName(managedUserDTO.getLastName());
         user.setEmail(managedUserDTO.getEmail());
+        user.setEntryDate(managedUserDTO.getEntryDate());
         if (managedUserDTO.getLangKey() == null) {
             user.setLangKey("fr"); // default language
         } else {
@@ -137,11 +140,12 @@ public class UserService {
         return user;
     }
 
-    public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
+    public void updateUserInformation(String firstName, String lastName, String email, String langKey, LocalDate entryDate) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
             u.setLastName(lastName);
             u.setEmail(email);
+            u.setEntryDate(entryDate);
             u.setLangKey(langKey);
             userRepository.save(u);
             log.debug("Changed Information for User: {}", u);

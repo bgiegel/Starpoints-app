@@ -3,6 +3,7 @@ package fr.softeam.starpointsapp.domain;
 import fr.softeam.starpointsapp.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -89,6 +91,26 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
+
+    /**
+     * Date d’entrée à la première communauté
+     *
+     */
+    @ApiModelProperty(value = ""
+        + "Date d’entrée à la première communauté                             "
+        + "")
+    @Column(name = "entry_date")
+    private LocalDate entryDate;
+
+    @ManyToMany(mappedBy = "members")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Community> communities = new HashSet<>();
+
+    @OneToMany(mappedBy = "author")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Contribution> contributions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -193,6 +215,30 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setPersistentTokens(Set<PersistentToken> persistentTokens) {
         this.persistentTokens = persistentTokens;
+    }
+
+    public Set<Contribution> getContributions() {
+        return contributions;
+    }
+
+    public void setContributions(Set<Contribution> contributions) {
+        this.contributions = contributions;
+    }
+
+    public Set<Community> getCommunities() {
+        return communities;
+    }
+
+    public void setCommunities(Set<Community> communities) {
+        this.communities = communities;
+    }
+
+    public LocalDate getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDate entryDate) {
+        this.entryDate = entryDate;
     }
 
     @Override

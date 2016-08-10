@@ -5,13 +5,12 @@
         .module('starPointsApp')
         .controller('ScaleDetailController', ScaleDetailController);
 
-    ScaleDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Scale', 'Activity'];
+    ScaleDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Scale', 'Activity'];
 
-    function ScaleDetailController($scope, $rootScope, $stateParams, previousState, entity, Scale, Activity) {
+    function ScaleDetailController($scope, $rootScope, $stateParams, entity, Scale, Activity) {
         var vm = this;
 
         vm.scale = entity;
-        vm.previousState = previousState.name;
 
         var unsubscribe = $rootScope.$on('starPointsApp:scaleUpdate', function(event, result) {
             vm.scale = result;
