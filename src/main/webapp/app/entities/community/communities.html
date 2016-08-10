@@ -31,7 +31,7 @@
                     <td>{{community.name}}</td>
                     <td>
                         <span ng-repeat="members in community.members">
-                            <a class="form-control-static" ui-sref="person-detail({id: {{members.id}}})">{{members.firstName}}</a>{{$last ? '' : ', '}}
+                            <a class="form-control-static" ui-sref="person-detail({id: members.id})">{{members.firstName}}</a>{{$last ? '' : ', '}}
                         </span>
                     </td>
                     <td>

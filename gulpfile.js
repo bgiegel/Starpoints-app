@@ -1,4 +1,4 @@
-// Generated on 2016-07-18 using generator-jhipster 3.4.2
+// Generated on 2016-08-10 using generator-jhipster 3.5.1
 'use strict';
 
 var gulp = require('gulp'),
@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     ngConstant = require('gulp-ng-constant'),
     rename = require('gulp-rename'),
+    replace = require('gulp-replace'),
     eslint = require('gulp-eslint'),
     es = require('event-stream'),
     flatten = require('gulp-flatten'),
@@ -165,7 +166,7 @@ gulp.task('inject:troubleshoot', function () {
         .pipe(gulp.dest(config.app));
 });
 
-gulp.task('assets:prod', ['images', 'styles', 'html'], build);
+gulp.task('assets:prod', ['images', 'styles', 'html','swagger-ui'], build);
 
 gulp.task('html', function () {
     return gulp.src(config.app + 'app/**/*.html')
@@ -176,6 +177,22 @@ gulp.task('html', function () {
             moduleSystem: 'IIFE'
         }))
         .pipe(gulp.dest(config.tmp));
+});
+
+gulp.task('swagger-ui', function () {
+    return es.merge(
+        gulp.src([config.bower + 'swagger-ui/dist/**',
+                 '!' + config.bower + 'swagger-ui/dist/index.html',
+                 '!' + config.bower + 'swagger-ui/dist/swagger-ui.min.js',
+                 '!' + config.bower + 'swagger-ui/dist/swagger-ui.js'])
+            .pipe(gulp.dest(config.dist + 'swagger-ui/')),
+        gulp.src(config.app + 'swagger-ui/index.html')
+            .pipe(replace('../bower_components/swagger-ui/dist/', ''))
+            .pipe(replace('swagger-ui.js', 'lib/swagger-ui.min.js'))
+            .pipe(gulp.dest(config.dist + 'swagger-ui/')),
+        gulp.src(config.bower  + 'swagger-ui/dist/swagger-ui.min.js')
+            .pipe(gulp.dest(config.dist + 'swagger-ui/lib/'))
+    );
 });
 
 gulp.task('ngconstant:dev', function () {

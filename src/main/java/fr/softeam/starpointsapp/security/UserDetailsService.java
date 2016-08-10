@@ -1,4 +1,5 @@
 package fr.softeam.starpointsapp.security;
+
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import org.slf4j.Logger;

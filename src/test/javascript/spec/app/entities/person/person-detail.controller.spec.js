@@ -4,13 +4,14 @@ describe('Controller Tests', function() {
 
     describe('Person Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockPerson, MockCommunity, MockContribution;
+        var MockEntity, MockPreviousState, MockPerson, MockCommunity, MockContribution;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockPerson = jasmine.createSpy('MockPerson');
             MockCommunity = jasmine.createSpy('MockCommunity');
             MockContribution = jasmine.createSpy('MockContribution');
@@ -19,7 +20,8 @@ describe('Controller Tests', function() {
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'Person': MockPerson,
                 'Community': MockCommunity,
                 'Contribution': MockContribution
