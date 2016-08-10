@@ -16,6 +16,14 @@
         vm.openCalendar = openCalendar;
         vm.save = save;
         vm.activities = Activity.query({filter: 'scale-is-null'});
+        $q.all([vm.scale.$promise, vm.activities.$promise]).then(function() {
+            if (!vm.scale.activity || !vm.scale.activity.id) {
+                return $q.reject();
+            }
+            return Activity.get({id : vm.scale.activity.id}).$promise;
+        }).then(function(activity) {
+            vm.activities.push(activity);
+        });
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

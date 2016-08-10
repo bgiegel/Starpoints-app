@@ -31,10 +31,10 @@ public class Community implements Serializable {
     @JoinTable(name = "community_members",
                joinColumns = @JoinColumn(name="communities_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="ID"))
-    private Set<User> members = new HashSet<>();
+    private Set<Person> members = new HashSet<>();
 
     @ManyToOne
-    private User leader;
+    private Person leader;
 
     public Long getId() {
         return id;
@@ -52,20 +52,20 @@ public class Community implements Serializable {
         this.name = name;
     }
 
-    public Set<User> getMembers() {
+    public Set<Person> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<User> members) {
-        this.members = members;
+    public void setMembers(Set<Person> people) {
+        this.members = people;
     }
 
-    public User getLeader() {
+    public Person getLeader() {
         return leader;
     }
 
-    public void setLeader(User leader) {
-        this.leader = leader;
+    public void setLeader(Person person) {
+        this.leader = person;
     }
 
     @Override

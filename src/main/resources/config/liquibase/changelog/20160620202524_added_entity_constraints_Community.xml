@@ -7,23 +7,23 @@
         Added the constraints for entity Community.
     -->
     <changeSet id="20160620202524-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="communities_id"
                                  baseTableName="community_members"
-                                 constraintName="fk_community_members_person_id"
+                                 constraintName="fk_community_members_communities_id"
                                  referencedColumnNames="id"
                                  referencedTableName="community"/>
         <addForeignKeyConstraint baseColumnNames="members_id"
                                  baseTableName="community_members"
-                                 constraintName="fk_community_members_community_id"
+                                 constraintName="fk_community_members_members_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
+                                 referencedTableName="person"/>
+        
         <addForeignKeyConstraint baseColumnNames="leader_id"
                                  baseTableName="community"
                                  constraintName="fk_community_leader_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="person"/>
 
     </changeSet>
 </databaseChangeLog>

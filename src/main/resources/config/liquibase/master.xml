@@ -10,17 +10,10 @@
     <include file="classpath:config/liquibase/changelog/20160620202523_added_entity_Level.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160620202524_added_entity_Community.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160620202525_added_entity_Contribution.xml" relativeToChangelogFile="false"/>
-
-
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20160620202521_added_entity_constraints_Scale.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160620202522_added_entity_constraints_Activity.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160620202524_added_entity_constraints_Community.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160620202525_added_entity_constraints_Contribution.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
-
-    <!-- Permet d'ajouter un jeu de données à la base -->
-    <include file="classpath:config/liquibase/changelog/load-data.xml" />
-
-
 </databaseChangeLog>

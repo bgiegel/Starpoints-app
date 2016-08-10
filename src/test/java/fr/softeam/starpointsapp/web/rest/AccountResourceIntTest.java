@@ -152,12 +152,11 @@ public class AccountResourceIntTest {
             "Shmoe",                // lastName
             "joe@example.com",      // e-mail
             true,                   // activated
-            "fr",               // langKey
+            "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                    // lastModifiedDate
-            null                    // entryDate
+            null                    // lastModifiedDate
         );
 
         restMvc.perform(
@@ -185,8 +184,7 @@ public class AccountResourceIntTest {
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null                    // lastModifiedDate
         );
 
         restUserMockMvc.perform(
@@ -203,7 +201,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterInvalidEmail() throws Exception {
         ManagedUserDTO invalidUser = new ManagedUserDTO(
-            null,                   // id
+            null,               // id
             "bob",              // login
             "password",         // password
             "Bob",              // firstName
@@ -212,10 +210,9 @@ public class AccountResourceIntTest {
             true,               // activated
             "fr",               // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
-            null,                   // createdDate
-            null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null,               // createdDate
+            null,               // lastModifiedBy
+            null                // lastModifiedDate
         );
 
         restUserMockMvc.perform(
@@ -232,7 +229,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterInvalidPassword() throws Exception {
         ManagedUserDTO invalidUser = new ManagedUserDTO(
-            null,                   // id
+            null,               // id
             "bob",              // login
             "123",              // password with only 3 digits
             "Bob",              // firstName
@@ -241,10 +238,9 @@ public class AccountResourceIntTest {
             true,               // activated
             "fr",               // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
-            null,                   // createdDate
-            null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null,               // createdDate
+            null,               // lastModifiedBy
+            null                // lastModifiedDate
         );
 
         restUserMockMvc.perform(
@@ -269,17 +265,16 @@ public class AccountResourceIntTest {
             "Something",            // lastName
             "alice@example.com",    // e-mail
             true,                   // activated
-            "fr",               // langKey
+            "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null                    // lastModifiedDate
         );
 
         // Duplicate login, different e-mail
         ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getEntryDate());
+            "alicejr@example.com", true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -311,17 +306,16 @@ public class AccountResourceIntTest {
             "Doe",                  // lastName
             "john@example.com",     // e-mail
             true,                   // activated
-            "fr",               // langKey
+            "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null                    // lastModifiedDate
         );
 
         // Duplicate e-mail, different login
         ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getEntryDate());
+            validUser.getEmail(), true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -352,12 +346,11 @@ public class AccountResourceIntTest {
             "Guy",                  // lastName
             "badguy@example.com",   // e-mail
             true,                   // activated
-            "fr",               // langKey
+            "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                   // lastModifiedDate
-            null                    // entryDate
+            null                    // lastModifiedDate
         );
 
         restMvc.perform(
@@ -381,9 +374,8 @@ public class AccountResourceIntTest {
             "One",                  // lastName
             "funky@example.com",    // e-mail
             true,                   // activated
-            "fr",               // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
-            null                    // entryDate
+            "fr",                   // langKey
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER))
         );
 
         restUserMockMvc.perform(

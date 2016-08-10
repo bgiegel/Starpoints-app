@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * <p>
  * We use a DTO for 3 reasons:
  * <ul>
- * <li>We want to keep a lazy association between the user and the authorities, because members will
+ * <li>We want to keep a lazy association between the user and the authorities, because people will
  * quite often do relationships with the user, and we don't want them to get the authorities all
  * the time for nothing (for performance reasons). This is the #1 goal: we should not impact our users'
  * application because of this use-case.</li>
@@ -85,7 +85,7 @@ public class UserResource {
      * @param managedUserDTO the user to create
      * @param request the HTTP request
      * @return the ResponseEntity with status 201 (Created) and with body the new user, or with status 400 (Bad Request) if the login or email is already in use
-     * @throws URISyntaxException if the Location URI syntaxt is incorrect
+     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/users",
         method = RequestMethod.POST,
@@ -125,7 +125,7 @@ public class UserResource {
      * @param managedUserDTO the user to update
      * @return the ResponseEntity with status 200 (OK) and with body the updated user,
      * or with status 400 (Bad Request) if the login or email is already in use,
-     * or with status 500 (Internal Server Error) if the user couldnt be updated
+     * or with status 500 (Internal Server Error) if the user couldn't be updated
      */
     @RequestMapping(value = "/users",
         method = RequestMethod.PUT,
@@ -150,7 +150,6 @@ public class UserResource {
                 user.setFirstName(managedUserDTO.getFirstName());
                 user.setLastName(managedUserDTO.getLastName());
                 user.setEmail(managedUserDTO.getEmail());
-                user.setEntryDate(managedUserDTO.getEntryDate());
                 user.setActivated(managedUserDTO.isActivated());
                 user.setLangKey(managedUserDTO.getLangKey());
                 Set<Authority> authorities = user.getAuthorities();
@@ -169,10 +168,10 @@ public class UserResource {
 
     /**
      * GET  /users : get all users.
-     *
+     * 
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and with body all users
-     * @throws URISyntaxException if the pagination headers couldnt be generated
+     * @throws URISyntaxException if the pagination headers couldn't be generated
      */
     @RequestMapping(value = "/users",
         method = RequestMethod.GET,

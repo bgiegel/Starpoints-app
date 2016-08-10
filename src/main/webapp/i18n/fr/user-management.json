@@ -18,7 +18,6 @@
         "firstName": "Prénom",
         "lastName": "Nom",
         "email": "Email",
-        "entryDate": "Date d'entrée",
         "activated": "Activé",
         "deactivated": "Désactivé",
         "profiles": "Droits",

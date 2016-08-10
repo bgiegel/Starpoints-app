@@ -4,13 +4,14 @@ describe('Controller Tests', function() {
 
     describe('Scale Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockScale, MockActivity;
+        var MockEntity, MockPreviousState, MockScale, MockActivity;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockScale = jasmine.createSpy('MockScale');
             MockActivity = jasmine.createSpy('MockActivity');
             
@@ -18,7 +19,8 @@ describe('Controller Tests', function() {
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'Scale': MockScale,
                 'Activity': MockActivity
             };

@@ -2,22 +2,22 @@
     "starPointsApp": {
         "community" : {
             "home": {
-                "title": "Communautés",
-                "createLabel": "Créer une nouvelle communauté",
-                "createOrEditLabel": "Créer ou éditer une communauté",
-                "search": "Recherche pour communauté"
+                "title": "Communities",
+                "createLabel": "Créer un nouveau Community",
+                "createOrEditLabel": "Créer ou éditer un Community",
+                "search": "Recherche pour Community"
             },
-            "created": "Une nouvelle communauté a été créé avec l'identifiant {{ param }}",
-            "updated": "La communauté avec l'identifiant {{ param }} a été mise à jour",
-            "deleted": "La communauté avec l'identifiant {{ param }} a été supprimée",
+            "created": "Un nouveau Community a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Community avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Community avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer la communauté {{ param }} ?"
+                "question": "Etes-vous certain de vouloir supprimer le Community {{ id }} ?"
             },
             "detail": {
-                "title": "Communauté"
+                "title": "Community"
             },
-            "name": "Nom",
-            "members": "Membres",
+            "name": "Name",
+            "members": "Members",
             "leader": "Leader"
         }
     }

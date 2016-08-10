@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <p translate="starPointsApp.community.delete.question" translate-values="{param: vm.community.name}">Are you sure you want to delete this Community?</p>
+        <p translate="starPointsApp.community.delete.question" translate-values="{id: '{{vm.community.id}}'}">Are you sure you want to delete this Community?</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

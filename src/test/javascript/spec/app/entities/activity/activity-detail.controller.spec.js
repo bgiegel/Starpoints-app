@@ -4,13 +4,14 @@ describe('Controller Tests', function() {
 
     describe('Activity Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockActivity, MockLevel;
+        var MockEntity, MockPreviousState, MockActivity, MockLevel;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockActivity = jasmine.createSpy('MockActivity');
             MockLevel = jasmine.createSpy('MockLevel');
             
@@ -18,7 +19,8 @@ describe('Controller Tests', function() {
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'Activity': MockActivity,
                 'Level': MockLevel
             };

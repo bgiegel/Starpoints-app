@@ -5,15 +5,15 @@
         .module('starPointsApp')
         .controller('ActivityDialogController', ActivityDialogController);
 
-    ActivityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Activity', 'Level'];
+    ActivityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Activity', 'Level'];
 
-    function ActivityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Activity, Level) {
+    function ActivityDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Activity, Level) {
         var vm = this;
 
         vm.activity = entity;
         vm.clear = clear;
         vm.save = save;
-        vm.levels = Level.query({filter: 'activity-is-null'});
+        vm.levels = Level.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

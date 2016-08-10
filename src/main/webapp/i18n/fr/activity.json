@@ -2,24 +2,24 @@
     "starPointsApp": {
         "activity" : {
             "home": {
-                "title": "Activités",
-                "createLabel": "Créer une nouvelle activité",
-                "createOrEditLabel": "Créer ou éditer une activité",
-                "search": "Recherche pour Activité"
+                "title": "Activities",
+                "createLabel": "Créer un nouveau Activity",
+                "createOrEditLabel": "Créer ou éditer un Activity",
+                "search": "Recherche pour Activity"
             },
-            "created": "Une nouvelle activité a été créée avec l'identifiant {{ param }}",
-            "updated": "L'activité avec l'identifiant {{ param }} a été mise à jour",
-            "deleted": "L'activité avec l'identifiant {{ param }} a été supprimée",
+            "created": "Un nouveau Activity a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Activity avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Activity avec l'identifiant {{ param }} a été supprimé",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer l'activité '{{ param }}' ?"
+                "question": "Etes-vous certain de vouloir supprimer le Activity {{ id }} ?"
             },
             "detail": {
-                "title": "Activité"
+                "title": "Activity"
             },
-            "name": "Nom",
+            "name": "Name",
             "type": "Type",
-            "deliverableDefinition": "Définition du livrable",
-            "level": "Niveau"
+            "deliverableDefinition": "Deliverable Definition",
+            "level": "Level"
         }
     }
 }

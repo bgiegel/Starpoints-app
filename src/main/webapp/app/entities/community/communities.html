@@ -31,11 +31,11 @@
                     <td>{{community.name}}</td>
                     <td>
                         <span ng-repeat="members in community.members">
-                            <a class="form-control-static" ui-sref="person-detail({id: {{members.id}}})">{{members.firstName}} {{members.lastName}}</a>{{$last ? '' : ', '}}
+                            <a class="form-control-static" ui-sref="person-detail({id: members.id})">{{members.firstName}}</a>{{$last ? '' : ', '}}
                         </span>
                     </td>
                     <td>
-                        <a ui-sref="person-detail({id:community.leader.id})">{{community.leader.firstName}} {{community.leader.lastName}}</a>
+                        <a ui-sref="person-detail({id:community.leader.id})">{{community.leader.firstName}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
