@@ -10,8 +10,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -26,10 +28,10 @@ import java.util.Optional;
 public class ScaleResource {
 
     private final Logger log = LoggerFactory.getLogger(ScaleResource.class);
-        
+
     @Inject
     private ScaleRepository scaleRepository;
-    
+
     /**
      * POST  /scales : Create a new scale.
      *
@@ -41,6 +43,7 @@ public class ScaleResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Scale> createScale(@RequestBody Scale scale) throws URISyntaxException {
         log.debug("REST request to save Scale : {}", scale);
         if (scale.getId() != null) {
@@ -65,6 +68,7 @@ public class ScaleResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Scale> updateScale(@RequestBody Scale scale) throws URISyntaxException {
         log.debug("REST request to update Scale : {}", scale);
         if (scale.getId() == null) {
@@ -121,6 +125,7 @@ public class ScaleResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteScale(@PathVariable Long id) {
         log.debug("REST request to delete Scale : {}", id);
         scaleRepository.delete(id);
