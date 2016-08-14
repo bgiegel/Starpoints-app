@@ -29,6 +29,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +59,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api")
 public class UserResource {
+
+    /**
+     * Predicat pour supprimer tous les utilisateurs system de la liste d'utilisateurs
+     */
+    public static final Predicate<User> SYSTEM_USERS = user -> !user.getCreatedBy().equals("system");
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -183,6 +189,7 @@ public class UserResource {
         throws URISyntaxException {
         Page<User> page = userRepository.findAll(pageable);
         List<ManagedUserDTO> managedUserDTOs = page.getContent().stream()
+            .filter(SYSTEM_USERS)
             .map(ManagedUserDTO::new)
             .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
