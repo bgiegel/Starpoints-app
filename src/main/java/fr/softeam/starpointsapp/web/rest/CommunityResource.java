@@ -26,10 +26,10 @@ import java.util.Optional;
 public class CommunityResource {
 
     private final Logger log = LoggerFactory.getLogger(CommunityResource.class);
-        
+
     @Inject
     private CommunityRepository communityRepository;
-    
+
     /**
      * POST  /communities : Create a new community.
      *
@@ -109,6 +109,21 @@ public class CommunityResource {
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * GET  /communities-leaded-by/:user : Récupère la liste des commmunautés dont l'utilisateur en paramètre est le leader.
+     *
+     * @param user Le login de l'utilisateur
+     * @return the ResponseEntity with status 200 (OK) and with body the community, or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/communities-leaded-by/{user}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Community> getCommunitiesLeadedBy(@PathVariable String user) {
+        log.debug("REST request to get Community leaded by: {}", user);
+        return communityRepository.findCommunitiesLeadedBy(user);
     }
 
     /**
