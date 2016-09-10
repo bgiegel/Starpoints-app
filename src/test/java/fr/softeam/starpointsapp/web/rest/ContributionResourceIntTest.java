@@ -1,12 +1,18 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.Contribution;
+import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
 
+import fr.softeam.starpointsapp.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
@@ -25,7 +31,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -58,6 +64,14 @@ public class ContributionResourceIntTest {
 
     private static final LocalDate DEFAULT_PREPARATORY_DATE_2 = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PREPARATORY_DATE_2 = LocalDate.now(ZoneId.systemDefault());
+    public static final String DEFAULT_PASSWORD = "$2a$10$WGW1mRkah133EMBcJGQnf.2yHpO7gTbxQKVK2sVPVgmr3G.lFKcFO";
+    public static final String USER1_LOGIN = "user1";
+
+    @Inject
+    private CommunityRepository communityRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private ContributionRepository contributionRepository;
@@ -70,7 +84,9 @@ public class ContributionResourceIntTest {
 
     private MockMvc restContributionMockMvc;
 
-    private Contribution contribution;
+    private Contribution contribution, javaContribution1, javaContribution2, agileContribution1;
+
+    private Community community;
 
     @PostConstruct
     public void setup() {
@@ -213,4 +229,85 @@ public class ContributionResourceIntTest {
         List<Contribution> contributions = contributionRepository.findAll();
         assertThat(contributions).hasSize(databaseSizeBeforeDelete - 1);
     }
+
+    @Test
+    @Transactional
+    public void findOneWithCommunityMembers() throws Exception {
+        given_a_contribution_linked_to_a_community();
+
+        restContributionMockMvc.perform(get("/api/contributions/{id}", contribution.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.community.name").value(community.getName()))
+            .andExpect(jsonPath("$.community.members.[*].login").value(USER1_LOGIN));
+    }
+
+    @Test
+    @Transactional
+    public void getContributionsFromLeaderCommunities() throws Exception {
+        given_a_contributions_linked_to_communities();
+
+        restContributionMockMvc.perform(get("/api/contributions-from-communities-leaded-by/{leader}", USER1_LOGIN)
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.[*].deliverableName").value(hasItem(javaContribution1.getDeliverableName())))
+            .andExpect(jsonPath("$.[*].deliverableName").value(hasItem(javaContribution2.getDeliverableName())))
+            .andExpect(jsonPath("$.[*].deliverableName").value(not(hasItem(agileContribution1.getDeliverableName()))));
+    }
+
+    private void given_a_contributions_linked_to_communities() {
+        User leaderOfJavaCommunity = new User();
+        leaderOfJavaCommunity.setLogin(USER1_LOGIN);
+        leaderOfJavaCommunity.setPassword(DEFAULT_PASSWORD);
+
+        Community javaCommunity = new Community();
+        javaCommunity.setName("Java");
+        javaCommunity.setLeader(leaderOfJavaCommunity);
+
+        javaContribution1 = new Contribution();
+        javaContribution1.setDeliverableName("java contribution 1");
+        javaContribution1.setCommunity(javaCommunity);
+
+        javaContribution2 = new Contribution();
+        javaContribution2.setDeliverableName("java contribution 2");
+        javaContribution2.setCommunity(javaCommunity);
+
+        User leaderOfAgileCommunity = new User();
+        leaderOfAgileCommunity.setLogin("agileLeader");
+        leaderOfAgileCommunity.setPassword(DEFAULT_PASSWORD);
+
+        Community agileCommunity = new Community();
+        agileCommunity.setName("Agile");
+        agileCommunity.setLeader(leaderOfAgileCommunity);
+
+        agileContribution1 = new Contribution();
+        agileContribution1.setDeliverableName("agile contribution 1");
+        agileContribution1.setCommunity(agileCommunity);
+
+        userRepository.save(leaderOfJavaCommunity);
+        userRepository.save(leaderOfAgileCommunity);
+        communityRepository.save(javaCommunity);
+        communityRepository.save(agileCommunity);
+        contributionRepository.save(javaContribution1);
+        contributionRepository.save(javaContribution2);
+        contributionRepository.save(agileContribution1);
+    }
+
+    private void given_a_contribution_linked_to_a_community() {
+        User user1 = new User();
+        user1.setLogin(USER1_LOGIN);
+        user1.setPassword(DEFAULT_PASSWORD);
+
+        Set<User> members = new HashSet<>();
+        members.add(user1);
+
+        this.community = new Community();
+        community.setName("Java");
+        community.setMembers(members);
+
+        contribution.setCommunity(community);
+
+        userRepository.save(user1);
+        communityRepository.save(community);
+        contributionRepository.save(contribution);
+    }
+
 }

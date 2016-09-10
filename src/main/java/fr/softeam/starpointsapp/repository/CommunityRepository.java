@@ -19,6 +19,6 @@ public interface CommunityRepository extends JpaRepository<Community,Long> {
     @Query("select community from Community community left join fetch community.members where community.id =:id")
     Community findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("select community from Community community left join fetch community.leader where community.leader.login = :user")
+    @Query("select distinct community from Community community left join fetch community.leader left join fetch community.members where community.leader.login = :user")
     List<Community> findCommunitiesLeadedBy(@Param("user") String user);
 }

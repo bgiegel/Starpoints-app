@@ -26,10 +26,10 @@ import java.util.Optional;
 public class ContributionResource {
 
     private final Logger log = LoggerFactory.getLogger(ContributionResource.class);
-        
+
     @Inject
     private ContributionRepository contributionRepository;
-    
+
     /**
      * POST  /contributions : Create a new contribution.
      *
@@ -87,8 +87,21 @@ public class ContributionResource {
     @Timed
     public List<Contribution> getAllContributions() {
         log.debug("REST request to get all Contributions");
-        List<Contribution> contributions = contributionRepository.findAll();
-        return contributions;
+        return contributionRepository.findAll();
+    }
+
+    /**
+     * GET  contributions-from-communities-leaded-by/:leader : Récupère toutes les contributions des communautés que dirige le leader passé en paramètre.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of contributions in body
+     */
+    @RequestMapping(value = "/contributions-from-communities-leaded-by/{leader}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Contribution> getContributionsFromLeaderCommunities(@PathVariable String leader) {
+        log.debug("REST request to get all Contributions");
+        return contributionRepository.findAllFromCommunitiesLeadedBy(leader);
     }
 
     /**
@@ -103,7 +116,7 @@ public class ContributionResource {
     @Timed
     public ResponseEntity<Contribution> getContribution(@PathVariable Long id) {
         log.debug("REST request to get Contribution : {}", id);
-        Contribution contribution = contributionRepository.findOne(id);
+        Contribution contribution = contributionRepository.findOneWithCommunityMembers(id);
         return Optional.ofNullable(contribution)
             .map(result -> new ResponseEntity<>(
                 result,

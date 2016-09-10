@@ -6,6 +6,13 @@
 
     Community.$inject = ['$resource'];
 
+    function parseJson(data) {
+        if (data) {
+            data = angular.fromJson(data);
+        }
+        return data;
+    }
+
     function Community ($resource) {
         var resourceUrl =  'api/communities/:id';
 
@@ -14,10 +21,15 @@
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
-                    if (data) {
-                        data = angular.fromJson(data);
-                    }
-                    return data;
+                    return parseJson(data);
+                }
+            },
+            'leadedBy': {
+                method: 'GET',
+                isArray: true,
+                url:'api/communities-leaded-by/:user',
+                transformResponse: function (data) {
+                    return parseJson(data);
                 }
             },
             'update': { method:'PUT' }

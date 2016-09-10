@@ -6,6 +6,13 @@
 
     Contribution.$inject = ['$resource', 'DateUtils'];
 
+    function parseJson(data) {
+        if (data) {
+            data = angular.fromJson(data);
+        }
+        return data;
+    }
+
     function Contribution ($resource, DateUtils) {
         var resourceUrl =  'api/contributions/:id';
 
@@ -21,6 +28,14 @@
                         data.preparatoryDate2 = DateUtils.convertLocalDateFromServer(data.preparatoryDate2);
                     }
                     return data;
+                }
+            },
+            'fromCommunitiesLeadedBy': {
+                method: 'GET',
+                isArray: true,
+                url:'api/contributions-from-communities-leaded-by/:leader',
+                transformResponse: function (data) {
+                    return parseJson(data);
                 }
             },
             'update': {

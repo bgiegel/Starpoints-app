@@ -87,8 +87,7 @@ public class CommunityResource {
     @Timed
     public List<Community> getAllCommunities() {
         log.debug("REST request to get all Communities");
-        List<Community> communities = communityRepository.findAllWithEagerRelationships();
-        return communities;
+        return communityRepository.findAllWithEagerRelationships();
     }
 
     /**
