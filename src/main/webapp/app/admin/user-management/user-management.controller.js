@@ -10,7 +10,7 @@
     function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
         vm.currentAccount = null;
         vm.languages = null;
         vm.loadAll = loadAll;
@@ -26,8 +26,6 @@
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
 
-        vm.loadAll();
-        
         JhiLanguageService.getAll().then(function (languages) {
             vm.languages = languages;
         });
@@ -74,7 +72,7 @@
                 id: null, login: null, firstName: null, lastName: null, email: null,
                 activated: null, langKey: null, createdBy: null, createdDate: null,
                 lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
-                resetKey: null, authorities: null
+                resetKey: null, authorities: null, communities: null
             };
         }
 
@@ -98,5 +96,21 @@
                 search: vm.currentSearch
             });
         }
+
+        /**
+         * On vérifie si l'utilisateur est admin. Si ce n'est pas le cas on récupère la liste des communautés
+         * qu'il dirige afin qu'il ne puisse créé que des contributions pour sa/ses communauté(s).
+         */
+        Principal.identity().then(function(currentUser) {
+            if(currentUser.authorities.indexOf("ROLE_ADMIN") === -1){
+                User.getMembersOfCommunitiesLeadedBy({
+                    page: pagingParams.page - 1,
+                    size: vm.itemsPerPage,
+                    sort: sort(),
+                    leader: currentUser.login}, onSuccess, onError);
+            } else {
+                vm.loadAll();
+            }
+        });
     }
 })();

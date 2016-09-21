@@ -33,7 +33,11 @@ public class ManagedUserDTO extends UserDTO {
     }
 
     public ManagedUserDTO(User user) {
-        super(user);
+        this(user, false);
+    }
+
+    public ManagedUserDTO(User user, boolean withCommunities) {
+        super(user, withCommunities);
         this.id = user.getId();
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();

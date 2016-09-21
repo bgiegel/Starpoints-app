@@ -1,8 +1,12 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Community;
+import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.PersistentToken;
 import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.repository.CommunityRepository;
+import fr.softeam.starpointsapp.repository.ContributionRepository;
 import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import java.time.ZonedDateTime;
@@ -21,6 +25,7 @@ import java.util.Optional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Test class for the UserResource REST controller.
@@ -42,6 +47,15 @@ public class UserServiceIntTest {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private CommunityRepository communityRepository;
+
+    @Inject
+    private ContributionRepository contributionRepository;
+
+    private Community community;
+    private Contribution contribution;
 
     @Test
     public void testRemoveOldPersistentTokens() {
@@ -126,6 +140,78 @@ public class UserServiceIntTest {
         assertThat(maybeUser.get().getPassword()).isNotEqualTo(oldPassword);
 
         userRepository.delete(user);
+    }
+
+    @Test
+    public void should_remove_contributions_and_link_to_communities_on_user_deletion() throws LeadersCannotBeDeletedException {
+        given_a_member_of_community_that_have_made_contributions();
+
+        //when
+        userService.deleteUserInformation("johndoe");
+
+        assertThatUserHasBeenDeleted();
+        assertThatUserHasBeenRemovedFromCommunityMembersList();
+        assertThatContributionHasBeenRemoved();
+    }
+
+    @Test(expected = LeadersCannotBeDeletedException.class)
+    public void should_not_remove_leader_of_community() throws LeadersCannotBeDeletedException {
+        given_a_member_of_community_which_is_also_the_leader();
+
+        //when
+        userService.deleteUserInformation("johndoe");
+    }
+
+    private void given_a_member_of_community_that_have_made_contributions() {
+        User user = buildUserAndCommunity();
+
+        contribution = new Contribution();
+        contribution.setAuthor(user);
+        contribution.setDeliverableName("Livrable contribution");
+
+        user.getContributions().add(contribution);
+
+        community = communityRepository.save(community);
+        contribution = contributionRepository.save(contribution);
+        communityRepository.flush();
+        contributionRepository.flush();
+        userRepository.save(user);
+        userRepository.flush();
+    }
+
+    private User buildUserAndCommunity() {
+        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe",
+            "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
+
+        community = new Community();
+        community.setName("community1");
+        community.getMembers().add(user);
+
+        user.getCommunities().add(community);
+
+        return user;
+    }
+
+    private void given_a_member_of_community_which_is_also_the_leader() {
+        User user = buildUserAndCommunity();
+        community.setLeader(user);
+        communityRepository.save(community);
+        communityRepository.flush();
+    }
+
+    private void assertThatContributionHasBeenRemoved() {
+        Contribution contributionResult = contributionRepository.findOne(contribution.getId());
+        assertThat(contributionResult).isNull();
+    }
+
+    private void assertThatUserHasBeenRemovedFromCommunityMembersList() {
+        Community communityResult = communityRepository.findOne(community.getId());
+        assertThat(communityResult.getMembers()).isEmpty();
+    }
+
+    private void assertThatUserHasBeenDeleted() {
+        Optional<User> johndoe = userRepository.findOneByLogin("johndoe");
+        assertFalse(johndoe.isPresent());
     }
 
     @Test

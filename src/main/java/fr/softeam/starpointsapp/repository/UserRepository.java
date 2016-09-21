@@ -3,7 +3,12 @@ package fr.softeam.starpointsapp.repository;
 import fr.softeam.starpointsapp.domain.User;
 
 import java.time.ZonedDateTime;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,4 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Override
     void delete(User t);
 
+    @Query("select members from Community community left join community.leader left join community.members as members where community.leader.login = :login")
+    Page<User> findMembersOfCommunitiesLeadedBy(@Param("login") String login, Pageable pageable);
 }

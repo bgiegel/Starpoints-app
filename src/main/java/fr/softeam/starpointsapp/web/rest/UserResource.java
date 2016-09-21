@@ -7,6 +7,7 @@ import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.AuthorityRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
+import fr.softeam.starpointsapp.service.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.MailService;
 import fr.softeam.starpointsapp.service.UserService;
 import fr.softeam.starpointsapp.web.rest.dto.ManagedUserDTO;
@@ -64,6 +65,7 @@ public class UserResource {
      * Predicat pour supprimer tous les utilisateurs system de la liste d'utilisateurs
      */
     public static final Predicate<User> SYSTEM_USERS = user -> !user.getCreatedBy().equals("system");
+    public static final boolean WITH_COMMUNITIES = true;
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
@@ -71,11 +73,10 @@ public class UserResource {
     private UserRepository userRepository;
 
     @Inject
-    private MailService mailService;
-
+    private AuthorityRepository authorityRepository;
 
     @Inject
-    private AuthorityRepository authorityRepository;
+    private MailService mailService;
 
     @Inject
     private UserService userService;
@@ -97,7 +98,7 @@ public class UserResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<?> createUser(@RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserDTO);
 
@@ -138,7 +139,7 @@ public class UserResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional
-    @Secured(AuthoritiesConstants.ADMIN)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<ManagedUserDTO> updateUser(@RequestBody ManagedUserDTO managedUserDTO) {
         log.debug("REST request to update User : {}", managedUserDTO);
         Optional<User> existingUser = userRepository.findOneByEmail(managedUserDTO.getEmail());
@@ -185,14 +186,38 @@ public class UserResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Transactional(readOnly = true)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers(Pageable pageable)
         throws URISyntaxException {
         Page<User> page = userRepository.findAll(pageable);
         List<ManagedUserDTO> managedUserDTOs = page.getContent().stream()
             .filter(SYSTEM_USERS)
-            .map(ManagedUserDTO::new)
+            .map(user -> new ManagedUserDTO(user, WITH_COMMUNITIES))
             .collect(Collectors.toList());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
+        return new ResponseEntity<>(managedUserDTOs, headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /members-of-communities-leaded-by/:login : Récupère tous les membres des communautés d'un leader.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     * @throws URISyntaxException if the pagination headers couldn't be generated
+     */
+    @RequestMapping(value = "/members-of-communities-leaded-by/{login}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
+    public ResponseEntity<List<ManagedUserDTO>> getMembersOfCommunitiesLeadedBy(Pageable pageable, @PathVariable String login)
+        throws URISyntaxException {
+        Page<User> page = userRepository.findMembersOfCommunitiesLeadedBy(login, pageable);
+        List<ManagedUserDTO> managedUserDTOs = page.getContent().stream()
+            .map(user -> new ManagedUserDTO(user, WITH_COMMUNITIES))
+            .collect(Collectors.toList());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/members-of-communities-leaded-by");
         return new ResponseEntity<>(managedUserDTOs, headers, HttpStatus.OK);
     }
 
@@ -209,7 +234,7 @@ public class UserResource {
     public ResponseEntity<ManagedUserDTO> getUser(@PathVariable String login) {
         log.debug("REST request to get User : {}", login);
         return userService.getUserWithAuthoritiesByLogin(login)
-                .map(ManagedUserDTO::new)
+                .map(user -> new ManagedUserDTO(user, WITH_COMMUNITIES))
                 .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
@@ -221,12 +246,19 @@ public class UserResource {
      */
     @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
         method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> deleteUser(@PathVariable String login) {
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
+    public ResponseEntity<?> deleteUser(@PathVariable String login) {
         log.debug("REST request to delete User: {}", login);
-        userService.deleteUserInformation(login);
+        try {
+            userService.deleteUserInformation(login);
+        } catch (LeadersCannotBeDeletedException e) {
+            return ResponseEntity
+                .badRequest()
+                .headers(HeaderUtil.createFailureAlert("leaderDeletionImpossible", "Impossible de supprimer un leader."))
+                .body(null);
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
 }

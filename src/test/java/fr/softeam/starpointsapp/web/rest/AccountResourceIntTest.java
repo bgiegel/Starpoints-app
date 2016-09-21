@@ -156,7 +156,7 @@ public class AccountResourceIntTest {
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
             null,                   // createdDate
             null,                   // lastModifiedBy
-            null,                    // lastModifiedDate
+            null,                   // lastModifiedDate
             null                    // entryDate
         );
 

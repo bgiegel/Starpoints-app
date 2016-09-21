@@ -6,5 +6,5 @@ ID;LOGIN;PASSWORD_HASH;FIRST_NAME;LAST_NAME;EMAIL;ACTIVATED;LANG_KEY;ACTIVATION_
 6;tschwender;$2a$10$ZOE/Yc5Ps70oNQmfdo8GWuQAoIxB51/7ML7RnrP12LNeeYtWyntM6;Thomas;Schwender;bgiegel@gmail.com;TRUE;fr;;;;;2014-02-04
 7;pleplay;$2a$10$cz3.zL7fj6g5gTByrps1KuWqmRI.UUtv8q4O.MOHRCdhpDC9h5MT.;Pierre;Leplay;pleplay@gmail.com;TRUE;fr;;;;;2014-02-04
 5;bgiegel;$2a$10$WGW1mRkah133EMBcJGQnf.2yHpO7gTbxQKVK2sVPVgmr3G.lFKcFO;Bastien;Giegel;bastien.giegel@laposte.net;TRUE;fr;;;;anonymousUser;2014-02-04
-8;ksoufiane;$2a$10$qMNi7ijFejR1n8yP0750IuDnrMeQ.p67PjiHuEZgV0VTW939S5Zbq;Soufiane;Khattab;bastien.giegel@softeam.fr;TRUE;fr;;;anonymousUser;admin;2014-02-04
+8;skhattab;$2a$10$qMNi7ijFejR1n8yP0750IuDnrMeQ.p67PjiHuEZgV0VTW939S5Zbq;Soufiane;Khattab;bastien.giegel@softeam.fr;TRUE;fr;;;anonymousUser;admin;2014-02-04
 

@@ -29,6 +29,12 @@
                 <li ng-repeat="authority in vm.user.authorities"><span>{{authority}}</span></li>
             </ul>
         </dd>
+        <dt><span translate="userManagement.communities">Communities</span></dt>
+        <dd>
+            <ul class="list-unstyled">
+                <li ng-repeat="community in vm.user.communities"><span>{{community}}</span></li>
+            </ul>
+        </dd>
     </dl>
     <button type="submit"
             ui-sref="user-management"

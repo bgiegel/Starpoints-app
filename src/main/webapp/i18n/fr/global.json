@@ -122,7 +122,8 @@
         "Size": "Field {{fieldName}} does not meet min/max size requirements!",
         "userexists": "Login name already used!",
         "emailexists": "E-mail is already in use!",
-        "idexists": "A new {{entityName}} cannot already have an ID"
+        "idexists": "A new {{entityName}} cannot already have an ID",
+        "leaderDeletionImpossible": "Impossible de supprimer le leader d'une communauté. Veuillez d'abord assigner un nouveau leader à la communauté concernée."
     },
     "footer": "© 2016 SOFTEAM Cadextan. Tous droits réservés. Réalisation : Bastien Giegel"
 }

@@ -53,6 +53,7 @@ public class Community implements Serializable {
     }
 
     public Set<User> getMembers() {
+
         return members;
     }
 

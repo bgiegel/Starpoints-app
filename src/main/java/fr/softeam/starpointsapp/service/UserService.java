@@ -1,8 +1,10 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.domain.Authority;
+import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.AuthorityRepository;
+import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
@@ -11,6 +13,7 @@ import fr.softeam.starpointsapp.service.util.RandomUtil;
 import fr.softeam.starpointsapp.web.rest.dto.ManagedUserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,9 +36,11 @@ public class UserService {
     @Inject
     private PasswordEncoder passwordEncoder;
 
-
     @Inject
     private UserRepository userRepository;
+
+    @Inject
+    private CommunityRepository communityRepository;
 
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
@@ -151,11 +156,24 @@ public class UserService {
         });
     }
 
-    public void deleteUserInformation(String login) {
-        userRepository.findOneByLogin(login).ifPresent(u -> {
-            userRepository.delete(u);
-            log.debug("Deleted User: {}", u);
-        });
+    public void deleteUserInformation(String login) throws LeadersCannotBeDeletedException {
+        Optional<User> findOneUserResponse = userRepository.findOneByLogin(login);
+        if (findOneUserResponse.isPresent()) {
+            //on supprime l'utilisateur de la liste des membres de toutes les communautés auxquelles il adhère
+            User user = findOneUserResponse.get();
+            List<Community> communitiesLeadedByUser = communityRepository.findCommunitiesLeadedBy(user.getLogin());
+            if (!communitiesLeadedByUser.isEmpty()){
+                throw new LeadersCannotBeDeletedException();
+            }
+            user.getCommunities().stream()
+                .forEach(community -> {
+                    community.getMembers().remove(user);
+                    communityRepository.save(community);
+                });
+            userRepository.delete(user);
+            log.debug("Deleted User: {}", user);
+        }
+
     }
 
     public void changePassword(String password) {
@@ -169,10 +187,14 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        return userRepository.findOneByLogin(login).map(u -> {
-            u.getAuthorities().size();
-            return u;
-        });
+        Optional<User> user = userRepository.findOneByLogin(login);
+        if (user.isPresent()){
+            // eagerly load the associations
+            user.get().getAuthorities().size();
+            user.get().getCommunities().size();
+        }
+
+        return user;
     }
 
     @Transactional(readOnly = true)

@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -41,6 +42,7 @@ public class ContributionResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN,ROLE_LEADER')")
     public ResponseEntity<Contribution> createContribution(@RequestBody Contribution contribution) throws URISyntaxException {
         log.debug("REST request to save Contribution : {}", contribution);
         if (contribution.getId() != null) {
@@ -65,6 +67,7 @@ public class ContributionResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_LEADER')")
     public ResponseEntity<Contribution> updateContribution(@RequestBody Contribution contribution) throws URISyntaxException {
         log.debug("REST request to update Contribution : {}", contribution);
         if (contribution.getId() == null) {
@@ -134,6 +137,7 @@ public class ContributionResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_LEADER')")
     public ResponseEntity<Void> deleteContribution(@PathVariable Long id) {
         log.debug("REST request to delete Contribution : {}", id);
         contributionRepository.delete(id);

@@ -66,4 +66,17 @@ public class UserResourceIntTest {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void testDeleteUser() throws Exception {
+        restUserMockMvc.perform(delete("/api/users/bgiegel")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteUserWhoIsLeader() throws Exception {
+        restUserMockMvc.perform(delete("/api/users/skhattab")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().is4xxClientError());
+    }
 }

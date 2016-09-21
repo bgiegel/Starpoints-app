@@ -37,4 +37,11 @@ public class HeaderUtil {
         headers.add("X-starPointsApp-params", entityName);
         return headers;
     }
+
+    public static HttpHeaders createFailureAlert(String errorKey, String defaultMessage) {
+        log.error("Entity creation failed, {}", defaultMessage);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-starPointsApp-error", "error." + errorKey);
+        return headers;
+    }
 }
