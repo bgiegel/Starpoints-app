@@ -1,6 +1,7 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+
 import fr.softeam.starpointsapp.domain.Person;
 import fr.softeam.starpointsapp.repository.PersonRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -31,16 +31,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the PersonResource REST controller.
  *
  * @see PersonResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StarPointsApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StarPointsApp.class)
 public class PersonResourceIntTest {
 
     private static final String DEFAULT_EMAIL = "AAAAA";
@@ -62,6 +59,9 @@ public class PersonResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restPersonMockMvc;
 
     private Person person;
@@ -76,13 +76,24 @@ public class PersonResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        person = new Person();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Person createEntity(EntityManager em) {
+        Person person = new Person();
         person.setEmail(DEFAULT_EMAIL);
         person.setFirstName(DEFAULT_FIRST_NAME);
         person.setLastName(DEFAULT_LAST_NAME);
         person.setEntryDate(DEFAULT_ENTRY_DATE);
+        return person;
+    }
+
+    @Before
+    public void initTest() {
+        person = createEntity(em);
     }
 
     @Test
@@ -116,7 +127,7 @@ public class PersonResourceIntTest {
         // Get all the people
         restPersonMockMvc.perform(get("/api/people?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(person.getId().intValue())))
                 .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
                 .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
@@ -133,7 +144,7 @@ public class PersonResourceIntTest {
         // Get the person
         restPersonMockMvc.perform(get("/api/people/{id}", person.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(person.getId().intValue()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
@@ -157,8 +168,7 @@ public class PersonResourceIntTest {
         int databaseSizeBeforeUpdate = personRepository.findAll().size();
 
         // Update the person
-        Person updatedPerson = new Person();
-        updatedPerson.setId(person.getId());
+        Person updatedPerson = personRepository.findOne(person.getId());
         updatedPerson.setEmail(UPDATED_EMAIL);
         updatedPerson.setFirstName(UPDATED_FIRST_NAME);
         updatedPerson.setLastName(UPDATED_LAST_NAME);

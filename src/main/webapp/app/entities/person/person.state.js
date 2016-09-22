@@ -113,7 +113,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('person', null, { reload: true });
+                    $state.go('person', null, { reload: 'person' });
                 }, function() {
                     $state.go('person');
                 });
@@ -138,7 +138,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('person', null, { reload: true });
+                    $state.go('person', null, { reload: 'person' });
                 }, function() {
                     $state.go('^');
                 });
@@ -162,7 +162,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('person', null, { reload: true });
+                    $state.go('person', null, { reload: 'person' });
                 }, function() {
                     $state.go('^');
                 });

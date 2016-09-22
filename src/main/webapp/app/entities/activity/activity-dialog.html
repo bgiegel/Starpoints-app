@@ -4,38 +4,38 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myActivityLabel" translate="starPointsApp.activity.home.createOrEditLabel">Create or edit a Activity</h4>
+        <h4 class="modal-title" id="myActivityLabel" data-translate="starPointsApp.activity.home.createOrEditLabel">Create or edit a Activity</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.activity.id">
-            <label for="id" translate="global.field.id">ID</label>
+            <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.activity.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.activity.name" for="field_name">Name</label>
+            <label class="control-label" data-translate="starPointsApp.activity.name" for="field_name">Name</label>
             <input type="text" class="form-control" name="name" id="field_name"
                     ng-model="vm.activity.name"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.activity.type" for="field_type">Type</label>
+            <label class="control-label" data-translate="starPointsApp.activity.type" for="field_type">Type</label>
             <select class="form-control" name="type" ng-model="vm.activity.type" id="field_type">
-                <option value="BLOG_POST" translate="starPointsApp.ActivityType.BLOG_POST">BLOG_POST</option>
-                <option value="BROWN_BAG_LUNCH" translate="starPointsApp.ActivityType.BROWN_BAG_LUNCH">BROWN_BAG_LUNCH</option>
-                <option value="TRAINING" translate="starPointsApp.ActivityType.TRAINING">TRAINING</option>
+                <option value="BLOG_POST" data-translate="starPointsApp.ActivityType.BLOG_POST">BLOG_POST</option>
+                <option value="BROWN_BAG_LUNCH" data-translate="starPointsApp.ActivityType.BROWN_BAG_LUNCH">BROWN_BAG_LUNCH</option>
+                <option value="TRAINING" data-translate="starPointsApp.ActivityType.TRAINING">TRAINING</option>
             </select>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.activity.deliverableDefinition" for="field_deliverableDefinition">Deliverable Definition</label>
+            <label class="control-label" data-translate="starPointsApp.activity.deliverableDefinition" for="field_deliverableDefinition">Deliverable Definition</label>
             <input type="text" class="form-control" name="deliverableDefinition" id="field_deliverableDefinition"
                     ng-model="vm.activity.deliverableDefinition"
                      />
         </div>
 
         <div class="form-group">
-            <label translate="starPointsApp.activity.level" for="field_level">Level</label>
+            <label data-translate="starPointsApp.activity.level" for="field_level">Level</label>
             <select class="form-control" id="field_level" name="level" ng-model="vm.activity.level" ng-options="level as level.name for level in vm.levels | orderBy:'id' track by level.id">
                 <option value=""></option>
             </select>
@@ -43,10 +43,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

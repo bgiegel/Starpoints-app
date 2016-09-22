@@ -1,6 +1,7 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+
 import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.repository.ActivityRepository;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,16 +30,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
-
 /**
  * Test class for the ActivityResource REST controller.
  *
  * @see ActivityResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StarPointsApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StarPointsApp.class)
 public class ActivityResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
@@ -59,6 +56,9 @@ public class ActivityResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restActivityMockMvc;
 
     private Activity activity;
@@ -73,12 +73,23 @@ public class ActivityResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        activity = new Activity();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Activity createEntity(EntityManager em) {
+        Activity activity = new Activity();
         activity.setName(DEFAULT_NAME);
         activity.setType(DEFAULT_TYPE);
         activity.setDeliverableDefinition(DEFAULT_DELIVERABLE_DEFINITION);
+        return activity;
+    }
+
+    @Before
+    public void initTest() {
+        activity = createEntity(em);
     }
 
     @Test
@@ -111,7 +122,7 @@ public class ActivityResourceIntTest {
         // Get all the activities
         restActivityMockMvc.perform(get("/api/activities?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(activity.getId().intValue())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
@@ -127,7 +138,7 @@ public class ActivityResourceIntTest {
         // Get the activity
         restActivityMockMvc.perform(get("/api/activities/{id}", activity.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(activity.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
@@ -150,8 +161,7 @@ public class ActivityResourceIntTest {
         int databaseSizeBeforeUpdate = activityRepository.findAll().size();
 
         // Update the activity
-        Activity updatedActivity = new Activity();
-        updatedActivity.setId(activity.getId());
+        Activity updatedActivity = activityRepository.findOne(activity.getId());
         updatedActivity.setName(UPDATED_NAME);
         updatedActivity.setType(UPDATED_TYPE);
         updatedActivity.setDeliverableDefinition(UPDATED_DELIVERABLE_DEFINITION);

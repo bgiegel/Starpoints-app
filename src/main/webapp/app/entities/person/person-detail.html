@@ -1,22 +1,22 @@
 
 <div>
-    <h2><span translate="starPointsApp.person.detail.title">Person</span> {{vm.person.id}}</h2>
+    <h2><span data-translate="starPointsApp.person.detail.title">Person</span> {{vm.person.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span translate="starPointsApp.person.email">Email</span></dt>
+        <dt><span data-translate="starPointsApp.person.email">Email</span></dt>
         <dd>
             <span>{{vm.person.email}}</span>
         </dd>
-        <dt><span translate="starPointsApp.person.firstName">First Name</span></dt>
+        <dt><span data-translate="starPointsApp.person.firstName">First Name</span></dt>
         <dd>
             <span>{{vm.person.firstName}}</span>
         </dd>
-        <dt><span translate="starPointsApp.person.lastName">Last Name</span></dt>
+        <dt><span data-translate="starPointsApp.person.lastName">Last Name</span></dt>
         <dd>
             <span>{{vm.person.lastName}}</span>
         </dd>
-        <dt><span translate="starPointsApp.person.entryDate">Entry Date</span></dt>
+        <dt><span data-translate="starPointsApp.person.entryDate">Entry Date</span></dt>
         <dd>
             <span>{{vm.person.entryDate | date:'mediumDate'}}</span>
         </dd>
@@ -25,11 +25,11 @@
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
     </button>
 
     <button type="button" ui-sref="person-detail.edit({id:vm.person.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

@@ -111,7 +111,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('level', null, { reload: true });
+                    $state.go('level', null, { reload: 'level' });
                 }, function() {
                     $state.go('level');
                 });
@@ -136,7 +136,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('level', null, { reload: true });
+                    $state.go('level', null, { reload: 'level' });
                 }, function() {
                     $state.go('^');
                 });
@@ -160,7 +160,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('level', null, { reload: true });
+                    $state.go('level', null, { reload: 'level' });
                 }, function() {
                     $state.go('^');
                 });

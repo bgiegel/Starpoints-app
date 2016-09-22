@@ -2,6 +2,7 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Activity;
+
 import fr.softeam.starpointsapp.repository.ActivityRepository;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class ActivityResource {
         
     @Inject
     private ActivityRepository activityRepository;
-    
+
     /**
      * POST  /activities : Create a new activity.
      *

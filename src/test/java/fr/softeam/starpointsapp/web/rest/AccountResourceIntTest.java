@@ -8,18 +8,16 @@ import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.service.MailService;
 import fr.softeam.starpointsapp.service.UserService;
-import fr.softeam.starpointsapp.web.rest.dto.ManagedUserDTO;
-import fr.softeam.starpointsapp.web.rest.dto.UserDTO;
+import fr.softeam.starpointsapp.service.dto.UserDTO;
+import fr.softeam.starpointsapp.web.rest.vm.ManagedUserVM;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -42,10 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @see UserService
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StarPointsApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StarPointsApp.class)
 public class AccountResourceIntTest {
 
     @Inject
@@ -124,7 +120,7 @@ public class AccountResourceIntTest {
         restUserMockMvc.perform(get("/api/account")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.login").value("test"))
                 .andExpect(jsonPath("$.firstName").value("john"))
                 .andExpect(jsonPath("$.lastName").value("doe"))
@@ -144,7 +140,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterValid() throws Exception {
-        ManagedUserDTO validUser = new ManagedUserDTO(
+        ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "joe",                  // login
             "password",             // password
@@ -154,6 +150,7 @@ public class AccountResourceIntTest {
             true,                   // activated
             "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -172,7 +169,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidLogin() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(
+        ManagedUserVM invalidUser = new ManagedUserVM(
             null,                   // id
             "funky-log!n",          // login <-- invalid
             "password",             // password
@@ -182,6 +179,7 @@ public class AccountResourceIntTest {
             true,                   // activated
             "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
@@ -200,7 +198,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidEmail() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(
+        ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
             "bob",              // login
             "password",         // password
@@ -210,6 +208,7 @@ public class AccountResourceIntTest {
             true,               // activated
             "fr",               // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,               // createdBy
             null,               // createdDate
             null,               // lastModifiedBy
             null                // lastModifiedDate
@@ -228,7 +227,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterInvalidPassword() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(
+        ManagedUserVM invalidUser = new ManagedUserVM(
             null,               // id
             "bob",              // login
             "123",              // password with only 3 digits
@@ -238,6 +237,7 @@ public class AccountResourceIntTest {
             true,               // activated
             "fr",               // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,               // createdBy
             null,               // createdDate
             null,               // lastModifiedBy
             null                // lastModifiedDate
@@ -257,7 +257,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterDuplicateLogin() throws Exception {
         // Good
-        ManagedUserDTO validUser = new ManagedUserDTO(
+        ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "alice",                // login
             "password",             // password
@@ -267,14 +267,15 @@ public class AccountResourceIntTest {
             true,                   // activated
             "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
         );
 
         // Duplicate login, different e-mail
-        ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
+        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
+            "alicejr@example.com", true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -298,7 +299,7 @@ public class AccountResourceIntTest {
     @Transactional
     public void testRegisterDuplicateEmail() throws Exception {
         // Good
-        ManagedUserDTO validUser = new ManagedUserDTO(
+        ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "john",                 // login
             "password",             // password
@@ -308,14 +309,15 @@ public class AccountResourceIntTest {
             true,                   // activated
             "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)),
+            null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate
         );
 
         // Duplicate e-mail, different login
-        ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
+        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
+            validUser.getEmail(), true, validUser.getLangKey(), validUser.getAuthorities(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc.perform(
@@ -338,7 +340,7 @@ public class AccountResourceIntTest {
     @Test
     @Transactional
     public void testRegisterAdminIsIgnored() throws Exception {
-        ManagedUserDTO validUser = new ManagedUserDTO(
+        ManagedUserVM validUser = new ManagedUserVM(
             null,                   // id
             "badguy",               // login
             "password",             // password
@@ -348,6 +350,7 @@ public class AccountResourceIntTest {
             true,                   // activated
             "fr",                   // langKey
             new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)),
+            null,                   // createdBy
             null,                   // createdDate
             null,                   // lastModifiedBy
             null                    // lastModifiedDate

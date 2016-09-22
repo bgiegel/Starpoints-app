@@ -2,6 +2,7 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Person;
+
 import fr.softeam.starpointsapp.repository.PersonRepository;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class PersonResource {
         
     @Inject
     private PersonRepository personRepository;
-    
+
     /**
      * POST  /people : Create a new person.
      *
