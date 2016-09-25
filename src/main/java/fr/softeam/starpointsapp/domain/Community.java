@@ -27,7 +27,7 @@ public class Community implements Serializable {
     private String name;
 
     @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    //@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "community_members",
                joinColumns = @JoinColumn(name="communities_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="ID"))

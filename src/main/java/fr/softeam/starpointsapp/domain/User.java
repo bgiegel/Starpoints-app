@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -104,7 +106,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @ManyToMany(mappedBy = "members")
     @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Fetch(FetchMode.SUBSELECT)
+    // @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Community> communities = new HashSet<>();
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)

@@ -190,8 +190,7 @@ public class UserResource {
         @Timed
         @Transactional(readOnly = true)
         @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
-        public ResponseEntity<List<ManagedUserVM>> getMembersOfCommunitiesLeadedBy (Pageable
-        pageable, @PathVariable String login)
+        public ResponseEntity<List<ManagedUserVM>> getMembersOfCommunitiesLeadedBy (Pageable pageable, @PathVariable String login)
         throws URISyntaxException {
             Page<User> page = userRepository.findMembersOfCommunitiesLeadedBy(login, pageable);
             List<ManagedUserVM> managedUserDTOs = page.getContent().stream()
