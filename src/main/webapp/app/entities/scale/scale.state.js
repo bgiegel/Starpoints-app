@@ -112,7 +112,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('scale', null, { reload: true });
+                    $state.go('scale', null, { reload: 'scale' });
                 }, function() {
                     $state.go('scale');
                 });
@@ -137,7 +137,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('scale', null, { reload: true });
+                    $state.go('scale', null, { reload: 'scale' });
                 }, function() {
                     $state.go('^');
                 });
@@ -161,7 +161,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('scale', null, { reload: true });
+                    $state.go('scale', null, { reload: 'scale' });
                 }, function() {
                     $state.go('^');
                 });

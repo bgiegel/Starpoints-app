@@ -14,11 +14,9 @@ import fr.softeam.starpointsapp.service.util.RandomUtil;
 import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -32,10 +30,8 @@ import static org.junit.Assert.assertFalse;
  *
  * @see UserService
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StarPointsApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StarPointsApp.class)
 @Transactional
 public class UserServiceIntTest {
 
@@ -84,7 +80,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
-        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016,8,9));
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
         Optional<User> maybeUser = userService.requestPasswordReset("john.doe@localhost");
         assertThat(maybeUser.isPresent()).isFalse();
         userRepository.delete(user);
@@ -92,7 +88,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatResetKeyMustNotBeOlderThan24Hours() {
-        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016,8,9));
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
 
         ZonedDateTime daysAgo = ZonedDateTime.now().minusHours(25);
         String resetKey = RandomUtil.generateResetKey();
@@ -111,7 +107,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatResetKeyMustBeValid() {
-        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016,8,9));
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
 
         ZonedDateTime daysAgo = ZonedDateTime.now().minusHours(25);
         user.setActivated(true);
@@ -125,7 +121,7 @@ public class UserServiceIntTest {
 
     @Test
     public void assertThatUserCanResetPassword() {
-        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016,8,9));
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "en-US", LocalDate.of(2016,8,9));
         String oldPassword = user.getPassword();
         ZonedDateTime daysAgo = ZonedDateTime.now().minusHours(2);
         String resetKey = RandomUtil.generateResetKey();
@@ -147,7 +143,7 @@ public class UserServiceIntTest {
         given_a_member_of_community_that_have_made_contributions();
 
         //when
-        userService.deleteUserInformation("johndoe");
+        userService.deleteUser("johndoe");
 
         assertThatUserHasBeenDeleted();
         assertThatUserHasBeenRemovedFromCommunityMembersList();
@@ -159,7 +155,7 @@ public class UserServiceIntTest {
         given_a_member_of_community_which_is_also_the_leader();
 
         //when
-        userService.deleteUserInformation("johndoe");
+        userService.deleteUser("johndoe");
     }
 
     private void given_a_member_of_community_that_have_made_contributions() {
@@ -180,7 +176,7 @@ public class UserServiceIntTest {
     }
 
     private User buildUserAndCommunity() {
-        User user = userService.createUserInformation("johndoe", "johndoe", "John", "Doe",
+        User user = userService.createUser("johndoe", "johndoe", "John", "Doe",
             "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
 
         community = new Community();

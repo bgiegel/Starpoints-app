@@ -3,7 +3,6 @@ package fr.softeam.starpointsapp.repository;
 import fr.softeam.starpointsapp.domain.User;
 
 import java.time.ZonedDateTime;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,6 +28,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByLogin(String login);
 
     Optional<User> findOneById(Long userId);
+
+    @Query(value = "select distinct user from User user left join fetch user.authorities left join fetch user.communities",
+        countQuery = "select count(user) from User user")
+    Page<User> findAllWithAuthorities(Pageable pageable);
 
     @Override
     void delete(User t);

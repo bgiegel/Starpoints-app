@@ -2,6 +2,7 @@ package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
 import fr.softeam.starpointsapp.domain.Community;
+
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
@@ -15,13 +16,11 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
@@ -37,16 +37,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 /**
  * Test class for the ContributionResource REST controller.
  *
  * @see ContributionResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = StarPointsApp.class)
-@WebAppConfiguration
-@IntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = StarPointsApp.class)
 public class ContributionResourceIntTest {
 
 
@@ -82,6 +79,9 @@ public class ContributionResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restContributionMockMvc;
 
     private Contribution contribution, javaContribution1, javaContribution2, agileContribution1;
@@ -98,15 +98,26 @@ public class ContributionResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        contribution = new Contribution();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Contribution createEntity(EntityManager em) {
+        Contribution contribution = new Contribution();
         contribution.setDeliverableDate(DEFAULT_DELIVERABLE_DATE);
         contribution.setDeliverableUrl(DEFAULT_DELIVERABLE_URL);
         contribution.setDeliverableName(DEFAULT_DELIVERABLE_NAME);
         contribution.setComment(DEFAULT_COMMENT);
         contribution.setPreparatoryDate1(DEFAULT_PREPARATORY_DATE_1);
         contribution.setPreparatoryDate2(DEFAULT_PREPARATORY_DATE_2);
+        return contribution;
+    }
+
+    @Before
+    public void initTest() {
+        contribution = createEntity(em);
     }
 
     @Test
@@ -142,7 +153,7 @@ public class ContributionResourceIntTest {
         // Get all the contributions
         restContributionMockMvc.perform(get("/api/contributions?sort=id,desc"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(contribution.getId().intValue())))
                 .andExpect(jsonPath("$.[*].deliverableDate").value(hasItem(DEFAULT_DELIVERABLE_DATE.toString())))
                 .andExpect(jsonPath("$.[*].deliverableUrl").value(hasItem(DEFAULT_DELIVERABLE_URL.toString())))
@@ -161,7 +172,7 @@ public class ContributionResourceIntTest {
         // Get the contribution
         restContributionMockMvc.perform(get("/api/contributions/{id}", contribution.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(contribution.getId().intValue()))
             .andExpect(jsonPath("$.deliverableDate").value(DEFAULT_DELIVERABLE_DATE.toString()))
             .andExpect(jsonPath("$.deliverableUrl").value(DEFAULT_DELIVERABLE_URL.toString()))
@@ -187,8 +198,7 @@ public class ContributionResourceIntTest {
         int databaseSizeBeforeUpdate = contributionRepository.findAll().size();
 
         // Update the contribution
-        Contribution updatedContribution = new Contribution();
-        updatedContribution.setId(contribution.getId());
+        Contribution updatedContribution = contributionRepository.findOne(contribution.getId());
         updatedContribution.setDeliverableDate(UPDATED_DELIVERABLE_DATE);
         updatedContribution.setDeliverableUrl(UPDATED_DELIVERABLE_URL);
         updatedContribution.setDeliverableName(UPDATED_DELIVERABLE_NAME);

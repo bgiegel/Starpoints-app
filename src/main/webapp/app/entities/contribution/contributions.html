@@ -1,12 +1,12 @@
 <div>
-    <h2 translate="starPointsApp.contribution.home.title">Contributions</h2>
+    <h2 data-translate="starPointsApp.contribution.home.title">Contributions</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="contribution.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="starPointsApp.contribution.home.createLabel">
+                    <span  data-translate="starPointsApp.contribution.home.createLabel">
                         Create new Contribution
                     </span>
                 </button>
@@ -18,16 +18,16 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
-                    <th><span translate="starPointsApp.contribution.deliverableDate">Deliverable Date</span></th>
-                    <th><span translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
-                    <th><span translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
-                    <th><span translate="starPointsApp.contribution.comment">Comment</span></th>
-                    <th><span translate="starPointsApp.contribution.preparatoryDate1">Preparatory Date 1</span></th>
-                    <th><span translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></th>
-                    <th><span translate="starPointsApp.contribution.activity">Activity</span></th>
-                    <th><span translate="starPointsApp.contribution.community">Community</span></th>
-                    <th><span translate="starPointsApp.contribution.author">Author</span></th>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="starPointsApp.contribution.deliverableDate">Deliverable Date</span></th>
+                    <th><span data-translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
+                    <th><span data-translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
+                    <th><span data-translate="starPointsApp.contribution.comment">Comment</span></th>
+                    <th><span data-translate="starPointsApp.contribution.preparatoryDate1">Preparatory Date 1</span></th>
+                    <th><span data-translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></th>
+                    <th><span data-translate="starPointsApp.contribution.activity">Activity</span></th>
+                    <th><span data-translate="starPointsApp.contribution.community">Community</span></th>
+                    <th><span data-translate="starPointsApp.contribution.author">Author</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -55,19 +55,19 @@
                                     ui-sref="contribution-detail({id:contribution.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="contribution.edit({id:contribution.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="contribution.delete({id:contribution.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>

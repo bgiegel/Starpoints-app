@@ -36,4 +36,42 @@
     <cache name="fr.softeam.starpointsapp.domain.User.persistentTokens"
            timeToLiveSeconds="3600">
     </cache>
-    </ehcache>
+    
+    <cache name="fr.softeam.starpointsapp.domain.Scale"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Activity"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Level"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Community"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Community.members"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Contribution"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Person"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Person.communities"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="fr.softeam.starpointsapp.domain.Person.contributions"
+           timeToLiveSeconds="3600">
+    </cache>
+
+    <!-- jhipster-needle-ehcache-add-entry -->
+</ehcache>

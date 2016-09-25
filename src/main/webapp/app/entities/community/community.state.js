@@ -110,7 +110,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('community', null, { reload: true });
+                    $state.go('community', null, { reload: 'community' });
                 }, function() {
                     $state.go('community');
                 });
@@ -135,7 +135,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('community', null, { reload: true });
+                    $state.go('community', null, { reload: 'community' });
                 }, function() {
                     $state.go('^');
                 });
@@ -159,7 +159,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('community', null, { reload: true });
+                    $state.go('community', null, { reload: 'community' });
                 }, function() {
                     $state.go('^');
                 });

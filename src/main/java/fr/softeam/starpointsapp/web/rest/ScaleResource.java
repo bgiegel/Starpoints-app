@@ -2,6 +2,7 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Scale;
+
 import fr.softeam.starpointsapp.repository.ScaleRepository;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;

@@ -1,14 +1,14 @@
 
 <div>
-    <h2><span translate="starPointsApp.level.detail.title">Level</span> {{vm.level.id}}</h2>
+    <h2><span data-translate="starPointsApp.level.detail.title">Level</span> {{vm.level.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span translate="starPointsApp.level.value">Value</span></dt>
+        <dt><span data-translate="starPointsApp.level.value">Value</span></dt>
         <dd>
             <span>{{vm.level.value}}</span>
         </dd>
-        <dt><span translate="starPointsApp.level.name">Name</span></dt>
+        <dt><span data-translate="starPointsApp.level.name">Name</span></dt>
         <dd>
             <span>{{vm.level.name}}</span>
         </dd>
@@ -17,11 +17,11 @@
     <button type="submit"
             ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
     </button>
 
     <button type="button" ui-sref="level-detail.edit({id:vm.level.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm" translate="entity.action.edit"> Edit</span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

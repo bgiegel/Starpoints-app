@@ -4,17 +4,17 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myContributionLabel" translate="starPointsApp.contribution.home.createOrEditLabel">Create or edit a Contribution</h4>
+        <h4 class="modal-title" id="myContributionLabel" data-translate="starPointsApp.contribution.home.createOrEditLabel">Create or edit a Contribution</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.contribution.id">
-            <label for="id" translate="global.field.id">ID</label>
+            <label for="id" data-translate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                     ng-model="vm.contribution.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.deliverableDate" for="field_deliverableDate">Deliverable Date</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.deliverableDate" for="field_deliverableDate">Deliverable Date</label>
                 <div class="input-group">
                     <input id="field_deliverableDate" type="text" class="form-control" name="deliverableDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.deliverableDate" is-open="vm.datePickerOpenStatus.deliverableDate"
                     />
@@ -24,25 +24,25 @@
                 </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.deliverableUrl" for="field_deliverableUrl">Deliverable Url</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.deliverableUrl" for="field_deliverableUrl">Deliverable Url</label>
             <input type="text" class="form-control" name="deliverableUrl" id="field_deliverableUrl"
                     ng-model="vm.contribution.deliverableUrl"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.deliverableName" for="field_deliverableName">Deliverable Name</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.deliverableName" for="field_deliverableName">Deliverable Name</label>
             <input type="text" class="form-control" name="deliverableName" id="field_deliverableName"
                     ng-model="vm.contribution.deliverableName"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.comment" for="field_comment">Comment</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.comment" for="field_comment">Comment</label>
             <input type="text" class="form-control" name="comment" id="field_comment"
                     ng-model="vm.contribution.comment"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.preparatoryDate1" for="field_preparatoryDate1">Preparatory Date 1</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.preparatoryDate1" for="field_preparatoryDate1">Preparatory Date 1</label>
                 <div class="input-group">
                     <input id="field_preparatoryDate1" type="text" class="form-control" name="preparatoryDate1" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.preparatoryDate1" is-open="vm.datePickerOpenStatus.preparatoryDate1"
                     />
@@ -52,7 +52,7 @@
                 </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="starPointsApp.contribution.preparatoryDate2" for="field_preparatoryDate2">Preparatory Date 2</label>
+            <label class="control-label" data-translate="starPointsApp.contribution.preparatoryDate2" for="field_preparatoryDate2">Preparatory Date 2</label>
                 <div class="input-group">
                     <input id="field_preparatoryDate2" type="text" class="form-control" name="preparatoryDate2" uib-datepicker-popup="{{dateformat}}" ng-model="vm.contribution.preparatoryDate2" is-open="vm.datePickerOpenStatus.preparatoryDate2"
                     />
@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-group">
-            <label translate="starPointsApp.contribution.activity" for="field_activity">Activity</label>
+            <label data-translate="starPointsApp.contribution.activity" for="field_activity">Activity</label>
             <select class="form-control" id="field_activity" name="activity"
                     ng-model="vm.contribution.activity"
                     ng-options="activity as activity.name for activity in vm.activities track by activity.id">
@@ -71,7 +71,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label translate="starPointsApp.contribution.community" for="field_community">Community</label>
+            <label data-translate="starPointsApp.contribution.community" for="field_community">Community</label>
             <select class="form-control" id="field_community" name="community"
                     ng-model="vm.contribution.community"
                     ng-options="community as community.name for community in vm.communities track by community.id"
@@ -80,7 +80,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label translate="starPointsApp.contribution.author" for="field_author">Author</label>
+            <label data-translate="starPointsApp.contribution.author" for="field_author">Author</label>
             <select class="form-control" id="field_author" name="author"
                     ng-model="vm.contribution.author"
                     ng-options="person as person.firstName+' '+person.lastName for person in vm.members track by person.id">
@@ -90,10 +90,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

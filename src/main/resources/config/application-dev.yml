@@ -12,6 +12,8 @@
 
 
 spring:
+    profiles:
+        active: dev,swagger
     devtools:
         restart:
             enabled: true
@@ -21,6 +23,7 @@ spring:
         serialization.indent_output: true
     datasource:
         url: jdbc:h2:mem:starpointsapp;DB_CLOSE_DELAY=-1
+        type: com.zaxxer.hikari.HikariDataSource
         name:
         username: StarPointsApp
         password:
@@ -53,8 +56,6 @@ spring:
         cache-seconds: 1
     thymeleaf:
         cache: false
-    profiles:
-        include: swagger # automatically set the 'swagger' profile
 
 liquibase:
     contexts: dev

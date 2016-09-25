@@ -1,12 +1,12 @@
 <div>
-    <h2 translate="starPointsApp.scale.home.title">Scales</h2>
+    <h2 data-translate="starPointsApp.scale.home.title">Scales</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
                 <button class="btn btn-primary" ui-sref="scale.new" >
                     <span class="glyphicon glyphicon-plus"></span>
-                    <span  translate="starPointsApp.scale.home.createLabel">
+                    <span  data-translate="starPointsApp.scale.home.createLabel">
                         Create new Scale
                     </span>
                 </button>
@@ -18,11 +18,11 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span translate="global.field.id">ID</span></th>
-                    <th><span translate="starPointsApp.scale.startDate">Start Date</span></th>
-                    <th><span translate="starPointsApp.scale.endDate">End Date</span></th>
-                    <th><span translate="starPointsApp.scale.value">Value</span></th>
-                    <th><span translate="starPointsApp.scale.activity">Activity</span></th>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="starPointsApp.scale.startDate">Start Date</span></th>
+                    <th><span data-translate="starPointsApp.scale.endDate">End Date</span></th>
+                    <th><span data-translate="starPointsApp.scale.value">Value</span></th>
+                    <th><span data-translate="starPointsApp.scale.activity">Activity</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -41,19 +41,19 @@
                                     ui-sref="scale-detail({id:scale.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="scale.edit({id:scale.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
                                     ui-sref="scale.delete({id:scale.id})"
                                     class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>

@@ -72,5 +72,4 @@ public class StarPointsApp {
             env.getProperty("server.port"));
 
     }
-
 }
