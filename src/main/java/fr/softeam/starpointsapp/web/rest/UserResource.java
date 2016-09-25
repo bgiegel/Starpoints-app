@@ -213,7 +213,7 @@ public class UserResource {
         @Timed
         public ResponseEntity<ManagedUserVM> getUser (@PathVariable String login){
             log.debug("REST request to get User : {}", login);
-            return userService.getUserWithAuthoritiesByLogin(login)
+            return userRepository.findOneByLoginWithAuthoritiesAndCommunities(login)
                 .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
                 .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));

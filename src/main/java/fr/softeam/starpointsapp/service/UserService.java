@@ -208,18 +208,6 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthoritiesByLogin(String login) {
-        Optional<User> user = userRepository.findOneByLogin(login);
-        if (user.isPresent()){
-            // eagerly load the associations
-            user.get().getAuthorities().size();
-            user.get().getCommunities().size();
-        }
-
-        return user;
-    }
-
-    @Transactional(readOnly = true)
     public User getUserWithAuthorities(Long id) {
         User user = userRepository.findOne(id);
         user.getAuthorities().size(); // eagerly load the association
