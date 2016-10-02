@@ -1,4 +1,4 @@
-package fr.softeam.starpointsapp.service;
+package fr.softeam.starpointsapp.service.exception;
 
 /**
  * Cette Exception est lancé quand on essaye de supprimer un utilisateur qui dirige une communauté.

@@ -9,6 +9,7 @@ import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.security.SecurityUtils;
+import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.util.RandomUtil;
 import fr.softeam.starpointsapp.web.rest.vm.ManagedUserVM;
 import org.slf4j.Logger;

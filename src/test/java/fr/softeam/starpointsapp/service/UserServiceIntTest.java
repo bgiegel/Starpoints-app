@@ -9,20 +9,21 @@ import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
 import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
-import java.time.ZonedDateTime;
+import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.util.RandomUtil;
-import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 
 /**

@@ -2,12 +2,12 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Community;
-
 import fr.softeam.starpointsapp.repository.CommunityRepository;
+import fr.softeam.starpointsapp.service.CommunityService;
+import fr.softeam.starpointsapp.service.exception.CommunityReferencedByContributionsException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +30,9 @@ public class CommunityResource {
 
     @Inject
     private CommunityRepository communityRepository;
+
+    @Inject
+    private CommunityService communityService;
 
     /**
      * POST  /communities : Create a new community.
@@ -138,7 +141,13 @@ public class CommunityResource {
     @Timed
     public ResponseEntity<Void> deleteCommunity(@PathVariable Long id) {
         log.debug("REST request to delete Community : {}", id);
-        communityRepository.delete(id);
+        try {
+            communityService.delete(id);
+        } catch (CommunityReferencedByContributionsException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
+                "communityWithRelatedContributionsDeletionImpossible",
+                "Impossible de supprimer une communauté rattachée à une ou des contributions.")).build();
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("community", id.toString())).build();
     }
 

@@ -2,15 +2,16 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Level;
-
 import fr.softeam.starpointsapp.repository.LevelRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
+import fr.softeam.starpointsapp.service.LevelService;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -27,9 +28,12 @@ import java.util.Optional;
 public class LevelResource {
 
     private final Logger log = LoggerFactory.getLogger(LevelResource.class);
-        
+
     @Inject
     private LevelRepository levelRepository;
+
+    @Inject
+    private LevelService levelService;
 
     /**
      * POST  /levels : Create a new level.
@@ -42,6 +46,7 @@ public class LevelResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Level> createLevel(@RequestBody Level level) throws URISyntaxException {
         log.debug("REST request to save Level : {}", level);
         if (level.getId() != null) {
@@ -66,6 +71,7 @@ public class LevelResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Level> updateLevel(@RequestBody Level level) throws URISyntaxException {
         log.debug("REST request to update Level : {}", level);
         if (level.getId() == null) {
@@ -122,9 +128,10 @@ public class LevelResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteLevel(@PathVariable Long id) {
         log.debug("REST request to delete Level : {}", id);
-        levelRepository.delete(id);
+        levelService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("level", id.toString())).build();
     }
 

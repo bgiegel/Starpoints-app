@@ -1,19 +1,20 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
-
 import fr.softeam.starpointsapp.domain.Activity;
+import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
 import fr.softeam.starpointsapp.repository.ActivityRepository;
-
+import fr.softeam.starpointsapp.repository.ContributionRepository;
+import fr.softeam.starpointsapp.service.ActivityService;
+import fr.softeam.starpointsapp.util.ContributionBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,10 +27,9 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
 /**
  * Test class for the ActivityResource REST controller.
  *
@@ -51,6 +51,12 @@ public class ActivityResourceIntTest {
     private ActivityRepository activityRepository;
 
     @Inject
+    private ActivityService activityService;
+
+    @Inject
+    private ContributionRepository contributionRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -68,6 +74,7 @@ public class ActivityResourceIntTest {
         MockitoAnnotations.initMocks(this);
         ActivityResource activityResource = new ActivityResource();
         ReflectionTestUtils.setField(activityResource, "activityRepository", activityRepository);
+        ReflectionTestUtils.setField(activityResource, "activityService", activityService);
         this.restActivityMockMvc = MockMvcBuilders.standaloneSetup(activityResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -189,11 +196,28 @@ public class ActivityResourceIntTest {
 
         // Get the activity
         restActivityMockMvc.perform(delete("/api/activities/{id}", activity.getId())
-                .accept(TestUtil.APPLICATION_JSON_UTF8))
-                .andExpect(status().isOk());
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
 
         // Validate the database is empty
         List<Activity> activities = activityRepository.findAll();
         assertThat(activities).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    @Transactional
+    public void deleteActivityWithContribution() throws Exception {
+        // Initialize the database
+        activityRepository.saveAndFlush(activity);
+        attachContributionToActivity();
+
+        // Get the activity
+        restActivityMockMvc.perform(delete("/api/activities/{id}", activity.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isBadRequest());
+    }
+
+    private void attachContributionToActivity() {
+        contributionRepository.save(new ContributionBuilder().withName("contrib 1").withActivity(activity).build());
     }
 }

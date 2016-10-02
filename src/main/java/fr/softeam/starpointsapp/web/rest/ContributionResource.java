@@ -2,16 +2,15 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Contribution;
-
 import fr.softeam.starpointsapp.repository.ContributionRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -43,7 +42,7 @@ public class ContributionResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN,ROLE_LEADER')")
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Contribution> createContribution(@RequestBody Contribution contribution) throws URISyntaxException {
         log.debug("REST request to save Contribution : {}", contribution);
         if (contribution.getId() != null) {
@@ -68,7 +67,7 @@ public class ContributionResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_LEADER')")
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Contribution> updateContribution(@RequestBody Contribution contribution) throws URISyntaxException {
         log.debug("REST request to update Contribution : {}", contribution);
         if (contribution.getId() == null) {
@@ -138,7 +137,7 @@ public class ContributionResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN, ROLE_LEADER')")
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Void> deleteContribution(@PathVariable Long id) {
         log.debug("REST request to delete Contribution : {}", id);
         contributionRepository.delete(id);

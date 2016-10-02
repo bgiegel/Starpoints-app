@@ -1,5 +1,6 @@
 package fr.softeam.starpointsapp.domain;
 
+import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,8 +8,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
-
-import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
 
 /**
  * A Activity.
@@ -32,8 +31,8 @@ public class Activity implements Serializable {
     private ActivityType type;
 
     /**
-     * Définition du livrable                                                  
-     * 
+     * Définition du livrable
+     *
      */
     @ApiModelProperty(value = ""
         + "Définition du livrable                                             "
@@ -41,7 +40,7 @@ public class Activity implements Serializable {
     @Column(name = "deliverable_definition")
     private String deliverableDefinition;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Level level;
 
     public Long getId() {

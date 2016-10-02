@@ -11,7 +11,7 @@
             "updated": "L'activité avec l'identifiant {{ param }} a été mise à jour",
             "deleted": "L'activité avec l'identifiant {{ param }} a été supprimée",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer l'activité '{{ param }}' ?"
+                "question": "Etes-vous certain de vouloir supprimer l'activité '{{ param }}' ? <br /> Ceci entrainera également la suppression du barème associé."
             },
             "detail": {
                 "title": "Activité"

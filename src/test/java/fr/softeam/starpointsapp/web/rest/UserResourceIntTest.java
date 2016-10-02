@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -38,6 +39,9 @@ public class UserResourceIntTest {
     @Inject
     private UserService userService;
 
+    @Inject
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
     private MockMvc restUserMockMvc;
 
     /**
@@ -65,7 +69,9 @@ public class UserResourceIntTest {
         UserResource userResource = new UserResource();
         ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
         ReflectionTestUtils.setField(userResource, "userService", userService);
-        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
+        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
+            .setCustomArgumentResolvers(pageableArgumentResolver)
+            .build();
     }
 
     @Test

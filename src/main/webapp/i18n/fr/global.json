@@ -122,8 +122,11 @@
         "Size": "Le champ {{fieldName}} ne respecte pas les critères minimum et maximum !",
         "userexists": "Login déja utilisé !",
         "emailexists": "Email déja utilisé !",
+        "accessDenied": "Vous n'avez pas les droits suffisants pour effectuer cette action.",
         "idexists": "Une nouvelle entité {{entityName}} ne peut pas avoir d'ID !",
-        "leaderDeletionImpossible": "Impossible de supprimer le leader d'une communauté. Veuillez d'abord assigner un nouveau leader à la communauté concernée."
+        "leaderDeletionImpossible": "Impossible de supprimer le leader d'une communauté. Veuillez d'abord assigner un nouveau leader à la communauté concernée.",
+        "activityWithRelatedContributionsDeletionImpossible": "Impossible de supprimer une activité rattachée à une ou des contributions.",
+        "communityWithRelatedContributionsDeletionImpossible": "Impossible de supprimer une communauté rattachée à une ou des contributions."
     },
     "footer": "© 2016 SOFTEAM Cadextan. Tous droits réservés. Réalisation : Bastien Giegel"
 }

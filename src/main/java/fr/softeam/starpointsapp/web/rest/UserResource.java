@@ -5,7 +5,7 @@ import fr.softeam.starpointsapp.config.Constants;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
-import fr.softeam.starpointsapp.service.LeadersCannotBeDeletedException;
+import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.MailService;
 import fr.softeam.starpointsapp.service.UserService;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;

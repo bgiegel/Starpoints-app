@@ -1,20 +1,19 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
-
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
-
 import fr.softeam.starpointsapp.repository.UserRepository;
+import fr.softeam.starpointsapp.service.CommunityService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.util.Arrays;
 import javax.persistence.EntityManager;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,6 +52,9 @@ public class CommunityResourceIntTest {
     private CommunityRepository communityRepository;
 
     @Inject
+    private CommunityService communityService;
+
+    @Inject
     private UserRepository userRepository;
 
     @Inject
@@ -73,6 +75,7 @@ public class CommunityResourceIntTest {
         MockitoAnnotations.initMocks(this);
         CommunityResource communityResource = new CommunityResource();
         ReflectionTestUtils.setField(communityResource, "communityRepository", communityRepository);
+        ReflectionTestUtils.setField(communityResource, "communityService", communityService);
         this.restCommunityMockMvc = MockMvcBuilders.standaloneSetup(communityResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -200,7 +203,7 @@ public class CommunityResourceIntTest {
 
         perform
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].name").value(hasItems(STARTECH_AGILE, STARTECH_JAVASCRIPT)))
             .andExpect(jsonPath("$.[*].name").value(not(hasItem(STARTECH_JAVA))));
     }

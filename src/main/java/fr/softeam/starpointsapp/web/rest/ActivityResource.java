@@ -2,15 +2,17 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Activity;
-
 import fr.softeam.starpointsapp.repository.ActivityRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
+import fr.softeam.starpointsapp.service.ActivityService;
+import fr.softeam.starpointsapp.service.exception.ActivityReferencedByContributionsException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -27,9 +29,12 @@ import java.util.Optional;
 public class ActivityResource {
 
     private final Logger log = LoggerFactory.getLogger(ActivityResource.class);
-        
+
     @Inject
     private ActivityRepository activityRepository;
+
+    @Inject
+    private ActivityService activityService;
 
     /**
      * POST  /activities : Create a new activity.
@@ -42,6 +47,7 @@ public class ActivityResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) throws URISyntaxException {
         log.debug("REST request to save Activity : {}", activity);
         if (activity.getId() != null) {
@@ -66,6 +72,7 @@ public class ActivityResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Activity> updateActivity(@RequestBody Activity activity) throws URISyntaxException {
         log.debug("REST request to update Activity : {}", activity);
         if (activity.getId() == null) {
@@ -122,9 +129,16 @@ public class ActivityResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Void> deleteActivity(@PathVariable Long id) {
         log.debug("REST request to delete Activity : {}", id);
-        activityRepository.delete(id);
+        try {
+            activityService.deleteActivity(id);
+        } catch (ActivityReferencedByContributionsException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
+                "activityWithRelatedContributionsDeletionImpossible",
+                "Impossible de supprimer une activité rattachée à une ou des contributions.")).build();
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("activity", id.toString())).build();
     }
 
