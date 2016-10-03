@@ -44,9 +44,10 @@ public class Scale implements Serializable {
     private LocalDate endDate;
 
     @Column(name = "value")
-    private String value;
+    private Integer value;
 
     @OneToOne
+    @JoinColumn(unique = true)
     private Activity activity;
 
     public Long getId() {
@@ -73,11 +74,11 @@ public class Scale implements Serializable {
         this.endDate = endDate;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

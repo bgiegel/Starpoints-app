@@ -2,19 +2,17 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Scale;
-
 import fr.softeam.starpointsapp.repository.ScaleRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -44,7 +42,7 @@ public class ScaleResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Scale> createScale(@RequestBody Scale scale) throws URISyntaxException {
         log.debug("REST request to save Scale : {}", scale);
         if (scale.getId() != null) {
@@ -69,7 +67,7 @@ public class ScaleResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Scale> updateScale(@RequestBody Scale scale) throws URISyntaxException {
         log.debug("REST request to update Scale : {}", scale);
         if (scale.getId() == null) {
@@ -126,7 +124,7 @@ public class ScaleResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Secured({AuthoritiesConstants.ADMIN})
     public ResponseEntity<Void> deleteScale(@PathVariable Long id) {
         log.debug("REST request to delete Scale : {}", id);
         scaleRepository.delete(id);

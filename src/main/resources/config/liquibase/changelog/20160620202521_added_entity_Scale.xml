@@ -29,10 +29,10 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="value" type="varchar(255)">
+            <column name="value" type="integer">
                 <constraints nullable="true" />
             </column>
-             <column name="activity_id" type="bigint">
+            <column name="activity_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->

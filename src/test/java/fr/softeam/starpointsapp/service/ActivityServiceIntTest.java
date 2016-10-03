@@ -68,7 +68,7 @@ public class ActivityServiceIntTest {
         activity = new ActivityBuilder().withName("activity with Scale").build();
         activityRepository.save(activity);
 
-        buildScale("100");
+        buildScale(100);
     }
 
     private void givenAnActivityWithRelatedContributions() {
@@ -96,7 +96,7 @@ public class ActivityServiceIntTest {
         activity = activityRepository.save(activity);
     }
 
-    private void buildScale(String value) {
+    private void buildScale(Integer value) {
         scale = new Scale();
         scale.setValue(value);
         scale.setActivity(activity);

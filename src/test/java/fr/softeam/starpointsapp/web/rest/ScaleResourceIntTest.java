@@ -1,19 +1,16 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
-
 import fr.softeam.starpointsapp.domain.Scale;
 import fr.softeam.starpointsapp.repository.ScaleRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +25,7 @@ import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -46,8 +44,9 @@ public class ScaleResourceIntTest {
 
     private static final LocalDate DEFAULT_END_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_END_DATE = LocalDate.now(ZoneId.systemDefault());
-    private static final String DEFAULT_VALUE = "AAAAA";
-    private static final String UPDATED_VALUE = "BBBBB";
+
+    private static final Integer DEFAULT_VALUE = 1;
+    private static final Integer UPDATED_VALUE = 2;
 
     @Inject
     private ScaleRepository scaleRepository;
@@ -128,7 +127,7 @@ public class ScaleResourceIntTest {
                 .andExpect(jsonPath("$.[*].id").value(hasItem(scale.getId().intValue())))
                 .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
                 .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-                .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())));
+                .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)));
     }
 
     @Test
@@ -144,7 +143,7 @@ public class ScaleResourceIntTest {
             .andExpect(jsonPath("$.id").value(scale.getId().intValue()))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.toString()));
+            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE));
     }
 
     @Test

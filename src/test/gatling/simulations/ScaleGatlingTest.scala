@@ -67,7 +67,7 @@ class ScaleGatlingTest extends Simulation {
             .exec(http("Create new scale")
             .post("/api/scales")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "value":"SAMPLE_TEXT"}""")).asJSON
+            .body(StringBody("""{"id":null, "startDate":"2020-01-01T00:00:00.000Z", "endDate":"2020-01-01T00:00:00.000Z", "value":"0"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_scale_url"))).exitHereIfFailed
             .pause(10)

@@ -26,7 +26,7 @@
     {
       "fieldId": 3,
       "fieldName": "value",
-      "fieldType": "String"
+      "fieldType": "Integer"
     }
   ],
   "changelogDate": "20160620202521",
