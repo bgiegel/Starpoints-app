@@ -10,9 +10,9 @@ import java.util.Optional;
 /**
  * Spring Data JPA repository for the Scale entity.
  */
-@SuppressWarnings("unused")
 public interface ScaleRepository extends JpaRepository<Scale,Long> {
 
-    @Query("From Scale scale join fetch scale.activity activity where activity.id= :activityId")
+    @Query("select scale from Scale scale join fetch scale.activity activity where activity.id= :activityId")
     Optional<Scale> findScaleFromActivityId(@Param("activityId") Long activityId);
+
 }
