@@ -1,0 +1,12 @@
+{
+    "starPointsApp": {
+        "starpoints" : {
+            "mystarpoints": {
+                "title": "Mes StarPoints",
+                "column" : {
+                    "community" : "Communauté"
+                }
+            }
+        }
+    }
+}
