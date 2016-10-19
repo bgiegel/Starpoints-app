@@ -17,6 +17,17 @@
                     }
                     return data;
                 }
+            },
+            'byCommunityForAllUsers': {
+                method: 'GET',
+                url: 'api/starpoints-by-community',
+                isArray: true,
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
             }
         });
     }

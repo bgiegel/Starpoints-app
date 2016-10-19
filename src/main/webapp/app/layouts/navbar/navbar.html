@@ -81,6 +81,12 @@
                                 <span>Mes Starpoints</span>
                             </a>
                         </li>
+
+                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                            <a ui-sref="all-starpoints" ng-click="vm.collapseNavbar()">
+                                <span>Starpoints par communautés</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown class="dropdown pointer">

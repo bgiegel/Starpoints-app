@@ -52,4 +52,16 @@ public class StarpointsResourceIntTest {
             .andExpect(jsonPath("$.[0].starpoints").value(equalTo(170)))
             .andExpect(jsonPath("$.[1].starpoints").value(equalTo(0)));
     }
+
+    @Test
+    public void testGetStarPointsByCommunity_allUsers() throws Exception {
+        //test avec l'utilisateur bgiegel
+        restStarPointsMockMvc.perform(get("/api/starpoints-by-community"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[0].community").value(equalTo("Java")))
+            .andExpect(jsonPath("$.[1].community").value(equalTo("Agile")))
+            .andExpect(jsonPath("$.[0].starpoints").value(equalTo(170)))
+            .andExpect(jsonPath("$.[1].starpoints").value(equalTo(575)));
+    }
 }

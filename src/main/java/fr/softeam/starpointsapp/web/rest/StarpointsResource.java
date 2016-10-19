@@ -29,9 +29,8 @@ public class StarpointsResource {
     private StarPointsRepository starPointsRepository;
 
     /**
-     * GET  /scales : get all the scales.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of scales in body
+     * GET  /starpoints-by-community/{userId} : Récupère tous les starpoints par communauté de l'utilisateur
+     * demandé.
      */
     @RequestMapping(value = "/starpoints-by-community/{userId}",
         method = RequestMethod.GET,
@@ -40,6 +39,19 @@ public class StarpointsResource {
     public List<StarPointsByCommunityDTO> getStarPointsByCommunity(@PathVariable Long userId) {
         log.debug("REST request to get all Scales");
         List<Object[]> results = starPointsRepository.calculateStarPointsByCommunityForUser(userId);
+        return buildStarPointsByCommunity(results);
+    }
+
+    /**
+     * GET  /starpoints-by-community : Récupère tous les starpoints par communauté de tous les utilisateurs.
+     */
+    @RequestMapping(value = "/starpoints-by-community",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<StarPointsByCommunityDTO> getStarPointsByCommunity() {
+        log.debug("REST request to get all Scales");
+        List<Object[]> results = starPointsRepository.calculateStarPointsByCommunity();
         return buildStarPointsByCommunity(results);
     }
 

@@ -30,4 +30,18 @@ public interface StarPointsRepository extends JpaRepository<Contribution,Long> {
         "where comMember.id= :userId " +
         "group by authorCommunity.name")
     List<Object[]> calculateStarPointsByCommunityForUser(@Param("userId") Long userId);
+
+    @Query("select community.name as community, " +
+        "(" +
+            "select sum(s.value) " +
+            "from Scale s, Contribution c " +
+            "join s.activity sActivity " +
+            "join c.activity cActivity " +
+            "join c.community com " +
+            "where com.id=community.id " +
+            "and sActivity=cActivity" +
+        ") as starpoints " +
+        "from Community community " +
+        "group by community.name")
+    List<Object[]> calculateStarPointsByCommunity();
 }

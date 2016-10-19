@@ -6,6 +6,12 @@
                 "column" : {
                     "community" : "Communauté"
                 }
+            },
+            "allstarpoints": {
+                "title": "StarPoints par communautés",
+                "column" : {
+                    "community" : "Communauté"
+                }
             }
         }
     }
