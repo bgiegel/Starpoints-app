@@ -24,7 +24,7 @@ public class CommunityService {
     private CommunityRepository communityRepository;
 
     public void delete(Long id) throws CommunityReferencedByContributionsException {
-        Page<Contribution> contributions = contributionRepository.findAllContributionForACommunity(id, new PageRequest(PAGE_NUMBER, PAGE_SIZE));
+        Page<Contribution> contributions = contributionRepository.findAllForACommunity(id, new PageRequest(PAGE_NUMBER, PAGE_SIZE));
         if (contributions.hasContent()){
             throw new CommunityReferencedByContributionsException();
         }

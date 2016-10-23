@@ -278,6 +278,15 @@ public class ContributionResourceIntTest {
 
     @Test
     @Transactional
+    public void getUserContributions() throws Exception {
+
+        restContributionMockMvc.perform(get("/api/contributions/author/{login}", "bgiegel")
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
     public void getUserContributionsByQuarter_wrongQuarterFormat() throws Exception {
 
         restContributionMockMvc.perform(get("/api/contributions-by-quarter/{quarter}/{login}", "Q3-qsdsfq", "bgiegel")

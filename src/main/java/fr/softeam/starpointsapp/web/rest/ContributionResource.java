@@ -103,6 +103,19 @@ public class ContributionResource {
     }
 
     /**
+     * GET  /contributions/author/{login} : Récupère toutes les contributions créée par un utilisateur.
+     *
+     */
+    @RequestMapping(value = "/contributions/author/{login}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Contribution> getAllContributionsFromAnAuthor(@PathVariable String login, Pageable pageable) {
+        log.debug("REST request to get all Contributions");
+        return contributionRepository.findAllFromAnAuthor(login, pageable).getContent();
+    }
+
+    /**
      * GET  contributions-from-communities-leaded-by/:leader : Récupère toutes les contributions des communautés que dirige le leader passé en paramètre.
      *
      */

@@ -26,7 +26,7 @@ public class ContributionService {
     public Page<Contribution> getUserContributionsByQuarter(String quarter, String login, Pageable pageable) {
 
         QuarterDTO quarterDTO = QuarterUtil.convertToQuarterDTO(quarter);
-        return contributionRepository.findAllFromUserByQuarter(login, quarterDTO.getStartMonth(), quarterDTO.getEndMonth(), quarterDTO.getYear(), pageable);
+        return contributionRepository.findAllFromAnAuthorByQuarter(login, quarterDTO.getStartMonth(), quarterDTO.getEndMonth(), quarterDTO.getYear(), pageable);
     }
 
 }

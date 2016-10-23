@@ -36,7 +36,7 @@ public class ActivityService {
      * @param id de l'activité a supprimer
      */
     public void deleteActivity(Long id) throws ActivityReferencedByContributionsException {
-        Page<Contribution> contributions = contributionRepository.findAllContributionForAnActivity(id, new PageRequest(PAGE_NUMBER, PAGE_SIZE));
+        Page<Contribution> contributions = contributionRepository.findAllForAnActivity(id, new PageRequest(PAGE_NUMBER, PAGE_SIZE));
         if (contributions.hasContent()){
             throw new ActivityReferencedByContributionsException();
         }

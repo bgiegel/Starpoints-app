@@ -51,7 +51,7 @@ public class ContributionServiceIntTest {
         //when
         Page<Contribution> contributions = contributionService.getUserContributionsByQuarter(Q3_2016, DEFAULT_LOGIN, PAGE_REQUEST);
 
-        assertThat(contributions.getContent()).containsExactly(julyContrib, augustContrib, septemberContrib);
+        assertThat(contributions.getContent()).containsExactly(septemberContrib,augustContrib,julyContrib);
     }
 
     @Test
@@ -113,7 +113,7 @@ public class ContributionServiceIntTest {
             withAuthor(user2).
             build();
 
-        List<Contribution> contributions = Arrays.asList(julyContrib, july2015Contrib, augustContrib, septemberContrib, juneContrib, user2Contribution);
+        List<Contribution> contributions = Arrays.asList(julyContrib, july2015Contrib, septemberContrib, augustContrib, juneContrib, user2Contribution);
         contributionRepository.save(contributions);
     }
 }
