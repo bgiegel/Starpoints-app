@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Contribution entity.
  */
-@SuppressWarnings("unused")
 public interface ContributionRepository extends JpaRepository<Contribution,Long> {
 
     @Query("select contribution from Contribution contribution left join fetch contribution.community c left join fetch c.members where contribution.id = :id")
@@ -26,4 +25,12 @@ public interface ContributionRepository extends JpaRepository<Contribution,Long>
 
     @Query("select contribution from Contribution contribution join contribution.community community where community.id = :communityId")
     Page<Contribution> findAllContributionForACommunity(@Param("communityId") Long id, Pageable pageable);
+
+    @Query("select c " +
+        "from Contribution c " +
+        "where c.author.login= :login " +
+        "and month(c.deliverableDate) <= :endMonth " +
+        "and month(c.deliverableDate) >= :startMonth " +
+        "and year(c.deliverableDate) = :year")
+    Page<Contribution> findAllFromUserByQuarter(@Param("login") String login, @Param("startMonth") Integer startMonth, @Param("endMonth") Integer endMonth, @Param("year") Integer year, Pageable pageable);
 }

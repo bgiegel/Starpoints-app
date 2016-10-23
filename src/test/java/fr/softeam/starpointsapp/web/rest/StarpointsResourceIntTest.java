@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.contains;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,10 +47,7 @@ public class StarpointsResourceIntTest {
         restStarPointsMockMvc.perform(get("/api/starpoints-by-community/5"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[0].community").value(equalTo("Java")))
-            .andExpect(jsonPath("$.[1].community").value(equalTo("Agile")))
-            .andExpect(jsonPath("$.[0].starpoints").value(equalTo(170)))
-            .andExpect(jsonPath("$.[1].starpoints").value(equalTo(0)));
+            .andExpect(jsonPath("$.[*].community").value(contains("Java", "Agile")));
     }
 
     @Test
@@ -59,9 +56,6 @@ public class StarpointsResourceIntTest {
         restStarPointsMockMvc.perform(get("/api/starpoints-by-community"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[0].community").value(equalTo("Java")))
-            .andExpect(jsonPath("$.[1].community").value(equalTo("Agile")))
-            .andExpect(jsonPath("$.[0].starpoints").value(equalTo(170)))
-            .andExpect(jsonPath("$.[1].starpoints").value(equalTo(575)));
+            .andExpect(jsonPath("$.[*].community").value(contains("Java", "Agile")));
     }
 }

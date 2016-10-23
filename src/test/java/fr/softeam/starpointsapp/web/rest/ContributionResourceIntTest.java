@@ -2,24 +2,20 @@ package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
 import fr.softeam.starpointsapp.domain.Community;
-
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
-
 import fr.softeam.starpointsapp.repository.UserRepository;
+import fr.softeam.starpointsapp.service.ContributionService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.hasItem;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,9 +27,13 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -74,6 +74,9 @@ public class ContributionResourceIntTest {
     private ContributionRepository contributionRepository;
 
     @Inject
+    private ContributionService contributionService;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -93,6 +96,7 @@ public class ContributionResourceIntTest {
         MockitoAnnotations.initMocks(this);
         ContributionResource contributionResource = new ContributionResource();
         ReflectionTestUtils.setField(contributionResource, "contributionRepository", contributionRepository);
+        ReflectionTestUtils.setField(contributionResource, "contributionService", contributionService);
         this.restContributionMockMvc = MockMvcBuilders.standaloneSetup(contributionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
@@ -156,9 +160,9 @@ public class ContributionResourceIntTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(contribution.getId().intValue())))
                 .andExpect(jsonPath("$.[*].deliverableDate").value(hasItem(DEFAULT_DELIVERABLE_DATE.toString())))
-                .andExpect(jsonPath("$.[*].deliverableUrl").value(hasItem(DEFAULT_DELIVERABLE_URL.toString())))
-                .andExpect(jsonPath("$.[*].deliverableName").value(hasItem(DEFAULT_DELIVERABLE_NAME.toString())))
-                .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT.toString())))
+                .andExpect(jsonPath("$.[*].deliverableUrl").value(hasItem(DEFAULT_DELIVERABLE_URL)))
+                .andExpect(jsonPath("$.[*].deliverableName").value(hasItem(DEFAULT_DELIVERABLE_NAME)))
+                .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)))
                 .andExpect(jsonPath("$.[*].preparatoryDate1").value(hasItem(DEFAULT_PREPARATORY_DATE_1.toString())))
                 .andExpect(jsonPath("$.[*].preparatoryDate2").value(hasItem(DEFAULT_PREPARATORY_DATE_2.toString())));
     }
@@ -175,9 +179,9 @@ public class ContributionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(contribution.getId().intValue()))
             .andExpect(jsonPath("$.deliverableDate").value(DEFAULT_DELIVERABLE_DATE.toString()))
-            .andExpect(jsonPath("$.deliverableUrl").value(DEFAULT_DELIVERABLE_URL.toString()))
-            .andExpect(jsonPath("$.deliverableName").value(DEFAULT_DELIVERABLE_NAME.toString()))
-            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT.toString()))
+            .andExpect(jsonPath("$.deliverableUrl").value(DEFAULT_DELIVERABLE_URL))
+            .andExpect(jsonPath("$.deliverableName").value(DEFAULT_DELIVERABLE_NAME))
+            .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT))
             .andExpect(jsonPath("$.preparatoryDate1").value(DEFAULT_PREPARATORY_DATE_1.toString()))
             .andExpect(jsonPath("$.preparatoryDate2").value(DEFAULT_PREPARATORY_DATE_2.toString()));
     }
@@ -263,11 +267,59 @@ public class ContributionResourceIntTest {
             .andExpect(jsonPath("$.[*].deliverableName").value(not(hasItem(agileContribution1.getDeliverableName()))));
     }
 
-    private void given_a_contributions_linked_to_communities() {
-        User leaderOfJavaCommunity = new User();
-        leaderOfJavaCommunity.setLogin(USER1_LOGIN);
-        leaderOfJavaCommunity.setPassword(DEFAULT_PASSWORD);
+    @Test
+    @Transactional
+    public void getUserContributionsByQuarter() throws Exception {
 
+        restContributionMockMvc.perform(get("/api/contributions-by-quarter/{quarter}/{login}", "Q3-2016", "bgiegel")
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    public void getUserContributionsByQuarter_wrongQuarterFormat() throws Exception {
+
+        restContributionMockMvc.perform(get("/api/contributions-by-quarter/{quarter}/{login}", "Q3-qsdsfq", "bgiegel")
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isBadRequest());
+    }
+
+    private void given_a_contributions_linked_to_communities() {
+        User leaderOfJavaCommunity = buildUser(USER1_LOGIN);
+        Community javaCommunity = buildJavaCommunityAndContributions(leaderOfJavaCommunity);
+
+        User leaderOfAgileCommunity = buildUser("agileLeader");
+        Community agileCommunity = buildAgileCommunityAndContributions(leaderOfAgileCommunity);
+
+        userRepository.save(leaderOfJavaCommunity);
+        userRepository.save(leaderOfAgileCommunity);
+        communityRepository.save(javaCommunity);
+        communityRepository.save(agileCommunity);
+        contributionRepository.save(javaContribution1);
+        contributionRepository.save(javaContribution2);
+        contributionRepository.save(agileContribution1);
+    }
+
+    private User buildUser(String agileLeader) {
+        User leaderOfAgileCommunity = new User();
+        leaderOfAgileCommunity.setLogin(agileLeader);
+        leaderOfAgileCommunity.setPassword(DEFAULT_PASSWORD);
+        return leaderOfAgileCommunity;
+    }
+
+    private Community buildAgileCommunityAndContributions(User leaderOfAgileCommunity) {
+        Community agileCommunity = new Community();
+        agileCommunity.setName("Agile");
+        agileCommunity.setLeader(leaderOfAgileCommunity);
+
+        agileContribution1 = new Contribution();
+        agileContribution1.setDeliverableName("agile contribution 1");
+        agileContribution1.setCommunity(agileCommunity);
+        return agileCommunity;
+    }
+
+    private Community buildJavaCommunityAndContributions(User leaderOfJavaCommunity) {
         Community javaCommunity = new Community();
         javaCommunity.setName("Java");
         javaCommunity.setLeader(leaderOfJavaCommunity);
@@ -279,32 +331,11 @@ public class ContributionResourceIntTest {
         javaContribution2 = new Contribution();
         javaContribution2.setDeliverableName("java contribution 2");
         javaContribution2.setCommunity(javaCommunity);
-
-        User leaderOfAgileCommunity = new User();
-        leaderOfAgileCommunity.setLogin("agileLeader");
-        leaderOfAgileCommunity.setPassword(DEFAULT_PASSWORD);
-
-        Community agileCommunity = new Community();
-        agileCommunity.setName("Agile");
-        agileCommunity.setLeader(leaderOfAgileCommunity);
-
-        agileContribution1 = new Contribution();
-        agileContribution1.setDeliverableName("agile contribution 1");
-        agileContribution1.setCommunity(agileCommunity);
-
-        userRepository.save(leaderOfJavaCommunity);
-        userRepository.save(leaderOfAgileCommunity);
-        communityRepository.save(javaCommunity);
-        communityRepository.save(agileCommunity);
-        contributionRepository.save(javaContribution1);
-        contributionRepository.save(javaContribution2);
-        contributionRepository.save(agileContribution1);
+        return javaCommunity;
     }
 
     private void given_a_contribution_linked_to_a_community() {
-        User user1 = new User();
-        user1.setLogin(USER1_LOGIN);
-        user1.setPassword(DEFAULT_PASSWORD);
+        User user1 = buildUser(USER1_LOGIN);
 
         Set<User> members = new HashSet<>();
         members.add(user1);

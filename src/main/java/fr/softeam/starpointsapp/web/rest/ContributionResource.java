@@ -4,9 +4,15 @@ import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
+import fr.softeam.starpointsapp.service.ContributionService;
+import fr.softeam.starpointsapp.service.exception.QuarterFormatException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
+import fr.softeam.starpointsapp.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +36,9 @@ public class ContributionResource {
 
     @Inject
     private ContributionRepository contributionRepository;
+
+    @Inject
+    private ContributionService contributionService;
 
     /**
      * POST  /contributions : Create a new contribution.
@@ -96,7 +105,6 @@ public class ContributionResource {
     /**
      * GET  contributions-from-communities-leaded-by/:leader : Récupère toutes les contributions des communautés que dirige le leader passé en paramètre.
      *
-     * @return the ResponseEntity with status 200 (OK) and the list of contributions in body
      */
     @RequestMapping(value = "/contributions-from-communities-leaded-by/{leader}",
         method = RequestMethod.GET,
@@ -105,6 +113,29 @@ public class ContributionResource {
     public List<Contribution> getContributionsFromLeaderCommunities(@PathVariable String leader) {
         log.debug("REST request to get all Contributions");
         return contributionRepository.findAllFromCommunitiesLeadedBy(leader);
+    }
+
+    /**
+     * GET  contributions-by-quarter/:login : Récupère toutes les contributions par trimestre.
+     *
+     */
+    @RequestMapping(value = "/contributions-by-quarter/{quarter}/{login}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<?> getUserContributionsByQuarter(@PathVariable String quarter, @PathVariable String login, Pageable pageable) throws URISyntaxException {
+        log.debug("REST request to get all Contributions");
+
+        Page<Contribution> page;
+        try {
+            page = contributionService.getUserContributionsByQuarter(quarter, login, pageable);
+        } catch (QuarterFormatException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
+                "wrongQuarterFormat",
+                "Le format du trimestre est incorrect. Ex: Q3-2016")).build();
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-by-quarter");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
