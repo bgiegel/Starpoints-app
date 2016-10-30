@@ -25,6 +25,10 @@
             "activity": "Activité",
             "community": "Communauté",
             "author": "Auteur"
+        },
+        "mycontributions": {
+            "title": "Mes Contributions",
+            "noresults": "Aucune contribution n'a été trouvée."
         }
     }
 }

@@ -110,9 +110,11 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Contribution> getAllContributionsFromAnAuthor(@PathVariable String login, Pageable pageable) {
+    public ResponseEntity<?> getAllContributionsFromAnAuthor(@PathVariable String login, Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get all Contributions");
-        return contributionRepository.findAllFromAnAuthor(login, pageable).getContent();
+        Page<Contribution> page = contributionRepository.findAllFromAnAuthor(login, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-by-quarter");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**

@@ -38,6 +38,22 @@
                     return parseJson(data);
                 }
             },
+            'getAllFromAnAuthor': {
+                method: 'GET',
+                isArray: true,
+                url:'api/contributions/author/:login',
+                transformResponse: function (data) {
+                    return parseJson(data);
+                }
+            },
+            'fromUserByQuarter': {
+                method: 'GET',
+                isArray: true,
+                url:'api/contributions-by-quarter/:quarter/:login',
+                transformResponse: function (data) {
+                    return parseJson(data);
+                }
+            },
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
