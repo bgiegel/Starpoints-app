@@ -28,7 +28,10 @@
         },
         "mycontributions": {
             "title": "Mes Contributions",
-            "noresults": "Aucune contribution n'a été trouvée."
+            "noresults": "Aucune contribution n'a été trouvée.",
+            "filter": "Filtrer",
+            "displayAll": "Tout afficher",
+            "filterByQuarter": "Filtrer par trimestre"
         }
     }
 }

@@ -3,41 +3,38 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <br/>
-    <button type="button" class="btn btn-primary" ng-click="vm.filterByQuarter = !vm.filterByQuarter">Filtrer par
-        Trimestre
+    <button type="button" class="btn btn-primary" ng-click="vm.filterByQuarter = !vm.filterByQuarter">
+        <span data-translate="starPointsApp.mycontributions.filterByQuarter">Filtrer par trimestre</span>
     </button>
     <div uib-collapse="!vm.filterByQuarter">
-        <form name="filterForm" role="form" novalidate ng-submit="vm.save()">
-            <div class="row">
-                <div class="col-xs-4 col-md-2">
-                    <p class="input-group">
-                        <label>
-                            <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
-                                   ng-model="vm.year"
-                                   is-open="vm.popup.opened" datepicker-options="vm.dateOptions"
-                                   ng-required="true" close-text="Fermer"/>
-                        </label>
+        <form name="filterForm" role="form" ng-submit="vm.loadContributions()">
+        <div class="row">
+            <div class="col-xs-4 col-md-2">
+                <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.year"
+                           is-open="vm.popup.opened" datepicker-options="vm.dateOptions"
+                           ng-required="true" close-text="Fermer"  ng-pattern="^(\d{4})$"/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()">
                         <i class="glyphicon glyphicon-calendar"></i>
                     </button>
                 </span>
-                    </p>
-                </div>
-                <div class="col-xs-8">
-                    <div class="btn-group">
-                        <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q1'">Q1</label>
-                        <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q2'">Q2</label>
-                        <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q3'">Q3</label>
-                        <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q4'">Q4</label>
-                    </div>
-                    <button type="button" class="btn btn-success" ng-click="vm.loadContributions()">Filtrer</button>
-                    <button type="button" class="btn btn-success"
-                            ng-click="vm.filterByQuarter=false; vm.loadContributions()">Tout afficher
-                    </button>
-                </div>
+                </p>
             </div>
-        </form>
+            <div class="col-xs-8">
+                <div class="btn-group">
+                    <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q1'">Q1</label>
+                    <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q2'">Q2</label>
+                    <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q3'">Q3</label>
+                    <label class="btn btn-primary" ng-model="vm.quarterId" uib-btn-radio="'Q4'">Q4</label>
+                </div>
+                <button type="submit" class="btn btn-success"><span data-translate="starPointsApp.mycontributions.filter">Filtrer</span></button>
+                <button type="button" class="btn btn-success" ng-click="vm.filterByQuarter=false; vm.loadContributions()">
+                    <span data-translate="starPointsApp.mycontributions.displayAll">Tout afficher</span>
+                </button>
+            </div>
+        </div>
+            </form>
     </div>
 
 
