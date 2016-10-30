@@ -47,7 +47,7 @@ public class Scale implements Serializable {
     private Integer value;
 
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn
     private Activity activity;
 
     public Long getId() {
