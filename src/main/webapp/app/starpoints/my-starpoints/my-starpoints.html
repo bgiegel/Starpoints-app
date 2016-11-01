@@ -2,21 +2,27 @@
     <h2><span data-translate="starPointsApp.starpoints.mystarpoints.title">My StarPoints</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-            <tr>
-                <th><span data-translate="starPointsApp.starpoints.mystarpoints.column.community">Community</span></th>
-                <th><span>StarPoints</span></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="sc in vm.starpointsByCommunity">
-                <td>{{sc.community}}</td>
-                <td>{{sc.starpoints}}</td>
-            </tr>
-            </tbody>
-        </table>
+    <div ng-if="vm.starpointsByCommunity.length>0">
+        <div class="table-responsive">
+            <table class="jh-table table table-striped">
+                <thead>
+                <tr>
+                    <th><span data-translate="starPointsApp.starpoints.mystarpoints.column.community">Community</span>
+                    </th>
+                    <th><span>StarPoints</span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="sc in vm.starpointsByCommunity">
+                    <td>{{sc.community}}</td>
+                    <td>{{sc.starpoints}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="alert alert-info" ng-if="vm.starpointsByCommunity.length<=0">
+        <span data-translate="starPointsApp.starpoints.mystarpoints.noresults">Vous n'avez aucun StarPoints pour le moment.</span>
     </div>
 </div>

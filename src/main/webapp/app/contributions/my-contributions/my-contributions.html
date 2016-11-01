@@ -78,7 +78,7 @@
                             ng-change="vm.transition()"></uib-pagination>
         </div>
     </div>
-    <div class="alert alert-info" ng-if="vm.contributions.length==0">
+    <div class="alert alert-info" ng-if="vm.contributions.length<=0">
         <span data-translate="starPointsApp.mycontributions.noresults">Aucune contribution n'a été trouvée.</span>
     </div>
 </div>

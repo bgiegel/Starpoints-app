@@ -5,13 +5,15 @@
                 "title": "Mes StarPoints",
                 "column" : {
                     "community" : "Communauté"
-                }
+                },
+                "noresults": "Vous n'avez aucun StarPoints pour le moment."
             },
             "allstarpoints": {
                 "title": "StarPoints par communautés",
                 "column" : {
                     "community" : "Communauté"
-                }
+                },
+                "noresults": "Il n'y a aucun StarPoints pour le moment."
             }
         }
     }
