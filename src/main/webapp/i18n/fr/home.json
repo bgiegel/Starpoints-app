@@ -1,7 +1,8 @@
 {
     "home": {
-        "title": "Bienvenue, Java Hipster !",
-        "subtitle": "Ceci est votre page d'accueil",
+        "title": "Bienvenue, {{username}} !",
+        "titleNotAuthenticated": "Bienvenue !",
+        "subtitle": "<p>StarPoints App permet à tous les membres des StarTech Softeam-Cadextan de consulter leur starpoints.</p><p>Vous pouvez également consulter toutes vos contributions.</p>",
         "logged": {
             "message": "Vous êtes connecté en tant que \"{{username}}\"."
         },

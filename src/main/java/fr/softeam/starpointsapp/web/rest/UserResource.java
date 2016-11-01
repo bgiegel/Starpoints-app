@@ -5,9 +5,9 @@ import fr.softeam.starpointsapp.config.Constants;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
-import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.MailService;
 import fr.softeam.starpointsapp.service.UserService;
+import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import fr.softeam.starpointsapp.web.rest.util.PaginationUtil;
 import fr.softeam.starpointsapp.web.rest.vm.ManagedUserVM;
@@ -29,7 +29,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -63,7 +62,6 @@ public class UserResource {
     /**
      * Predicat pour supprimer tous les utilisateurs system de la liste d'utilisateurs
      */
-    public static final Predicate<User> SYSTEM_USERS = user -> !user.getCreatedBy().equals("system");
     public static final boolean WITH_COMMUNITIES = true;
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
@@ -170,7 +168,6 @@ public class UserResource {
         throws URISyntaxException {
             Page<User> page = userRepository.findAllWithAuthorities(pageable);
             List<ManagedUserVM> managedUserVMs = page.getContent().stream()
-                .filter(SYSTEM_USERS)
                 .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
                 .collect(Collectors.toList());
             HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
