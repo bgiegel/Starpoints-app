@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
  */
 public class UserDTO {
 
+    private Long id;
+
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
@@ -51,7 +53,7 @@ public class UserDTO {
     }
 
     public UserDTO(User user, boolean withCommunities) {
-        this(user.getLogin(), user.getFirstName(), user.getLastName(),
+        this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
             user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()),
             user.getEntryDate());
@@ -60,10 +62,11 @@ public class UserDTO {
         }
     }
 
-    public UserDTO(String login, String firstName, String lastName,
+    public UserDTO(Long id, String login, String firstName, String lastName,
                    String email, boolean activated, String langKey,
                    Set<String> authorities, LocalDate entryDate) {
 
+        this.id = id;
         this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -118,9 +121,18 @@ public class UserDTO {
         this.communities = communities;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
+            "id='" + id + '\'' +
             "login='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +

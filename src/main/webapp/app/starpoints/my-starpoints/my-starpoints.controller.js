@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('MyStarPointsController', MyStarPointsController);
 
-    MyStarPointsController.$inject = ['$scope', '$stateParams', 'Principal', 'Starpoints'];
+    MyStarPointsController.$inject = ['Principal', 'Starpoints'];
 
-    function MyStarPointsController ($scope, $stateParams, Principal, Starpoints) {
+    function MyStarPointsController (Principal, Starpoints) {
         var vm = this;
 
         vm.starpointsByCommunity = [];
@@ -19,7 +19,7 @@
              * On récupère l'utilisateur actuellement connecté et appel le service Starpoints.byCommunity
              */
             Principal.identity().then(function(currentUser) {
-                Starpoints.byCommunity({userId:5}, function(result) {
+                Starpoints.byCommunity({userId:currentUser.id}, function(result) {
                     vm.starpointsByCommunity = result;
                 });
             });
