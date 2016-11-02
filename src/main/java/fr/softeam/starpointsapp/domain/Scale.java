@@ -30,7 +30,7 @@ public class Scale implements Serializable {
     @ApiModelProperty(value = ""
         + "Date de début incluse                                              "
         + "")
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
     /**
@@ -43,10 +43,10 @@ public class Scale implements Serializable {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private Integer value;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn
     private Activity activity;
 

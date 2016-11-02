@@ -1,8 +1,11 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.domain.Scale;
+import fr.softeam.starpointsapp.repository.ActivityRepository;
 import fr.softeam.starpointsapp.repository.ScaleRepository;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -52,13 +54,13 @@ public class ScaleResourceIntTest {
     private ScaleRepository scaleRepository;
 
     @Inject
+    private ActivityRepository activityRepository;
+
+    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Inject
-    private EntityManager em;
 
     private MockMvc restScaleMockMvc;
 
@@ -74,23 +76,22 @@ public class ScaleResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Scale createEntity(EntityManager em) {
+    public Scale createEntity() {
+        Activity activity = new ActivityBuilder().build();
+        activityRepository.save(activity);
+
         Scale scale = new Scale();
         scale.setStartDate(DEFAULT_START_DATE);
         scale.setEndDate(DEFAULT_END_DATE);
         scale.setValue(DEFAULT_VALUE);
+        scale.setActivity(activity);
+
         return scale;
     }
 
     @Before
     public void initTest() {
-        scale = createEntity(em);
+        scale = createEntity();
     }
 
     @Test

@@ -21,10 +21,10 @@ public class Level implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     private String value;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Long getId() {

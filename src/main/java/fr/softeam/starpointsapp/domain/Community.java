@@ -23,7 +23,7 @@ public class Community implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany
@@ -33,7 +33,7 @@ public class Community implements Serializable {
                inverseJoinColumns = @JoinColumn(name="members_id", referencedColumnName="ID"))
     private Set<User> members = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User leader;
 
     public Long getId() {

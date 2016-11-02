@@ -22,16 +22,16 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
-            
+
             <column name="leader_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        
+
         <createTable tableName="community_members">
             <column name="members_id" type="bigint">
                 <constraints nullable="false"/>
@@ -42,6 +42,6 @@
         </createTable>
 
         <addPrimaryKey columnNames="communities_id, members_id" tableName="community_members"/>
-        
+
     </changeSet>
 </databaseChangeLog>

@@ -30,7 +30,7 @@ public class Contribution implements Serializable {
     @ApiModelProperty(value = ""
         + "Date de rédaction de l’article, date de la vraie présentation      "
         + "")
-    @Column(name = "deliverable_date")
+    @Column(name = "deliverable_date", nullable = false)
     private LocalDate deliverableDate;
 
     /**
@@ -50,7 +50,7 @@ public class Contribution implements Serializable {
     @ApiModelProperty(value = ""
         + "Nom de l'article ou de la présentation                             "
         + "")
-    @Column(name = "deliverable_name")
+    @Column(name = "deliverable_name", nullable = false)
     private String deliverableName;
 
     @Column(name = "comment")
@@ -76,13 +76,13 @@ public class Contribution implements Serializable {
     @Column(name = "preparatory_date_2")
     private LocalDate preparatoryDate2;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Activity activity;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Community community;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User author;
 
     public Long getId() {

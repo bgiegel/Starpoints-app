@@ -8,34 +8,46 @@ import fr.softeam.starpointsapp.domain.User;
 import java.time.LocalDate;
 
 public class ContributionBuilder {
+    private static final String DEFAULT_NAME = "Default name";
+
     private Contribution contribution;
 
-    public ContributionBuilder() {
+    public ContributionBuilder(Activity activity, Community community, User author) {
         contribution = new Contribution();
-    }
-
-    public ContributionBuilder withName(String deliverableName) {
-        contribution.setDeliverableName(deliverableName);
-        return this;
-    }
-
-    public ContributionBuilder withActivity(Activity activity) {
+        contribution.setDeliverableDate(LocalDate.now());
+        contribution.setDeliverableName(DEFAULT_NAME);
         contribution.setActivity(activity);
-        return this;
-    }
-
-    public ContributionBuilder withCommunity(Community community) {
         contribution.setCommunity(community);
-        return this;
+        contribution.setAuthor(author);
     }
 
-    public ContributionBuilder withAuthor(User author) {
-        contribution.setAuthor(author);
+    public ContributionBuilder withDeliverableName(String deliverableName) {
+        contribution.setDeliverableName(deliverableName);
         return this;
     }
 
     public ContributionBuilder withDeliverableDate(LocalDate date) {
         contribution.setDeliverableDate(date);
+        return this;
+    }
+
+    public ContributionBuilder withDeliverableUrl(String url) {
+        contribution.setDeliverableUrl(url);
+        return this;
+    }
+
+    public ContributionBuilder withComment(String comment) {
+        contribution.setComment(comment);
+        return this;
+    }
+
+    public ContributionBuilder withPreparatoryDate1(LocalDate date) {
+        contribution.setPreparatoryDate1(date);
+        return this;
+    }
+
+    public ContributionBuilder withPreparatoryDate2(LocalDate date) {
+        contribution.setPreparatoryDate2(date);
         return this;
     }
 

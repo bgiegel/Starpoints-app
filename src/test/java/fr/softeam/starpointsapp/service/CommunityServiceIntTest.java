@@ -1,11 +1,19 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.domain.Community;
+import fr.softeam.starpointsapp.domain.Contribution;
+import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.repository.ActivityRepository;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
+import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.service.exception.CommunityReferencedByContributionsException;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
 import fr.softeam.starpointsapp.util.ContributionBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +33,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = StarPointsApp.class)
 @Transactional
 public class CommunityServiceIntTest {
+
+    @Inject
+    private ActivityRepository activityRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private CommunityRepository communityRepository;
@@ -62,13 +76,20 @@ public class CommunityServiceIntTest {
     private void givenACommunityWithRelatedContributions() {
         buildCommunity("communauté avec contributions");
 
-        contributionRepository.save(new ContributionBuilder().withCommunity(community).build());
+        User user = new UserBuilder("contributionAuthor").build();
+        Activity activity = new ActivityBuilder().build();
+        Contribution contribution = new ContributionBuilder(activity, community, user).build();
+
+        userRepository.save(user);
+        activityRepository.save(activity);
+        contributionRepository.save(contribution);
     }
 
     private void buildCommunity(String name) {
-        community = new Community();
-        community.setName(name);
+        User user = new UserBuilder("communityLeader").build();
+        community = new CommunityBuilder(user).withName(name).build();
 
+        userRepository.save(user);
         communityRepository.save(community);
     }
 

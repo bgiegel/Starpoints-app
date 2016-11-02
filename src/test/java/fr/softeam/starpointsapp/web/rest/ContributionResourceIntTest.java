@@ -1,13 +1,19 @@
 package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.repository.ActivityRepository;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.service.ContributionService;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
+import fr.softeam.starpointsapp.util.ContributionBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashSet;
@@ -61,11 +66,14 @@ public class ContributionResourceIntTest {
 
     private static final LocalDate DEFAULT_PREPARATORY_DATE_2 = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PREPARATORY_DATE_2 = LocalDate.now(ZoneId.systemDefault());
-    public static final String DEFAULT_PASSWORD = "$2a$10$WGW1mRkah133EMBcJGQnf.2yHpO7gTbxQKVK2sVPVgmr3G.lFKcFO";
     public static final String USER1_LOGIN = "user1";
 
     @Inject
     private CommunityRepository communityRepository;
+
+
+    @Inject
+    private ActivityRepository activityRepository;
 
     @Inject
     private UserRepository userRepository;
@@ -82,14 +90,15 @@ public class ContributionResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
-    private EntityManager em;
-
     private MockMvc restContributionMockMvc;
 
     private Contribution contribution, javaContribution1, javaContribution2, agileContribution1;
 
-    private Community community;
+    private Community javaCommunity;
+
+    private Activity activity;
+
+    private User author;
 
     @PostConstruct
     public void setup() {
@@ -102,26 +111,30 @@ public class ContributionResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Contribution createEntity(EntityManager em) {
-        Contribution contribution = new Contribution();
-        contribution.setDeliverableDate(DEFAULT_DELIVERABLE_DATE);
-        contribution.setDeliverableUrl(DEFAULT_DELIVERABLE_URL);
-        contribution.setDeliverableName(DEFAULT_DELIVERABLE_NAME);
-        contribution.setComment(DEFAULT_COMMENT);
-        contribution.setPreparatoryDate1(DEFAULT_PREPARATORY_DATE_1);
-        contribution.setPreparatoryDate2(DEFAULT_PREPARATORY_DATE_2);
-        return contribution;
+    public Contribution createEntity() {
+        User leader = new UserBuilder("leader").build();
+        author = new UserBuilder("author").build();
+        activity = new ActivityBuilder().build();
+        Community community = new CommunityBuilder(leader).build();
+
+        userRepository.save(leader);
+        userRepository.save(author);
+        activityRepository.save(activity);
+        communityRepository.save(community);
+
+        return new ContributionBuilder(activity, community, author).
+            withDeliverableName(DEFAULT_DELIVERABLE_NAME).
+            withDeliverableDate(DEFAULT_DELIVERABLE_DATE).
+            withDeliverableUrl(DEFAULT_DELIVERABLE_URL).
+            withComment(DEFAULT_COMMENT).
+            withPreparatoryDate1(DEFAULT_PREPARATORY_DATE_1).
+            withPreparatoryDate2(DEFAULT_PREPARATORY_DATE_2).
+            build();
     }
 
     @Before
     public void initTest() {
-        contribution = createEntity(em);
+        contribution = createEntity();
     }
 
     @Test
@@ -249,16 +262,16 @@ public class ContributionResourceIntTest {
     public void findOneWithCommunityMembers() throws Exception {
         given_a_contribution_linked_to_a_community();
 
-        restContributionMockMvc.perform(get("/api/contributions/{id}", contribution.getId())
+        restContributionMockMvc.perform(get("/api/contributions/{id}", javaContribution1.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(jsonPath("$.community.name").value(community.getName()))
-            .andExpect(jsonPath("$.community.members.[*].login").value(USER1_LOGIN));
+            .andExpect(jsonPath("$.community.name").value(javaCommunity.getName()))
+            .andExpect(jsonPath("$.community.members.[*].login").value("member"));
     }
 
     @Test
     @Transactional
     public void getContributionsFromLeaderCommunities() throws Exception {
-        given_a_contributions_linked_to_communities();
+        given_contributions_linked_to_communities();
 
         restContributionMockMvc.perform(get("/api/contributions-from-communities-leaded-by/{leader}", USER1_LOGIN)
             .accept(TestUtil.APPLICATION_JSON_UTF8))
@@ -294,11 +307,11 @@ public class ContributionResourceIntTest {
             .andExpect(status().isBadRequest());
     }
 
-    private void given_a_contributions_linked_to_communities() {
-        User leaderOfJavaCommunity = buildUser(USER1_LOGIN);
+    private void given_contributions_linked_to_communities() {
+        User leaderOfJavaCommunity = new UserBuilder(USER1_LOGIN).build();
         Community javaCommunity = buildJavaCommunityAndContributions(leaderOfJavaCommunity);
 
-        User leaderOfAgileCommunity = buildUser("agileLeader");
+        User leaderOfAgileCommunity = new UserBuilder("agileLeader").build();
         Community agileCommunity = buildAgileCommunityAndContributions(leaderOfAgileCommunity);
 
         userRepository.save(leaderOfJavaCommunity);
@@ -310,54 +323,41 @@ public class ContributionResourceIntTest {
         contributionRepository.save(agileContribution1);
     }
 
-    private User buildUser(String agileLeader) {
-        User leaderOfAgileCommunity = new User();
-        leaderOfAgileCommunity.setLogin(agileLeader);
-        leaderOfAgileCommunity.setPassword(DEFAULT_PASSWORD);
-        return leaderOfAgileCommunity;
-    }
-
     private Community buildAgileCommunityAndContributions(User leaderOfAgileCommunity) {
-        Community agileCommunity = new Community();
-        agileCommunity.setName("Agile");
-        agileCommunity.setLeader(leaderOfAgileCommunity);
+        Community agileCommunity = new CommunityBuilder(leaderOfAgileCommunity).withName("Agile").build();
 
-        agileContribution1 = new Contribution();
-        agileContribution1.setDeliverableName("agile contribution 1");
-        agileContribution1.setCommunity(agileCommunity);
+        agileContribution1 = new ContributionBuilder(activity, agileCommunity, author).
+            withDeliverableName("agile contribution 1").
+            build();
         return agileCommunity;
     }
 
     private Community buildJavaCommunityAndContributions(User leaderOfJavaCommunity) {
-        Community javaCommunity = new Community();
-        javaCommunity.setName("Java");
-        javaCommunity.setLeader(leaderOfJavaCommunity);
+        Community javaCommunity = new CommunityBuilder(leaderOfJavaCommunity).withName("Java").build();
 
-        javaContribution1 = new Contribution();
-        javaContribution1.setDeliverableName("java contribution 1");
-        javaContribution1.setCommunity(javaCommunity);
+        javaContribution1 = new ContributionBuilder(activity, javaCommunity, author).
+            withDeliverableName("java contribution 1").
+            build();
 
-        javaContribution2 = new Contribution();
-        javaContribution2.setDeliverableName("java contribution 2");
-        javaContribution2.setCommunity(javaCommunity);
+        javaContribution2 = new ContributionBuilder(activity, javaCommunity, author).
+            withDeliverableName("java contribution 2").
+            build();
         return javaCommunity;
     }
 
     private void given_a_contribution_linked_to_a_community() {
-        User user1 = buildUser(USER1_LOGIN);
-
+        User member = new UserBuilder("member").build();
         Set<User> members = new HashSet<>();
-        members.add(user1);
+        members.add(member);
 
-        this.community = new Community();
-        community.setName("Java");
-        community.setMembers(members);
+        User leaderOfJavaCommunity = new UserBuilder(USER1_LOGIN).build();
+        javaCommunity = buildJavaCommunityAndContributions(leaderOfJavaCommunity);
+        javaCommunity.setMembers(members);
 
-        contribution.setCommunity(community);
-
-        userRepository.save(user1);
-        communityRepository.save(community);
-        contributionRepository.save(contribution);
+        userRepository.save(member);
+        userRepository.save(leaderOfJavaCommunity);
+        communityRepository.save(javaCommunity);
+        contributionRepository.save(javaContribution1);
     }
 
 }

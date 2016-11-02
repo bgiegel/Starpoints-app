@@ -1,10 +1,16 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.StarPointsApp;
+import fr.softeam.starpointsapp.domain.Activity;
+import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.repository.ActivityRepository;
+import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
 import fr.softeam.starpointsapp.util.ContributionBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,12 +41,20 @@ public class ContributionServiceIntTest {
     private UserRepository userRepository;
 
     @Inject
+    private CommunityRepository communityRepository;
+
+    @Inject
+    private ActivityRepository activityRepository;
+
+    @Inject
     private ContributionRepository contributionRepository;
 
     @Inject
     private ContributionService contributionService;
 
-    private Contribution julyContrib, augustContrib, septemberContrib, juneContrib, july2015Contrib;
+    private Contribution julyContrib;
+    private Contribution augustContrib;
+    private Contribution septemberContrib;
 
     private User user, user2;
 
@@ -82,36 +96,37 @@ public class ContributionServiceIntTest {
     }
 
     private void buildContributions() {
-        julyContrib = new ContributionBuilder().
-            withName("july contribution").
-            withAuthor(user).
+        Activity activity = new ActivityBuilder().build();
+        Community community = new CommunityBuilder(user2).build();
+
+
+        julyContrib = new ContributionBuilder(activity, community, user).
+            withDeliverableName("july contribution").
             withDeliverableDate(LocalDate.of(2016, 7, 1)).
             build();
-        july2015Contrib = new ContributionBuilder().
-            withName("july 2015 contribution").
-            withAuthor(user).
-            withDeliverableDate(LocalDate.of(2015,7,1)).
+        Contribution july2015Contrib = new ContributionBuilder(activity, community, user).
+            withDeliverableName("july 2015 contribution").
+            withDeliverableDate(LocalDate.of(2015, 7, 1)).
             build();
-        augustContrib = new ContributionBuilder().
-            withName("august contribution").
-            withAuthor(user).
+        augustContrib = new ContributionBuilder(activity, community, user).
+            withDeliverableName("august contribution").
             withDeliverableDate(LocalDate.of(2016, 8, 31)).
             build();
-        septemberContrib = new ContributionBuilder().
-            withName("september contribution").
-            withAuthor(user).
+        septemberContrib = new ContributionBuilder(activity, community, user).
+            withDeliverableName("september contribution").
             withDeliverableDate(LocalDate.of(2016,9,1)).
             build();
-        juneContrib = new ContributionBuilder().
-            withName("june contribution").
-            withAuthor(user).
-            withDeliverableDate(LocalDate.of(2016,6,30)).
+        Contribution juneContrib = new ContributionBuilder(activity, community, user).
+            withDeliverableName("june contribution").
+            withDeliverableDate(LocalDate.of(2016, 6, 30)).
             build();
-        Contribution user2Contribution = new ContributionBuilder().
-            withName("Not concerned user contribution").
+        Contribution user2Contribution = new ContributionBuilder(activity, community, user2).
+            withDeliverableName("Not concerned user contribution").
             withDeliverableDate(LocalDate.of(2016,7,1)).
-            withAuthor(user2).
             build();
+
+        activityRepository.save(activity);
+        communityRepository.save(community);
 
         List<Contribution> contributions = Arrays.asList(julyContrib, july2015Contrib, septemberContrib, augustContrib, juneContrib, user2Contribution);
         contributionRepository.save(contributions);

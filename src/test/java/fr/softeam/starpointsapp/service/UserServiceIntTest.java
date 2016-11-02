@@ -1,16 +1,14 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.StarPointsApp;
-import fr.softeam.starpointsapp.domain.Community;
-import fr.softeam.starpointsapp.domain.Contribution;
-import fr.softeam.starpointsapp.domain.PersistentToken;
-import fr.softeam.starpointsapp.domain.User;
-import fr.softeam.starpointsapp.repository.CommunityRepository;
-import fr.softeam.starpointsapp.repository.ContributionRepository;
-import fr.softeam.starpointsapp.repository.PersistentTokenRepository;
-import fr.softeam.starpointsapp.repository.UserRepository;
+import fr.softeam.starpointsapp.domain.*;
+import fr.softeam.starpointsapp.repository.*;
 import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.service.util.RandomUtil;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
+import fr.softeam.starpointsapp.util.ContributionBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,6 +48,9 @@ public class UserServiceIntTest {
 
     @Inject
     private ContributionRepository contributionRepository;
+
+    @Inject
+    private ActivityRepository activityRepository;
 
     private Community community;
     private Contribution contribution;
@@ -161,28 +162,33 @@ public class UserServiceIntTest {
 
     private void given_a_member_of_community_that_have_made_contributions() {
         User user = buildUserAndCommunity();
+        Activity activity = new ActivityBuilder().build();
 
-        contribution = new Contribution();
+        contribution = new ContributionBuilder(activity, community, user).build();
+            new Contribution();
         contribution.setAuthor(user);
         contribution.setDeliverableName("Livrable contribution");
 
         user.getContributions().add(contribution);
 
+        activityRepository.save(activity);
         community = communityRepository.save(community);
         contribution = contributionRepository.save(contribution);
         communityRepository.flush();
         contributionRepository.flush();
-        userRepository.save(user);
-        userRepository.flush();
+
     }
 
     private User buildUserAndCommunity() {
         User user = userService.createUser("johndoe", "johndoe", "John", "Doe",
             "john.doe@localhost", "en-US", LocalDate.of(2016, 8, 9));
+        User leader = new UserBuilder("leader").build();
 
-        community = new Community();
-        community.setName("community1");
-        community.getMembers().add(user);
+        userRepository.save(user);
+        userRepository.save(leader);
+        userRepository.flush();
+
+        community = new CommunityBuilder(leader).withName("community1").withMembers(user).build();
 
         user.getCommunities().add(community);
 

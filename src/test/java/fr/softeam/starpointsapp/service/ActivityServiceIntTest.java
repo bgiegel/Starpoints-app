@@ -1,15 +1,13 @@
 package fr.softeam.starpointsapp.service;
 
 import fr.softeam.starpointsapp.StarPointsApp;
-import fr.softeam.starpointsapp.domain.Activity;
-import fr.softeam.starpointsapp.domain.Scale;
-import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
-import fr.softeam.starpointsapp.repository.ActivityRepository;
-import fr.softeam.starpointsapp.repository.ContributionRepository;
-import fr.softeam.starpointsapp.repository.ScaleRepository;
+import fr.softeam.starpointsapp.domain.*;
+import fr.softeam.starpointsapp.repository.*;
 import fr.softeam.starpointsapp.service.exception.ActivityReferencedByContributionsException;
 import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
 import fr.softeam.starpointsapp.util.ContributionBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,7 +40,15 @@ public class ActivityServiceIntTest {
     private ScaleRepository scaleRepository;
 
     @Inject
+    private UserRepository userRepository;
+
+    @Inject
+    private CommunityRepository communityRepository;
+
+    @Inject
     private ContributionRepository contributionRepository;
+
+
 
     private Activity activity;
     private Scale scale;
@@ -73,9 +81,16 @@ public class ActivityServiceIntTest {
 
     private void givenAnActivityWithRelatedContributions() {
         activity = new ActivityBuilder().withName("activity with Contributions").build();
-        activityRepository.save(activity);
+        User leader = new UserBuilder("leader").build();
+        Community community = new CommunityBuilder(leader).build();
+        User author = new UserBuilder("author").build();
+        Contribution contribution = new ContributionBuilder(activity, community, author).withDeliverableName("contrib 1").build();
 
-        contributionRepository.save(new ContributionBuilder().withName("contrib 1").withActivity(activity).build());
+        userRepository.save(leader);
+        userRepository.save(author);
+        communityRepository.save(community);
+        activityRepository.save(activity);
+        contributionRepository.save(contribution);
     }
 
     private void assertThatScaleIsDeleted() {
@@ -88,16 +103,9 @@ public class ActivityServiceIntTest {
         assertThat(deletedActivity).isNull();
     }
 
-    private void buildActivity(String name) {
-        activity = new Activity();
-        activity.setName(name);
-        activity.setType(ActivityType.BROWN_BAG_LUNCH);
-
-        activity = activityRepository.save(activity);
-    }
-
     private void buildScale(Integer value) {
         scale = new Scale();
+        scale.setStartDate(LocalDate.of(2016,1,1));
         scale.setValue(value);
         scale.setActivity(activity);
 

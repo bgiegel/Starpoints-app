@@ -6,6 +6,8 @@ import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.service.CommunityService;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,9 +64,6 @@ public class CommunityResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Inject
-    private EntityManager em;
-
     private MockMvc restCommunityMockMvc;
 
     private Community community;
@@ -81,21 +79,15 @@ public class CommunityResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Community createEntity(EntityManager em) {
-        Community community = new Community();
-        community.setName(DEFAULT_NAME);
-        return community;
+    public  Community createEntity() {
+        User leader = new UserBuilder("leader").build();
+        userRepository.save(leader);
+        return new CommunityBuilder(leader).withName(DEFAULT_NAME).build();
     }
 
     @Before
     public void initTest() {
-        community = createEntity(em);
+        community = createEntity();
     }
 
     @Test

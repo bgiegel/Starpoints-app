@@ -2,11 +2,19 @@ package fr.softeam.starpointsapp.web.rest;
 
 import fr.softeam.starpointsapp.StarPointsApp;
 import fr.softeam.starpointsapp.domain.Activity;
+import fr.softeam.starpointsapp.domain.Community;
+import fr.softeam.starpointsapp.domain.Contribution;
+import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.domain.enumeration.ActivityType;
 import fr.softeam.starpointsapp.repository.ActivityRepository;
+import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
+import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.service.ActivityService;
+import fr.softeam.starpointsapp.util.ActivityBuilder;
+import fr.softeam.starpointsapp.util.CommunityBuilder;
 import fr.softeam.starpointsapp.util.ContributionBuilder;
+import fr.softeam.starpointsapp.util.UserBuilder;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,7 +48,6 @@ public class ActivityResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
-
     private static final ActivityType DEFAULT_TYPE = ActivityType.BLOG_POST;
     private static final ActivityType UPDATED_TYPE = ActivityType.BROWN_BAG_LUNCH;
     private static final String DEFAULT_DELIVERABLE_DEFINITION = "AAAAA";
@@ -51,19 +57,22 @@ public class ActivityResourceIntTest {
     private ActivityRepository activityRepository;
 
     @Inject
-    private ActivityService activityService;
+    private CommunityRepository communityRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private ContributionRepository contributionRepository;
+
+    @Inject
+    private ActivityService activityService;
 
     @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
-
-    @Inject
-    private EntityManager em;
 
     private MockMvc restActivityMockMvc;
 
@@ -80,23 +89,15 @@ public class ActivityResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static Activity createEntity(EntityManager em) {
-        Activity activity = new Activity();
-        activity.setName(DEFAULT_NAME);
-        activity.setType(DEFAULT_TYPE);
-        activity.setDeliverableDefinition(DEFAULT_DELIVERABLE_DEFINITION);
-        return activity;
+    public Activity createEntity() {
+        return new ActivityBuilder(DEFAULT_NAME, DEFAULT_TYPE).
+            withDeliverableDefinition(DEFAULT_DELIVERABLE_DEFINITION).
+            build();
     }
 
     @Before
     public void initTest() {
-        activity = createEntity(em);
+        activity = createEntity();
     }
 
     @Test
@@ -131,9 +132,9 @@ public class ActivityResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(activity.getId().intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
                 .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-                .andExpect(jsonPath("$.[*].deliverableDefinition").value(hasItem(DEFAULT_DELIVERABLE_DEFINITION.toString())));
+                .andExpect(jsonPath("$.[*].deliverableDefinition").value(hasItem(DEFAULT_DELIVERABLE_DEFINITION)));
     }
 
     @Test
@@ -147,9 +148,9 @@ public class ActivityResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(activity.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.deliverableDefinition").value(DEFAULT_DELIVERABLE_DEFINITION.toString()));
+            .andExpect(jsonPath("$.deliverableDefinition").value(DEFAULT_DELIVERABLE_DEFINITION));
     }
 
     @Test
@@ -218,6 +219,18 @@ public class ActivityResourceIntTest {
     }
 
     private void attachContributionToActivity() {
-        contributionRepository.save(new ContributionBuilder().withName("contrib 1").withActivity(activity).build());
+        User leader = new UserBuilder("leader").build();
+        User author = new UserBuilder("author").build();
+
+        Community community = new CommunityBuilder(leader).build();
+
+        Contribution contribution = new ContributionBuilder(activity, community, author).
+            withDeliverableName("java contribution 2").
+            build();
+
+        userRepository.save(leader);
+        communityRepository.save(community);
+        userRepository.save(author);
+        contributionRepository.save(contribution);
     }
 }
