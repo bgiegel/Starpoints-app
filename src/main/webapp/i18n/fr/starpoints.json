@@ -1,19 +1,18 @@
 {
     "starPointsApp": {
         "starpoints" : {
+            "column" : {
+                "community" : "Communauté"
+            },
+            "noresults": "Vous n'avez aucun StarPoints pour le moment.",
             "mystarpoints": {
-                "title": "Mes StarPoints",
-                "column" : {
-                    "community" : "Communauté"
-                },
-                "noresults": "Vous n'avez aucun StarPoints pour le moment."
+                "title": "Mes StarPoints"
             },
             "allstarpoints": {
-                "title": "StarPoints par communautés",
-                "column" : {
-                    "community" : "Communauté"
-                },
-                "noresults": "Il n'y a aucun StarPoints pour le moment."
+                "title": "StarPoints par communautés"
+            },
+            "mycommunitiesstarpoints": {
+                "title": "StarPoints de mes communautés"
             }
         }
     }

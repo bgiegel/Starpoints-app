@@ -80,6 +80,11 @@
                                 <span>Mes Starpoints</span>
                             </a>
                         </li>
+                        <li ui-sref-active="active" has-authority="ROLE_LEADER">
+                            <a ui-sref="my-communities-starpoints" ng-click="vm.collapseNavbar()">
+                                <span>Starpoints de mes communautés</span>
+                            </a>
+                        </li>
 
                         <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="all-starpoints" ng-click="vm.collapseNavbar()">

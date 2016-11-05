@@ -29,10 +29,10 @@ public class StarpointsResource {
     private StarPointsRepository starPointsRepository;
 
     /**
-     * GET  /starpoints-by-community/{userId} : Récupère tous les starpoints par communauté de l'utilisateur
+     * GET  /starpoints/by-community/{userId} : Récupère tous les starpoints par communauté de l'utilisateur
      * demandé.
      */
-    @RequestMapping(value = "/starpoints-by-community/{userId}",
+    @RequestMapping(value = "/starpoints/by-community/{userId}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -43,9 +43,23 @@ public class StarpointsResource {
     }
 
     /**
-     * GET  /starpoints-by-community : Récupère tous les starpoints par communauté de tous les utilisateurs.
+     * GET  /starpoints/by-community/leaded-by/{leader} : Récupère tous les starpoints des communautés dirigé par le leader
+     * demandé.
      */
-    @RequestMapping(value = "/starpoints-by-community",
+    @RequestMapping(value = "/starpoints/by-community/leaded-by/{leader}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<StarPointsByCommunityDTO> getStarPointsByCommunityLeadedBy(@PathVariable Long leader) {
+        log.debug("REST request to get all Scales");
+        List<Object[]> results = starPointsRepository.calculateStarPointsByCommunityLeadedBy(leader);
+        return buildStarPointsByCommunity(results);
+    }
+
+    /**
+     * GET  /starpoints/by-community : Récupère tous les starpoints par communauté de tous les utilisateurs.
+     */
+    @RequestMapping(value = "/starpoints/by-community",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed

@@ -6,10 +6,21 @@
 
     Starpoints.$inject = ['$resource'];
     function Starpoints ($resource) {
-        return $resource('api/starpoints-by-community/:userId', {}, {
+        return $resource('api/starpoints/by-community/:userId', {}, {
             'byCommunity': {
                 method: 'GET',
-                url: 'api/starpoints-by-community/:userId',
+                url: 'api/starpoints/by-community/:userId',
+                isArray: true,
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'byCommunityLeadedBy': {
+                method: 'GET',
+                url: 'api/starpoints/by-community/leaded-by/:leaderId',
                 isArray: true,
                 transformResponse: function (data) {
                     if (data) {
@@ -20,7 +31,7 @@
             },
             'byCommunityForAllUsers': {
                 method: 'GET',
-                url: 'api/starpoints-by-community',
+                url: 'api/starpoints/by-community',
                 isArray: true,
                 transformResponse: function (data) {
                     if (data) {

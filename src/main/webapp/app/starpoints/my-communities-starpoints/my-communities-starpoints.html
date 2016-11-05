@@ -1,8 +1,8 @@
 <div>
-    <h2><span data-translate="starPointsApp.starpoints.allstarpoints.title">My StarPoints</span></h2>
+    <h2><span data-translate="starPointsApp.starpoints.mycommunitiesstarpoints.title">My StarPoints</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <div ng-if="vm.allStarpointsByCommunity.length>0">
+    <div ng-if="vm.starpointsByCommunity.length>0">
         <div class="table-responsive">
             <table class="jh-table table table-striped">
                 <thead>
@@ -14,7 +14,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="sc in vm.allStarpointsByCommunity">
+                <tr ng-repeat="sc in vm.starpointsByCommunity">
                     <td>{{sc.community}}</td>
                     <td>{{sc.starpoints}}</td>
                 </tr>
@@ -23,6 +23,6 @@
         </div>
     </div>
     <div class="alert alert-info" ng-if="vm.starpointsByCommunity.length<=0">
-        <span data-translate="starPointsApp.starpoints.noresults">Il n'y a aucun StarPoints pour le moment.</span>
+        <span data-translate="starPointsApp.starpoints.noresults">Vous n'avez aucun StarPoints pour le moment.</span>
     </div>
 </div>

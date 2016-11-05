@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,16 +45,26 @@ public class StarpointsResourceIntTest {
     @Test
     public void testGetStarPointsByCommunity() throws Exception {
         //test avec l'utilisateur bgiegel
-        restStarPointsMockMvc.perform(get("/api/starpoints-by-community/5"))
+        restStarPointsMockMvc.perform(get("/api/starpoints/by-community/5"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].community").value(contains("Java", "Agile")));
     }
 
     @Test
+    public void testGetStarPointsByCommunityLeadedBy() throws Exception {
+        //test avec l'utilisateur bgiegel
+        restStarPointsMockMvc.perform(get("/api/starpoints/by-community/leaded-by/6"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].community").value(contains("Java")))
+            .andExpect(jsonPath("$.[*].community").value(not(contains("Agile"))));
+    }
+
+    @Test
     public void testGetStarPointsByCommunity_allUsers() throws Exception {
         //test avec l'utilisateur bgiegel
-        restStarPointsMockMvc.perform(get("/api/starpoints-by-community"))
+        restStarPointsMockMvc.perform(get("/api/starpoints/by-community"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].community").value(contains("Java", "Agile")));
