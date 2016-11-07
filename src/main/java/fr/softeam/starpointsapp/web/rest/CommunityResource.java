@@ -3,6 +3,7 @@ package fr.softeam.starpointsapp.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.service.CommunityService;
 import fr.softeam.starpointsapp.service.exception.CommunityReferencedByContributionsException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -45,6 +47,7 @@ public class CommunityResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Community> createCommunity(@RequestBody Community community) throws URISyntaxException {
         log.debug("REST request to save Community : {}", community);
         if (community.getId() != null) {
@@ -69,6 +72,7 @@ public class CommunityResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Community> updateCommunity(@RequestBody Community community) throws URISyntaxException {
         log.debug("REST request to update Community : {}", community);
         if (community.getId() == null) {
@@ -139,6 +143,7 @@ public class CommunityResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteCommunity(@PathVariable Long id) {
         log.debug("REST request to delete Community : {}", id);
         try {

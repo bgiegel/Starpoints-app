@@ -2,10 +2,12 @@ package fr.softeam.starpointsapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fr.softeam.starpointsapp.repository.StarPointsRepository;
+import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.service.dto.StarPointsByCommunityDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,6 +52,7 @@ public class StarpointsResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.LEADER)
     public List<StarPointsByCommunityDTO> getStarPointsByCommunityLeadedBy(@PathVariable Long leader) {
         log.debug("REST request to get all Scales");
         List<Object[]> results = starPointsRepository.calculateStarPointsByCommunityLeadedBy(leader);
@@ -63,6 +66,7 @@ public class StarpointsResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public List<StarPointsByCommunityDTO> getStarPointsByCommunity() {
         log.debug("REST request to get all Scales");
         List<Object[]> results = starPointsRepository.calculateStarPointsByCommunity();

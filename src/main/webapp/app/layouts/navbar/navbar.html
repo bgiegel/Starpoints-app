@@ -37,25 +37,25 @@
                                 <span data-translate="global.menu.entities.scale">Scale</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" >
+                        <li ui-sref-active="active"  has-authority="ROLE_ADMIN">
                             <a ui-sref="activity" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.activity">Activity</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" >
+                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="level" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.level">Level</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" >
+                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN, ROLE_LEADER">
                             <a ui-sref="community" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.community">Community</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_LEADER">
+                        <li ui-sref-active="active">
                             <a ui-sref="contribution" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.contribution">Contribution</span>
