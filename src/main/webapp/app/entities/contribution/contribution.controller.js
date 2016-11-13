@@ -5,12 +5,19 @@
         .module('starPointsApp')
         .controller('ContributionController', ContributionController);
 
-    ContributionController.$inject = ['Contribution', 'Principal'];
+    ContributionController.$inject = ['Contribution', '$state', 'Principal', 'ParseLinks', 'pagingParams', 'paginationConstants'];
 
-    function ContributionController(Contribution, Principal) {
+    function ContributionController(Contribution, $state, Principal, ParseLinks, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.contributions = [];
+
+        //pagination
+        vm.page = 1;
+        vm.totalItems = null;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.loadPage = loadPage;
+        vm.transition = transition;
 
         loadAll();
 
@@ -21,16 +28,42 @@
              */
             Principal.identity().then(function (currentUser) {
                 if (currentUser.authorities.indexOf("ROLE_ADMIN") !== -1) {
-                    Contribution.query(onSuccess);
+                    Contribution.query({
+                        page: pagingParams.page - 1,
+                        size: vm.itemsPerPage
+                    } ,onSuccess);
                 } else if (currentUser.authorities.indexOf("ROLE_LEADER") !== -1) {
-                    Contribution.fromCommunitiesLeadedBy({leader: currentUser.login}, onSuccess);
+                    Contribution.fromCommunitiesLeadedBy({
+                        leader: currentUser.login,
+                        page: pagingParams.page - 1,
+                        size: vm.itemsPerPage
+                    }, onSuccess);
                 } else {
-                    Contribution.getAllFromAnAuthor({login: currentUser.login}, onSuccess);
+                    Contribution.getAllFromAnAuthor({
+                        login: currentUser.login,
+                        page: pagingParams.page - 1,
+                        size: vm.itemsPerPage
+                    }, onSuccess);
                 }
             });
         }
 
-        function onSuccess(contributions) {
+        function loadPage (page) {
+            vm.page = page;
+            vm.transition();
+        }
+
+        function transition () {
+            $state.transitionTo($state.$current, {
+                page: vm.page
+            });
+        }
+
+        function onSuccess(contributions, headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
             vm.contributions = contributions;
         }
     }

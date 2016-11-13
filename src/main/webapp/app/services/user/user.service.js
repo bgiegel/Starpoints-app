@@ -8,7 +8,7 @@
     User.$inject = ['$resource', 'DateUtils'];
 
     function User ($resource, DateUtils) {
-        var service = $resource('api/users/:login', {}, {
+        return $resource('api/users/:login', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
@@ -21,18 +21,16 @@
             'getMembersOfCommunitiesLeadedBy': {
                 method: 'GET',
                 isArray: true,
-                url:'api/members-of-communities-leaded-by/:leader',
+                url: 'api/members-of-communities-leaded-by/:leader',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
                     data.entryDate = DateUtils.convertLocalDateFromServer(data.entryDate);
                     return data;
                 }
             },
-            'save': { method:'POST' },
-            'update': { method:'PUT' },
-            'delete':{ method:'DELETE'}
+            'save': {method: 'POST'},
+            'update': {method: 'PUT'},
+            'delete': {method: 'DELETE'}
         });
-
-        return service;
     }
 })();

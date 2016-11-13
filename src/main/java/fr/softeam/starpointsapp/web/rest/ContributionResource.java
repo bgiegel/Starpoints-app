@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -97,9 +96,11 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Contribution> getAllContributions() {
+    public ResponseEntity<?> getAllContributions(Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get all Contributions");
-        return contributionRepository.findAll();
+        Page page = contributionRepository.findAllContributions(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -111,7 +112,7 @@ public class ContributionResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<?> getAllContributionsFromAnAuthor(@PathVariable String login, Pageable pageable) throws URISyntaxException {
-        log.debug("REST request to get all Contributions");
+        log.debug("REST request to getAllContributionsFromAnAuthor");
         Page<Contribution> page = contributionRepository.findAllFromAnAuthor(login, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-by-quarter");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -125,9 +126,12 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Contribution> getContributionsFromLeaderCommunities(@PathVariable String leader) {
-        log.debug("REST request to get all Contributions");
-        return contributionRepository.findAllFromCommunitiesLeadedBy(leader);
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
+    public ResponseEntity<?> getContributionsFromLeaderCommunities(@PathVariable String leader, Pageable pageable) throws URISyntaxException {
+        log.debug("REST request to getContributionsFromLeaderCommunities");
+        Page page = contributionRepository.findAllFromCommunitiesLeadedBy(leader, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-from-communities-leaded-by");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
@@ -138,6 +142,7 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<?> getUserContributionsByQuarter(@PathVariable String quarter, @PathVariable String login, Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get all Contributions");
 
@@ -163,6 +168,7 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Contribution> getContribution(@PathVariable Long id) {
         log.debug("REST request to get Contribution : {}", id);
         Contribution contribution = contributionRepository.findOneWithCommunityMembers(id);

@@ -15,13 +15,13 @@
         vm.totalItems = null;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.loadPage = loadPage;
+        vm.transition = transition;
 
         //datePicker
         vm.popup = {
             opened:false
         };
         vm.format= 'yyyy';
-        vm.transition = transition;
         vm.dateOptions = {
             formatYear: 'yyyy',
             maxDate: new Date(),
