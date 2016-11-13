@@ -5,11 +5,11 @@
         .module('starPointsApp')
         .controller('LevelController', LevelController);
 
-    LevelController.$inject = ['$scope', '$state', 'Level'];
+    LevelController.$inject = ['Level'];
 
-    function LevelController ($scope, $state, Level) {
+    function LevelController (Level) {
         var vm = this;
-        
+
         vm.levels = [];
 
         loadAll();

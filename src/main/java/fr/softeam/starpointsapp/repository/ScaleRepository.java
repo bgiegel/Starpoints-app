@@ -1,6 +1,8 @@
 package fr.softeam.starpointsapp.repository;
 
 import fr.softeam.starpointsapp.domain.Scale;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +17,6 @@ public interface ScaleRepository extends JpaRepository<Scale,Long> {
     @Query("select scale from Scale scale join fetch scale.activity activity where activity.id= :activityId")
     Optional<Scale> findScaleFromActivityId(@Param("activityId") Long activityId);
 
+    @Query("select distinct scale from Scale scale")
+    Page<Scale> findAllScales(Pageable pageable);
 }
