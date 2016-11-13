@@ -1,3 +1,4 @@
+@import "flatly/skin";
 
 body {
     background: #fafafa;
@@ -69,13 +70,7 @@ Browser Upgrade Prompt
 Logo styles
 ========================================================================== */
 .navbar-brand {
-    &.logo {
-        padding: 5px 15px;
-        .logo-img {
-            height: 45px;
-            display: inline-block;
-        }
-    }
+    padding: 17px 15px 5px 30%;
 }
 
 /* ==========================================================================
@@ -343,4 +338,4 @@ ui bootstrap tweaks
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */
-@import "flatly/skin";
+
