@@ -25,7 +25,7 @@
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm" data-translate="global.menu.entities.main">
-                                Entities
+                                Management
                             </span>
                             <b class="caret"></b>
                         </span>
@@ -67,7 +67,7 @@
                 <li ng-class="{active: vm.$state.includes('starpoints')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="starpoints-menu">
                         <span>
-                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="glyphicon glyphicon-star"></span>
                             <span class="hidden-sm">
                                 StarPoints
                             </span>
@@ -77,17 +77,20 @@
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
                             <a ui-sref="my-starpoints" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Mes Starpoints</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" has-authority="ROLE_LEADER">
                             <a ui-sref="my-communities-starpoints" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Starpoints de mes communautés</span>
                             </a>
                         </li>
 
                         <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="all-starpoints" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Starpoints par communautés</span>
                             </a>
                         </li>
@@ -96,7 +99,7 @@
                 <li ng-class="{active: vm.$state.includes('contributions')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="contributions-menu">
                         <span>
-                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="glyphicon glyphicon-file"></span>
                             <span class="hidden-sm">
                                 Contributions
                             </span>
@@ -106,6 +109,7 @@
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
                             <a ui-sref="my-contributions" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Mes Contributions</span>
                             </a>
                         </li>
