@@ -20,7 +20,7 @@
       "fieldId": 2,
       "fieldName": "type",
       "fieldType": "ActivityType",
-      "fieldValues": "BLOG_POST,BROWN_BAG_LUNCH,TRAINING"
+      "fieldValues": "INTERNAL_BLOG_POST,EXTERNAL_BLOG_POST,TECHNICAL_EVENT,FUN_EVENT,COACHING,ACTIV_DISCUSSION,INTERNAL_TRAINING,EXTERNAL_TRAINING,IMPROVEMENT,NEWSLETTER,SEUIL"
     },
     {
       "fieldId": 3,

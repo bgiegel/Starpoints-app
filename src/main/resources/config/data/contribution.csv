@@ -14,3 +14,10 @@ ID;DELIVERABLE_DATE;DELIVERABLE_URL;DELIVERABLE_NAME;COMMENT;PREPARATORY_DATE_1;
 13;2016-03-31;http://softeam.fr/;Présentation Intellij 11;Introduction à l'IDE Intellij;2016-07-11;2016-07-11;2;1;5
 15;2016-05-31;http://softeam.fr/;Présentation Intellij 12;Introduction à l'IDE Intellij;2016-07-11;2016-07-11;2;1;5
 16;2016-11-10;www.toto.com;Slides;Formation agile;2016-08-01;2016-08-11;3;2;8
+17;2016-11-10;NULL;ParisJUG : Soirée Gradle & JEE;NULL;2016-08-01;2016-08-11;1;2;6
+18;2016-11-10;NULL;The Rise and Fall of Scala;NULL;2016-08-01;2016-08-11;8;1;6
+19;2016-11-11;NULL;Retour d'expérience sur jHipster;NULL;2016-08-01;2016-08-11;9;1;5
+20;2016-11-12;NULL;ParisJUG - Soirée NumaGiC : a garbage collector for Big-Data;NULL;2016-08-01;2016-08-11;1;1;6
+21;2016-11-13;NULL;Notes du 12@13 JHipster du 2016/10/04;NULL;2016-08-01;2016-08-11;1;1;6
+22;2016-11-13;NULL;Formation Git;NULL;2016-08-01;2016-08-11;5;1;6
+23;2016-11-13;NULL;Formation externe Git;NULL;2016-08-01;2016-08-11;7;1;6

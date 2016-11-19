@@ -2,9 +2,17 @@
     "starPointsApp": {
         "ActivityType" : {
             "null": "",
-            "BLOG_POST": "BLOG_POST",
-            "BROWN_BAG_LUNCH": "BROWN_BAG_LUNCH",
-            "TRAINING": "TRAINING"
+            "INTERNAL_BLOG_POST" : "Blog interne",
+            "EXTERNAL_BLOG_POST": "Blog externe",
+            "TECHNICAL_EVENT": "Evènement technique",
+            "FUN_EVENT": "Evènement Fun",
+            "COACHING": "Coaching",
+            "ACTIV_DISCUSSION": "Discussion active",
+            "INTERNAL_TRAINING": "Formation interne",
+            "EXTERNAL_TRAINING": "Formation externe",
+            "IMPROVEMENT": "Amélioration",
+            "NEWSLETTER": "Newsletter",
+            "SEUIL": "Seuil"
         }
     }
 }

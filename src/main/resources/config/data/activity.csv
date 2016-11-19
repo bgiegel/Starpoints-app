@@ -1,4 +1,16 @@
 ID;NAME;TYPE;DELIVERABLE_DEFINITION;LEVEL_ID
-1;Rédaction d'article de Blog;BLOG_POST;Article publié sur le site intranet de Softeam;1
-2;Présentation d'un 12@13;BROWN_BAG_LUNCH;Livraison du support;2
-3;Création d'une formation;TRAINING;Livraison du support;4
+1;Rédiger un article de blog interne N1;INTERNAL_BLOG_POST;1 article de blogs (pointeurs);1
+2;Présenter un évènement technique;TECHNICAL_EVENT;Présentation 12 à 13 ou Soir (retours participants);NULL
+3;Dispenser une formation interne N1;INTERNAL_TRAINING;Formation interne 1 session (2H);1
+4;Dispenser une formation interne N2;INTERNAL_TRAINING;Formation interne 2 sessions (2 * 2H);2
+5;Dispenser une formation interne N3;INTERNAL_TRAINING;Formation interne 3 sessions (3 * 2H);3
+6;Dispenser une formation externe N1;EXTERNAL_TRAINING;Formation externe avec 5 personnes min;1
+7;Dispenser une formation externe N2;EXTERNAL_TRAINING;Formation externe avec 10 personnes min;2
+8;Rédiger un article de blog interne N2;INTERNAL_BLOG_POST;1 article de blogs (pointeurs + abstract);2
+9;Rédiger un article de blog interne N3;INTERNAL_BLOG_POST;1 article de blogs (article);3
+10;Rédiger un article de blog externe;EXTERNAL_BLOG_POST;1 article de blogs (article);NULL
+11;Organiser un évènement fun;FUN_EVENT;Organisation d'une soirée "Team Building";NULL
+12;Organiser / Animer une discussion;ACTIV_DISCUSSION;Organiser un débat sur des sujets (CR, liste des sujets);NULL
+13;Organiser un meetup externe;ACTIV_DISCUSSION;Organiser un meetup sur des sujets thématiques (CR, liste des sujets);NULL
+14;Organiser un meetup interne;ACTIV_DISCUSSION;Organiser un meetup dans les locaux sur des sujets thématiques (CR, liste des sujets);NULL
+15;Effectuer un coaching particulier;COACHING;Coacher un(e) consultant(e) pour 1h (questionnaire d'évaluation);NULL

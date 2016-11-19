@@ -11,7 +11,7 @@ public class ActivityBuilder {
     public ActivityBuilder() {
         activity = new Activity();
         activity.setName(DEFAULT_NAME);
-        activity.setType(ActivityType.BLOG_POST);
+        activity.setType(ActivityType.INTERNAL_BLOG_POST);
     }
 
     public ActivityBuilder(String name, ActivityType type){

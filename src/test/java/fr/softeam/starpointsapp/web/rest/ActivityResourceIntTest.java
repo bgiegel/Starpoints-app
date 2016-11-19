@@ -48,8 +48,8 @@ public class ActivityResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
-    private static final ActivityType DEFAULT_TYPE = ActivityType.BLOG_POST;
-    private static final ActivityType UPDATED_TYPE = ActivityType.BROWN_BAG_LUNCH;
+    private static final ActivityType DEFAULT_TYPE = ActivityType.INTERNAL_BLOG_POST;
+    private static final ActivityType UPDATED_TYPE = ActivityType.TECHNICAL_EVENT;
     private static final String DEFAULT_DELIVERABLE_DEFINITION = "AAAAA";
     private static final String UPDATED_DELIVERABLE_DEFINITION = "BBBBB";
 

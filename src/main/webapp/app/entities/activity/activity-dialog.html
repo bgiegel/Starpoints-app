@@ -20,14 +20,18 @@
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.activity.type" for="field_type">Type</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
-            <select class="form-control" name="type" ng-model="vm.activity.type" id="field_type" required>
-                <option value=""></option>
-                <option value="BLOG_POST" data-translate="starPointsApp.ActivityType.BLOG_POST">BLOG_POST</option>
-                <option value="BROWN_BAG_LUNCH" data-translate="starPointsApp.ActivityType.BROWN_BAG_LUNCH">
-                    BROWN_BAG_LUNCH
-                </option>
-                <option value="TRAINING" data-translate="starPointsApp.ActivityType.TRAINING">TRAINING</option>
+            <select class="form-control" name="type" ng-model="vm.activity.type" id="field_type">
+                <option value="INTERNAL_BLOG_POST" data-translate="starPointsApp.ActivityType.INTERNAL_BLOG_POST">INTERNAL_BLOG_POST</option>
+                <option value="EXTERNAL_BLOG_POST" data-translate="starPointsApp.ActivityType.EXTERNAL_BLOG_POST">EXTERNAL_BLOG_POST</option>
+                <option value="TECHNICAL_EVENT" data-translate="starPointsApp.ActivityType.TECHNICAL_EVENT">TECHNICAL_EVENT</option>
+                <option value="FUN_EVENT" data-translate="starPointsApp.ActivityType.FUN_EVENT">FUN_EVENT</option>
+                <option value="COACHING" data-translate="starPointsApp.ActivityType.COACHING">COACHING</option>
+                <option value="ACTIV_DISCUSSION" data-translate="starPointsApp.ActivityType.ACTIV_DISCUSSION">ACTIV_DISCUSSION</option>
+                <option value="INTERNAL_TRAINING" data-translate="starPointsApp.ActivityType.INTERNAL_TRAINING">INTERNAL_TRAINING</option>
+                <option value="EXTERNAL_TRAINING" data-translate="starPointsApp.ActivityType.EXTERNAL_TRAINING">EXTERNAL_TRAINING</option>
+                <option value="IMPROVEMENT" data-translate="starPointsApp.ActivityType.IMPROVEMENT">IMPROVEMENT</option>
+                <option value="NEWSLETTER" data-translate="starPointsApp.ActivityType.NEWSLETTER">NEWSLETTER</option>
+                <option value="SEUIL" data-translate="starPointsApp.ActivityType.SEUIL">SEUIL</option>
             </select>
         </div>
         <div class="form-group">

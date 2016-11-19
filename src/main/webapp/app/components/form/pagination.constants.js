@@ -4,6 +4,6 @@
     angular
         .module('starPointsApp')
         .constant('paginationConstants', {
-            'itemsPerPage': 2
+            'itemsPerPage': 10
         });
 })();
