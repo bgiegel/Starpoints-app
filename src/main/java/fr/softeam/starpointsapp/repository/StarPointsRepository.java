@@ -15,15 +15,17 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
 
     @Query("select authorCommunity.name as community, " +
         "(" +
-        "select sum(s.value) " +
-        "from Scale s, Contribution c " +
-        "join s.activity sActivity " +
-        "join c.activity cActivity " +
-        "join c.author author " +
-        "join c.community com " +
-        "where author.id=comMember.id " +
-        "and com.id=authorCommunity " +
-        "and sActivity=cActivity" +
+            "select sum(s.value) " +
+            "from Scale s, Contribution c " +
+            "join s.activity sActivity " +
+            "join c.activity cActivity " +
+            "join c.author author " +
+            "join c.community com " +
+            "where author.id=comMember.id " +
+            "and s.startDate < c.deliverableDate " +
+            "and s.endDate > c.deliverableDate " +
+            "and com.id=authorCommunity " +
+            "and sActivity=cActivity" +
         ") as starpoints " +
         "from Community authorCommunity " +
         "join authorCommunity.members comMember " +
@@ -33,13 +35,15 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
 
     @Query("select community.name as community, " +
         "(" +
-        "select sum(s.value) " +
-        "from Scale s, Contribution c " +
-        "join s.activity sActivity " +
-        "join c.activity cActivity " +
-        "join c.community com " +
-        "where com.id=community.id " +
-        "and sActivity=cActivity" +
+            "select sum(s.value) " +
+            "from Scale s, Contribution c " +
+            "join s.activity sActivity " +
+            "join c.activity cActivity " +
+            "join c.community com " +
+            "where com.id=community.id " +
+            "and s.startDate < c.deliverableDate " +
+            "and s.endDate > c.deliverableDate " +
+            "and sActivity=cActivity" +
         ") as starpoints " +
         "from Community community " +
         "group by community.name")
@@ -53,6 +57,8 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
             "join c.activity cActivity " +
             "join c.community com " +
             "where com.id=community.id " +
+            "and s.startDate < c.deliverableDate " +
+            "and s.endDate > c.deliverableDate " +
             "and sActivity=cActivity" +
         ") as starpoints " +
         "from Community community " +
