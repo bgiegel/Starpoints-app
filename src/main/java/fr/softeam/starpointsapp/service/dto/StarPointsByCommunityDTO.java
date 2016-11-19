@@ -13,17 +13,10 @@ public class StarPointsByCommunityDTO {
         return community;
     }
 
-    public void setCommunity(String community) {
-        this.community = community;
-    }
-
     public Long getStarpoints() {
         return starpoints;
     }
 
-    public void setStarpoints(Long starpoints) {
-        this.starpoints = starpoints;
-    }
 
     @Override
     public String toString() {
