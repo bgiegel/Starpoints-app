@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import java.util.List;
 
-import static fr.softeam.starpointsapp.service.util.StarpointsUtil.buildStarPointsByCommunityDTO;
-
 /**
  * REST controller for managing Scale.
  */
@@ -41,8 +39,7 @@ public class StarpointsResource {
     @Secured({AuthoritiesConstants.USER, AuthoritiesConstants.LEADER, AuthoritiesConstants.ADMIN})
     public List<StarPointsByCommunityDTO> getStarPointsByCommunity(@PathVariable Long userId) {
         log.debug("REST request to get all Scales");
-        List<Object[]> results = starPointsRepository.calculateStarPointsByCommunityForUser(userId);
-        return buildStarPointsByCommunityDTO(results);
+        return starPointsRepository.calculateStarPointsByCommunityForUser(userId);
     }
 
     /**
@@ -56,8 +53,7 @@ public class StarpointsResource {
     @Secured({AuthoritiesConstants.LEADER, AuthoritiesConstants.ADMIN})
     public List<StarPointsByCommunityDTO> getStarPointsByCommunityLeadedBy(@PathVariable Long leader) {
         log.debug("REST request to get all Scales");
-        List<Object[]> results = starPointsRepository.calculateStarPointsByCommunityLeadedBy(leader);
-        return buildStarPointsByCommunityDTO(results);
+        return starPointsRepository.calculateStarPointsByCommunityLeadedBy(leader);
     }
 
     /**
@@ -70,8 +66,7 @@ public class StarpointsResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public List<StarPointsByCommunityDTO> getStarPointsByCommunity() {
         log.debug("REST request to get all Scales");
-        List<Object[]> results = starPointsRepository.calculateStarPointsByCommunity();
-        return buildStarPointsByCommunityDTO(results);
+        return starPointsRepository.calculateStarPointsByCommunity();
     }
 
 }
