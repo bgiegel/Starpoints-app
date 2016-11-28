@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="community.new" has-authority="Admin">
+                <button class="btn btn-primary" ui-sref="community.new" has-authority="ROLE_ADMIN">
                     <span class="glyphicon glyphicon-plus"></span>
                     <span  data-translate="starPointsApp.community.home.createLabel">
                         Create new Community
@@ -54,7 +54,7 @@
                             <button type="submit"
                                     ui-sref="community.delete({id:community.id})"
                                     class="btn btn-danger btn-sm"
-                                    has-authority="Admin">
+                                    has-authority="ROLE_ADMIN">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
                             </button>

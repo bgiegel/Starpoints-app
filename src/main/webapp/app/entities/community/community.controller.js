@@ -27,7 +27,7 @@
 
         function isLeaderOrAdmin(communityLeader) {
             var leader = vm.currentUser.login === communityLeader;
-            var admin = vm.currentUser.authorities.indexOf("Admin") === 1;
+            var admin = vm.currentUser.authorities.indexOf("ROLE_ADMIN") === 1;
             return leader || admin;
         }
     }

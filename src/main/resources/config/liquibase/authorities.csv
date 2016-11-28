@@ -1,4 +1,4 @@
 name
-Admin
-Leader
-Utilisateur
+ROLE_ADMIN
+ROLE_LEADER
+ROLE_USER

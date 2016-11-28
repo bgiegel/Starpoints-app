@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/activity',
                 data: {
-                    authorities: ['Utilisateur'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'starPointsApp.activity.home.title'
                 },
                 views: {
@@ -47,7 +47,7 @@
                 parent: 'entity',
                 url: '/activity/{id}',
                 data: {
-                    authorities: ['Utilisateur'],
+                    authorities: ['ROLE_USER'],
                     pageTitle: 'starPointsApp.activity.detail.title'
                 },
                 views: {
@@ -67,11 +67,12 @@
                         return Activity.get({id: $stateParams.id}).$promise;
                     }],
                     previousState: ["$state", function ($state) {
-                        return {
+                        var currentStateData = {
                             name: $state.current.name || 'activity',
                             params: $state.params,
                             url: $state.href($state.current.name, $state.params)
                         };
+                        return currentStateData;
                     }]
                 }
             })
@@ -79,7 +80,7 @@
                 parent: 'activity-detail',
                 url: '/detail/edit',
                 data: {
-                    authorities: ['Utilisateur']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -104,7 +105,7 @@
                 parent: 'activity',
                 url: '/new',
                 data: {
-                    authorities: ['Utilisateur']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -134,7 +135,7 @@
                 parent: 'activity',
                 url: '/{id}/edit',
                 data: {
-                    authorities: ['Utilisateur']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -159,7 +160,7 @@
                 parent: 'activity',
                 url: '/{id}/delete',
                 data: {
-                    authorities: ['Utilisateur']
+                    authorities: ['ROLE_USER']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({

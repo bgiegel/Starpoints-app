@@ -13,7 +13,7 @@
             parent: 'admin',
             url: '/user-management?page&sort',
             data: {
-                authorities: ['Admin', 'Leader'],
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER'],
                 pageTitle: 'user-management.home.title'
             },
             views: {
@@ -52,7 +52,7 @@
             parent: 'admin',
             url: '/user/:login',
             data: {
-                authorities: ['Admin', 'Leader'],
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER'],
                 pageTitle: 'user-management.detail.title'
             },
             views: {
@@ -73,7 +73,7 @@
             parent: 'user-management',
             url: '/new',
             data: {
-                authorities: ['Admin', 'Leader']
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -103,7 +103,7 @@
             parent: 'user-management',
             url: '/{login}/edit',
             data: {
-                authorities: ['Admin', 'Leader']
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -128,7 +128,7 @@
             parent: 'user-management',
             url: '/{login}/delete',
             data: {
-                authorities: ['Admin', 'Leader']
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

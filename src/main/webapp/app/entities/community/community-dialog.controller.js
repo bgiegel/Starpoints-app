@@ -26,7 +26,7 @@
 
         Principal.identity().then(function(currentUser) {
             var notLeader = vm.community.leader && currentUser.login !== vm.community.leader.login;
-            var notAdmin = currentUser.authorities.indexOf("Admin") === -1;
+            var notAdmin = currentUser.authorities.indexOf("ROLE_ADMIN") === -1;
             vm.isNotLeaderNorAdmin = notLeader && notAdmin;
         });
 

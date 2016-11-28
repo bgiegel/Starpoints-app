@@ -12,7 +12,7 @@
             parent: 'contributions',
             url: '/mes-contributions',
             data: {
-                authorities: ['Utilisateur'],
+                authorities: ['ROLE_USER'],
                 pageTitle: 'starPointsApp.mycontributions.title'
             },
             views: {

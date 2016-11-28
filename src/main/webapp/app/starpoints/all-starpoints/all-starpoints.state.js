@@ -12,7 +12,7 @@
             parent: 'starpoints',
             url: '/all-starpoints',
             data: {
-                authorities: ['Utilisateur', 'Admin'],
+                authorities: ['ROLE_USER', 'ROLE_ADMIN'],
                 pageTitle: 'starPointsApp.starpoints.allstarpoints.title'
             },
             views: {

@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/community',
             data: {
-                authorities: ['Utilisateur'],
+                authorities: ['ROLE_USER'],
                 pageTitle: 'starPointsApp.community.home.title'
             },
             views: {
@@ -35,7 +35,7 @@
             parent: 'entity',
             url: '/community/{id}',
             data: {
-                authorities: ['Utilisateur'],
+                authorities: ['ROLE_USER'],
                 pageTitle: 'starPointsApp.community.detail.title'
             },
             views: {
@@ -66,7 +66,7 @@
             parent: 'community-detail',
             url: '/detail/edit',
             data: {
-                authorities: ['Utilisateur']
+                authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -91,7 +91,7 @@
             parent: 'community',
             url: '/new',
             data: {
-                authorities: ['Utilisateur']
+                authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -119,7 +119,7 @@
             parent: 'community',
             url: '/{id}/edit',
             data: {
-                authorities: ['Utilisateur']
+                authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -144,7 +144,7 @@
             parent: 'community',
             url: '/{id}/delete',
             data: {
-                authorities: ['Utilisateur']
+                authorities: ['ROLE_USER']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
