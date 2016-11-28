@@ -7,6 +7,7 @@ import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.security.AuthoritiesConstants;
 import fr.softeam.starpointsapp.service.MailService;
 import fr.softeam.starpointsapp.service.UserService;
+import fr.softeam.starpointsapp.service.dto.BasicUserDTO;
 import fr.softeam.starpointsapp.service.exception.LeadersCannotBeDeletedException;
 import fr.softeam.starpointsapp.web.rest.util.HeaderUtil;
 import fr.softeam.starpointsapp.web.rest.util.PaginationUtil;
@@ -164,78 +165,90 @@ public class UserResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<ManagedUserVM>> getAllUsers (Pageable pageable)
-        throws URISyntaxException {
-            Page<User> page = userRepository.findAllWithAuthorities(pageable);
-            List<ManagedUserVM> managedUserVMs = page.getContent().stream()
-                .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
-                .collect(Collectors.toList());
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
-            return new ResponseEntity<>(managedUserVMs, headers, HttpStatus.OK);
-        }
-
-        /**
-         * GET  /members-of-communities-leaded-by/:login : Récupère tous les membres des communautés d'un leader.
-         *
-         * @param pageable the pagination information
-         * @return the ResponseEntity with status 200 (OK) and with body all users
-         * @throws URISyntaxException if the pagination headers couldn't be generated
-         */
-        @RequestMapping(value = "/members-of-communities-leaded-by/{login}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-        @Timed
-        @Transactional(readOnly = true)
-        @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
-        public ResponseEntity<List<ManagedUserVM>> getMembersOfCommunitiesLeadedBy (Pageable pageable, @PathVariable String login)
-        throws URISyntaxException {
-            Page<User> page = userRepository.findMembersOfCommunitiesLeadedBy(login, pageable);
-            List<ManagedUserVM> managedUserDTOs = page.getContent().stream()
-                .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
-                .collect(Collectors.toList());
-            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/members-of-communities-leaded-by");
-            return new ResponseEntity<>(managedUserDTOs, headers, HttpStatus.OK);
-        }
-
-        /**
-         * GET  /users/:login : get the "login" user.
-         *
-         * @param login the login of the user to find
-         * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
-         */
-        @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-        @Timed
-        public ResponseEntity<ManagedUserVM> getUser (@PathVariable String login){
-            log.debug("REST request to get User : {}", login);
-            return userRepository.findOneByLoginWithAuthoritiesAndCommunities(login)
-                .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
-                .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-        }
-
-        /**
-         * DELETE /users/:login : delete the "login" User.
-         *
-         * @param login the login of the user to delete
-         * @return the ResponseEntity with status 200 (OK)
-         */
-        @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
-            method = RequestMethod.DELETE,
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
-        @Timed
-        @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
-        public ResponseEntity<?> deleteUser (@PathVariable String login){
-            log.debug("REST request to delete User: {}", login);
-            try {
-                userService.deleteUser(login);
-            } catch (LeadersCannotBeDeletedException e) {
-                return ResponseEntity
-                    .badRequest()
-                    .headers(HeaderUtil.createFailureAlert("leaderDeletionImpossible", "Impossible de supprimer un leader."))
-                    .body(null);
-            }
-            return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", login)).build();
-        }
+    public ResponseEntity<List<ManagedUserVM>> getAllUsers(Pageable pageable) throws URISyntaxException {
+        Page<User> page = userRepository.findAllWithAuthorities(pageable);
+        List<ManagedUserVM> managedUserVMs = page.getContent().stream()
+            .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
+            .collect(Collectors.toList());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users");
+        return new ResponseEntity<>(managedUserVMs, headers, HttpStatus.OK);
     }
+
+    /**
+     * GET  /users : get all users.
+     */
+    @RequestMapping(value = "/users/names",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<BasicUserDTO> getAllUsersNames() throws URISyntaxException {
+        List<User> users = userRepository.findAllWithoutTechnicalUsers();
+        return users.stream()
+            .map(BasicUserDTO::new).collect(Collectors.toList());
+    }
+
+    /**
+     * GET  /members-of-communities-leaded-by/:login : Récupère tous les membres des communautés d'un leader.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     * @throws URISyntaxException if the pagination headers couldn't be generated
+     */
+    @RequestMapping(value = "/members-of-communities-leaded-by/{login}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
+    public ResponseEntity<List<ManagedUserVM>> getMembersOfCommunitiesLeadedBy(Pageable pageable, @PathVariable String login)
+        throws URISyntaxException {
+        Page<User> page = userRepository.findMembersOfCommunitiesLeadedBy(login, pageable);
+        List<ManagedUserVM> managedUserDTOs = page.getContent().stream()
+            .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
+            .collect(Collectors.toList());
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/members-of-communities-leaded-by");
+        return new ResponseEntity<>(managedUserDTOs, headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  /users/:login : get the "login" user.
+     *
+     * @param login the login of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
+     */
+    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<ManagedUserVM> getUser(@PathVariable String login) {
+        log.debug("REST request to get User : {}", login);
+        return userRepository.findOneByLoginWithAuthoritiesAndCommunities(login)
+            .map(user -> new ManagedUserVM(user, WITH_COMMUNITIES))
+            .map(managedUserDTO -> new ResponseEntity<>(managedUserDTO, HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    /**
+     * DELETE /users/:login : delete the "login" User.
+     *
+     * @param login the login of the user to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
+        method = RequestMethod.DELETE,
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+    @Timed
+    @Secured({AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
+    public ResponseEntity<?> deleteUser(@PathVariable String login) {
+        log.debug("REST request to delete User: {}", login);
+        try {
+            userService.deleteUser(login);
+        } catch (LeadersCannotBeDeletedException e) {
+            return ResponseEntity
+                .badRequest()
+                .headers(HeaderUtil.createFailureAlert("leaderDeletionImpossible", "Impossible de supprimer un leader."))
+                .body(null);
+        }
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", login)).build();
+    }
+}

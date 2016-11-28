@@ -4,7 +4,6 @@ import fr.softeam.starpointsapp.StarPointsApp;
 import fr.softeam.starpointsapp.domain.User;
 import fr.softeam.starpointsapp.repository.UserRepository;
 import fr.softeam.starpointsapp.service.UserService;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
@@ -81,6 +81,20 @@ public class UserResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.lastName").value("Administrator"));
+    }
+
+    @Test
+    public void testGetAllUsersNames() throws Exception {
+        restUserMockMvc.perform(get("/api/users/names")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$[0].lastName").exists())
+            .andExpect(jsonPath("$[0].firstName").exists())
+            .andExpect(jsonPath("$[0].login").exists())
+            .andExpect(jsonPath("$[0].id").exists())
+            .andExpect(jsonPath("$[0].email").doesNotExist()).
+            andDo(MockMvcResultHandlers.print());
     }
 
     @Test

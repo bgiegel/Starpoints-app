@@ -35,6 +35,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
         countQuery = "select count(user) from User user where user.createdBy <> 'system'")
     Page<User> findAllWithAuthorities(Pageable pageable);
 
+    @Query("select distinct user from User user where user.createdBy <> 'system'")
+    List<User> findAllWithoutTechnicalUsers();
+
     @Override
     void delete(User t);
 

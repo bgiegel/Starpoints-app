@@ -5,16 +5,20 @@
         .module('starPointsApp')
         .controller('CommunityDialogController', CommunityDialogController);
 
-    CommunityDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Community', 'User', 'Principal'];
+    CommunityDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'Community', 'User', 'Principal'];
 
-    function CommunityDialogController($timeout, $scope, $stateParams, $uibModalInstance, entity, Community, User, Principal) {
+    function CommunityDialogController($timeout, $scope, $uibModalInstance, entity, Community, User, Principal) {
         var vm = this;
 
-        vm.community = entity;
         vm.clear = clear;
         vm.save = save;
+        vm.addMember = addMember;
+        vm.removeMember = removeMember;
+
+        vm.community = entity;
         vm.isNotLeaderNorAdmin = true;
-        vm.members = User.query();
+        vm.users = User.getUsersNames();
+        vm.userSearchFieldValue = "";
 
         $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
@@ -48,5 +52,35 @@
         function onSaveError() {
             vm.isSaving = false;
         }
+
+        function removeMember($index) {
+            vm.community.members.splice($index, 1);
+        }
+
+        /**
+         * @param selectedUser l'utilisatteur qui a été sélectionné dans le champs de recherche
+         * @returns boolean si l'utilisateur est déjà présent dans la liste de membres. Faux dans le cas contraire.
+         */
+        function notAlreadyMember(selectedUser) {
+            return vm.community.members.some(function (member) {
+                return member.id !== selectedUser.id;
+            });
+        }
+
+        /**
+         * Ajoute un membre à la communauté en cours de création (ou d'édition)
+         * @param selectedUser l'utilisateur sélectionné par la composant de recherche d'utilisateur.
+         */
+        function addMember(selectedUser) {
+            var members = vm.community.members;
+            if(!members){
+                vm.community.members = [];
+            }
+            if(members.length==0 ||  notAlreadyMember(selectedUser)){
+                members.push(selectedUser);
+            }
+            vm.userSearchFieldValue = "";
+        }
+
     }
 })();

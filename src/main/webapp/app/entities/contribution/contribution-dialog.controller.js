@@ -5,21 +5,22 @@
         .module('starPointsApp')
         .controller('ContributionDialogController', ContributionDialogController);
 
-    ContributionDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Contribution', 'Activity', 'Community', 'User', 'Principal'];
+    ContributionDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'Contribution', 'Activity', 'Community', 'Principal'];
 
-    function ContributionDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Contribution, Activity, Community, User, Principal) {
+    function ContributionDialogController ($timeout, $scope, $uibModalInstance, entity, Contribution, Activity, Community, Principal) {
         var vm = this;
 
-        vm.contribution = entity;
         vm.clear = clear;
-        vm.datePickerOpenStatus = {};
-        vm.openCalendar = openCalendar;
         vm.save = save;
+        vm.loadCommunityMembers = loadCommunityMembers;
+        vm.openCalendar = openCalendar;
+
+        vm.contribution = entity;
         vm.activities = Activity.query();
         vm.communities = Community.query();
         vm.members = [];
 
-        vm.loadCommunityMembers = loadCommunityMembers;
+        vm.datePickerOpenStatus = {};
 
         loadCommunityMembers();
 

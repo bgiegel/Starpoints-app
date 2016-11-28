@@ -1,13 +1,10 @@
 package fr.softeam.starpointsapp.service.dto;
 
-import fr.softeam.starpointsapp.config.Constants;
 import fr.softeam.starpointsapp.domain.Authority;
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.User;
 import org.hibernate.validator.constraints.Email;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Set;
@@ -15,20 +12,7 @@ import java.util.stream.Collectors;
 /**
  * A DTO representing a user, with his authorities.
  */
-public class UserDTO {
-
-    private Long id;
-
-    @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
-    private String login;
-
-    @Size(max = 50)
-    private String firstName;
-
-    @Size(max = 50)
-    private String lastName;
+public class UserDTO extends BasicUserDTO {
 
     @Email
     @Size(min = 5, max = 100)
@@ -66,27 +50,12 @@ public class UserDTO {
                    String email, boolean activated, String langKey,
                    Set<String> authorities, LocalDate entryDate) {
 
-        this.id = id;
-        this.login = login;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        super(id, login, firstName, lastName);
         this.email = email;
         this.entryDate = entryDate;
         this.activated = activated;
         this.langKey = langKey;
         this.authorities = authorities;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public String getEmail() {
@@ -119,14 +88,6 @@ public class UserDTO {
 
     public void setCommunities(Set<String> communities) {
         this.communities = communities;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override

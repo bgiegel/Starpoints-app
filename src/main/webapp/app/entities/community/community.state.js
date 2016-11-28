@@ -54,12 +54,11 @@
                     return Community.get({id : $stateParams.id}).$promise;
                 }],
                 previousState: ["$state", function ($state) {
-                    var currentStateData = {
+                    return {
                         name: $state.current.name || 'community',
                         params: $state.params,
                         url: $state.href($state.current.name, $state.params)
                     };
-                    return currentStateData;
                 }]
             }
         })

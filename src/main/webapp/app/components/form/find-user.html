@@ -1,0 +1,4 @@
+<input type="text" ng-model="ngModel" placeholder="Commencer à saisir le nom d'une personne"
+       uib-typeahead="person as (person.firstName+' '+person.lastName)
+                      for person in filterByName(usersList, $viewValue) | limitTo:8"
+       class="form-control" typeahead-on-select="onSelectAction({user: $item})">

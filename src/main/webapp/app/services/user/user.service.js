@@ -28,6 +28,14 @@
                     return data;
                 }
             },
+            'getUsersNames': {
+                method: 'GET',
+                isArray: true,
+                url: 'api/users/names',
+                transformResponse: function (data) {
+                    return angular.fromJson(data);
+                }
+            },
             'save': {method: 'POST'},
             'update': {method: 'PUT'},
             'delete': {method: 'DELETE'}
