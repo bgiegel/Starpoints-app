@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ContributionRepository extends JpaRepository<Contribution,Long> {
 
-    @Query(value = "select distinct contribution from Contribution contribution",
+    @Query(value = "select distinct contribution from Contribution contribution order by contribution.deliverableDate desc",
         countQuery = "select count(contribution) from Contribution contribution")
     Page<Contribution> findAllContributions(Pageable pageable);
 
