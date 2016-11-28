@@ -27,12 +27,12 @@
              * qu'il dirige afin qu'il ne puisse créé que des contributions pour sa/ses communauté(s).
              */
             Principal.identity().then(function (currentUser) {
-                if (currentUser.authorities.indexOf("ROLE_ADMIN") !== -1) {
+                if (currentUser.authorities.indexOf("Admin") !== -1) {
                     Contribution.query({
                         page: pagingParams.page - 1,
                         size: vm.itemsPerPage
                     } ,onSuccess);
-                } else if (currentUser.authorities.indexOf("ROLE_LEADER") !== -1) {
+                } else if (currentUser.authorities.indexOf("Leader") !== -1) {
                     Contribution.fromCommunitiesLeadedBy({
                         leader: currentUser.login,
                         page: pagingParams.page - 1,

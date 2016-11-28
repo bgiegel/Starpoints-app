@@ -10,7 +10,7 @@
     function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
+        vm.authorities = ['Utilisateur', 'Leader', 'Admin'];
         vm.currentAccount = null;
         vm.languages = null;
         vm.loadAll = loadAll;
@@ -102,7 +102,7 @@
          * qu'il dirige afin qu'il ne puisse créé que des contributions pour sa/ses communauté(s).
          */
         Principal.identity().then(function(currentUser) {
-            if(currentUser.authorities.indexOf("ROLE_ADMIN") === -1){
+            if(currentUser.authorities.indexOf("Admin") === -1){
                 User.getMembersOfCommunitiesLeadedBy({
                     page: pagingParams.page - 1,
                     size: vm.itemsPerPage,

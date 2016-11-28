@@ -5,18 +5,20 @@
         .module('starPointsApp')
         .controller('UserManagementDialogController',UserManagementDialogController);
 
-    UserManagementDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'User', 'JhiLanguageService'];
+    UserManagementDialogController.$inject = ['$uibModalInstance', 'entity', 'User', 'JhiLanguageService'];
 
-    function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User, JhiLanguageService) {
+    function UserManagementDialogController ($uibModalInstance, entity, User, JhiLanguageService) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
         vm.clear = clear;
-        vm.languages = null;
         vm.save = save;
-        vm.user = entity;
-        vm.datePickerOpenStatus = {};
         vm.openCalendar = openCalendar;
+
+        vm.authorities = ['Utilisateur', 'Leader', 'Admin'];
+        vm.languages = null;
+        vm.user = entity;
+
+        vm.datePickerOpenStatus = {};
 
 
         JhiLanguageService.getAll().then(function (languages) {

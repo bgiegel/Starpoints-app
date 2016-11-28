@@ -27,7 +27,7 @@
                     <th><span data-translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></th>
                     <th><span data-translate="starPointsApp.contribution.activity">Activity</span></th>
                     <th><span data-translate="starPointsApp.contribution.community">Community</span></th>
-                    <th><span data-translate="starPointsApp.contribution.author" has-any-authority="ROLE_ADMIN,ROLE_LEADER">Author</span></th>
+                    <th><span data-translate="starPointsApp.contribution.author" has-any-authority="Admin,Leader">Author</span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,7 +46,7 @@
                     <td>
                         <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.name}}</a>
                     </td>
-                    <td has-any-authority="ROLE_ADMIN,ROLE_LEADER">
+                    <td has-any-authority="Admin,Leader">
                         <a ui-sref="person-detail({id:contribution.author.id})">{{contribution.author.firstName}} {{contribution.author.lastName}}</a>
                     </td>
                     <td class="text-right">

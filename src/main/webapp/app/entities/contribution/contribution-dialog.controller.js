@@ -73,7 +73,7 @@
          * qu'il dirige afin qu'il ne puisse créé que des contributions pour sa/ses communauté(s).
          */
         Principal.identity().then(function(currentUser) {
-            if(currentUser.authorities.indexOf("ROLE_ADMIN") === -1){
+            if(currentUser.authorities.indexOf("Admin") === -1){
                 Community.leadedBy({user: currentUser.login}, function(leaderCommunities){
                     if(leaderCommunities.length > 0){
                         vm.communities = leaderCommunities;

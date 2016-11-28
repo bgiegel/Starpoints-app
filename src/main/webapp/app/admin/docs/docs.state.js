@@ -12,7 +12,7 @@
             parent: 'admin',
             url: '/docs',
             data: {
-                authorities: ['ROLE_ADMIN'],
+                authorities: ['Admin'],
                 pageTitle: 'global.menu.admin.apidocs'
             },
             views: {

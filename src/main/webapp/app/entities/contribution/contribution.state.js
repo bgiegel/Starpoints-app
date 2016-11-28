@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/contribution',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['Utilisateur'],
                     pageTitle: 'starPointsApp.contribution.home.title'
                 },
                 views: {
@@ -46,7 +46,7 @@
                 parent: 'entity',
                 url: '/contribution/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['Utilisateur'],
                     pageTitle: 'starPointsApp.contribution.detail.title'
                 },
                 views: {
@@ -78,7 +78,7 @@
                 parent: 'contribution-detail',
                 url: '/detail/edit',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['Utilisateur']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -103,7 +103,7 @@
                 parent: 'contribution',
                 url: '/new',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['Utilisateur']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -136,7 +136,7 @@
                 parent: 'contribution',
                 url: '/{id}/edit',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['Utilisateur']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({
@@ -161,7 +161,7 @@
                 parent: 'contribution',
                 url: '/{id}/delete',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['Utilisateur']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                     $uibModal.open({

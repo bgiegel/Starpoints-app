@@ -12,7 +12,7 @@
             parent: 'account',
             url: '/sessions',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['Utilisateur'],
                 pageTitle: 'global.menu.account.sessions'
             },
             views: {

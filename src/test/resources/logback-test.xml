@@ -4,7 +4,7 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <logger name="fr.softeam.starpointsapp" level="DEBUG"/>
-    <logger name="org.hibernate.type" level="TRACE"/>
+    <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
 

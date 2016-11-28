@@ -31,25 +31,25 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="scale" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.scale">Scale</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active"  has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active"  has-authority="Admin">
                             <a ui-sref="activity" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.activity">Activity</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="level" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.level">Level</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active"  has-any-authority="ROLE_ADMIN, ROLE_LEADER">
+                        <li ui-sref-active="active"  has-any-authority="Admin, Leader">
                             <a ui-sref="community" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.community">Community</span>
@@ -81,14 +81,14 @@
                                 <span>Mes Starpoints</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_LEADER">
+                        <li ui-sref-active="active" has-authority="Leader">
                             <a ui-sref="my-communities-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Starpoints de mes communautés</span>
                             </a>
                         </li>
 
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="all-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span>Starpoints par communautés</span>
@@ -164,7 +164,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-any-authority="ROLE_ADMIN,ROLE_LEADER" uib-dropdown class="dropdown pointer">
+                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-any-authority="Admin,Leader" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
                         <span>
                             <span class="glyphicon glyphicon-tower"></span>
@@ -173,50 +173,50 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN,ROLE_LEADER">
+                        <li ui-sref-active="active" has-any-authority="Admin,Leader">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
                                 <span data-translate="global.menu.admin.userManagement">User management</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-dashboard"></span>&nbsp;
                                 <span data-translate="global.menu.admin.metrics">Metrics</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="jhi-health" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-heart"></span>&nbsp;
                                 <span data-translate="global.menu.admin.health">Health</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
                                 <span data-translate="global.menu.admin.configuration">Configuration</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="audits" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-bell"></span>&nbsp;
                                 <span data-translate="global.menu.admin.audits">Audits</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="logs" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-tasks"></span>&nbsp;
                                 <span data-translate="global.menu.admin.logs">Logs</span>
                             </a>
                         </li>
-                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active" has-authority="ROLE_ADMIN">
+                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active" has-authority="Admin">
                             <a ui-sref="docs" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-book"></span>&nbsp;
                                 <span data-translate="global.menu.admin.apidocs">API</span>
                             </a>
                         </li>
                         <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                        <li ng-hide="vm.inProduction" has-authority="ROLE_ADMIN">
+                        <li ng-hide="vm.inProduction" has-authority="Admin">
                             <a href='/h2-console' target="_tab" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-hdd"></span>&nbsp;
                                 <span data-translate="global.menu.admin.database">Database</span>
