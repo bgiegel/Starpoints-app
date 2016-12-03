@@ -116,6 +116,7 @@
         }
     },
     "error": {
+        "internalServerError": "Une erreur technique est survenue.",
         "server.not.reachable": "Serveur inaccessible",
         "url.not.found": "Non trouvé",
         "NotNull": "Le champ {{fieldName}} ne peut pas être vide !",

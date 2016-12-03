@@ -23,8 +23,6 @@
                     <th><span data-translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
                     <th><span data-translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
                     <th><span data-translate="starPointsApp.contribution.comment">Comment</span></th>
-                    <th><span data-translate="starPointsApp.contribution.preparatoryDate1">Preparatory Date 1</span></th>
-                    <th><span data-translate="starPointsApp.contribution.preparatoryDate2">Preparatory Date 2</span></th>
                     <th><span data-translate="starPointsApp.contribution.activity">Activity</span></th>
                     <th><span data-translate="starPointsApp.contribution.community">Community</span></th>
                     <th><span data-translate="starPointsApp.contribution.author" has-any-authority="ROLE_ADMIN,ROLE_LEADER">Author</span></th>
@@ -38,8 +36,6 @@
                     <td>{{contribution.deliverableUrl}}</td>
                     <td>{{contribution.deliverableName}}</td>
                     <td>{{contribution.comment}}</td>
-                        <td>{{contribution.preparatoryDate1 | date:'mediumDate'}}</td>
-                        <td>{{contribution.preparatoryDate2 | date:'mediumDate'}}</td>
                     <td>
                         <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.name}}</a>
                     </td>
