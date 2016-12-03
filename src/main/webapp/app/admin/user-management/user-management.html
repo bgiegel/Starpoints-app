@@ -16,10 +16,7 @@
                 <th jh-sort-by="login"><span data-translate="userManagement.login">Login</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="email"><span data-translate="userManagement.email">Email</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th></th>
-                <th  jh-sort-by="langKey"> <span data-translate="userManagement.langKey">Lang Key</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th><span data-translate="userManagement.profiles">Profiles</span></th>
-                <th jh-sort-by="createdDate"><span data-translate="userManagement.createdDate">Created Date</span> <span class="glyphicon glyphicon-sort"></span></th>
-                <th jh-sort-by="lastModifiedBy"><span data-translate="userManagement.lastModifiedBy">Last Modified By</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th jh-sort-by="lastModifiedDate"><span data-translate="userManagement.lastModifiedDate">Last Modified Date</span> <span class="glyphicon glyphicon-sort"></span></th>
                 <th><span data-translate="userManagement.communities">Communities</span></th>
                 <th></th>
@@ -36,14 +33,11 @@
                     <span class="label label-success" ng-click="vm.setActive(user, false)" ng-show="user.activated"
                           data-translate="userManagement.activated" style="cursor: pointer;">Activated</span>
                 </td>
-                <td>{{user.langKey}}</td>
                 <td>
                     <div ng-repeat="authority in user.authorities">
                         <span class="label label-info">{{ authority }}</span>
                     </div>
                 </td>
-                <td>{{user.createdDate | date:'dd/MM/yy HH:mm'}}</td>
-                <td>{{user.lastModifiedBy}}</td>
                 <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
                 <td>
                     <div ng-repeat="community in user.communities">

@@ -25,16 +25,12 @@
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
-                    data.startDate = DateUtils.convertLocalDateToServer(data.startDate);
-                    data.endDate = DateUtils.convertLocalDateToServer(data.endDate);
                     return angular.toJson(data);
                 }
             },
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
-                    data.startDate = DateUtils.convertLocalDateToServer(data.startDate);
-                    data.endDate = DateUtils.convertLocalDateToServer(data.endDate);
                     return angular.toJson(data);
                 }
             }

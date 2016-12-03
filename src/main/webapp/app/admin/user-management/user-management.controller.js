@@ -10,17 +10,19 @@
     function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
 
+        vm.loadAll = loadAll;
+        vm.setActive = setActive;
+        vm.clear = clear;
+        vm.loadPage = loadPage;
+
         vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
         vm.currentAccount = null;
         vm.languages = null;
-        vm.loadAll = loadAll;
-        vm.setActive = setActive;
         vm.users = [];
+        vm.links = null;
+
         vm.page = 1;
         vm.totalItems = null;
-        vm.clear = clear;
-        vm.links = null;
-        vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.itemsPerPage = paginationConstants.itemsPerPage;

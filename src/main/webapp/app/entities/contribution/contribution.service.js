@@ -57,18 +57,12 @@
             'update': {
                 method: 'PUT',
                 transformRequest: function (data) {
-                    data.deliverableDate = DateUtils.convertLocalDateToServer(data.deliverableDate);
-                    data.preparatoryDate1 = DateUtils.convertLocalDateToServer(data.preparatoryDate1);
-                    data.preparatoryDate2 = DateUtils.convertLocalDateToServer(data.preparatoryDate2);
                     return angular.toJson(data);
                 }
             },
             'save': {
                 method: 'POST',
                 transformRequest: function (data) {
-                    data.deliverableDate = DateUtils.convertLocalDateToServer(data.deliverableDate);
-                    data.preparatoryDate1 = DateUtils.convertLocalDateToServer(data.preparatoryDate1);
-                    data.preparatoryDate2 = DateUtils.convertLocalDateToServer(data.preparatoryDate2);
                     return angular.toJson(data);
                 }
             }
