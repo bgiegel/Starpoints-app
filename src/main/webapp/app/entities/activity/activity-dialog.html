@@ -1,4 +1,4 @@
-<form name="editForm" role="form" ng-submit="vm.save()">
+<form name="editForm" role="form" ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -15,12 +15,12 @@
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.activity.name" for="field_name">Name</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
-            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.activity.name" required/>
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.activity.name" ng-maxlength="150" required/>
+            <field-errors field="editForm.name" max-length-value="150"></field-errors>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.activity.type" for="field_type">Type</label>
-            <select class="form-control" name="type" ng-model="vm.activity.type" id="field_type">
+            <select class="form-control" name="type" ng-model="vm.activity.type" id="field_type" required>
                 <option value="INTERNAL_BLOG_POST" data-translate="starPointsApp.ActivityType.INTERNAL_BLOG_POST">INTERNAL_BLOG_POST</option>
                 <option value="EXTERNAL_BLOG_POST" data-translate="starPointsApp.ActivityType.EXTERNAL_BLOG_POST">EXTERNAL_BLOG_POST</option>
                 <option value="TECHNICAL_EVENT" data-translate="starPointsApp.ActivityType.TECHNICAL_EVENT">TECHNICAL_EVENT</option>
@@ -33,6 +33,7 @@
                 <option value="NEWSLETTER" data-translate="starPointsApp.ActivityType.NEWSLETTER">NEWSLETTER</option>
                 <option value="SEUIL" data-translate="starPointsApp.ActivityType.SEUIL">SEUIL</option>
             </select>
+            <field-errors field="editForm.type"></field-errors>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.activity.deliverableDefinition"
@@ -55,7 +56,7 @@
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
             data-translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>

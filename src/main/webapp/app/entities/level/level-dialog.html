@@ -1,5 +1,5 @@
 
-<form name="editForm" role="form" ng-submit="vm.save()">
+<form name="editForm" role="form" ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -10,20 +10,17 @@
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.level.id">
             <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.level.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" ng-model="vm.level.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.level.value" for="field_value">Value</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
-            <input type="text" class="form-control" name="value" id="field_value"
-                    ng-model="vm.level.value" required />
+            <input type="number" class="form-control" name="value" id="field_value" ng-model="vm.level.value" min="0" max="100" required />
+            <field-errors field="editForm.value" min="0" max="100"></field-errors>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.level.name" for="field_name">Name</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.level.name" required />
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.level.name" ng-maxlength="150" required />
+            <field-errors field="editForm.name" max-length-value="150"></field-errors>
         </div>
 
     </div>
@@ -31,7 +28,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>

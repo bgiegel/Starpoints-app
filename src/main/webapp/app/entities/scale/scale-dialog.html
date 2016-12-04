@@ -1,4 +1,4 @@
-<form name="editForm" role="form" ng-submit="vm.save()">
+<form name="editForm" role="form" ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
@@ -14,18 +14,19 @@
                    ng-model="vm.scale.id" readonly/>
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="starPointsApp.scale.startDate" for="field_startDate">Start Date</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
+            <label class="control-label" data-translate="starPointsApp.scale.startDate" for="field_startDate">Start
+                Date</label>
 
             <div class="input-group">
                 <input id="field_startDate" type="text" class="form-control" name="startDate"
                        uib-datepicker-popup="{{dateformat}}" ng-model="vm.scale.startDate"
-                       is-open="vm.datePickerOpenStatus.startDate" required />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')"><i
-                            class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+                       is-open="vm.datePickerOpenStatus.startDate" required/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('startDate')">
+                        <i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
             </div>
+            <field-errors field="editForm.startDate"></field-errors>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.scale.endDate" for="field_endDate">End
@@ -34,29 +35,29 @@
             <div class="input-group">
                 <input id="field_endDate" type="text" class="form-control" name="endDate"
                        uib-datepicker-popup="{{dateformat}}" ng-model="vm.scale.endDate"
-                       is-open="vm.datePickerOpenStatus.endDate"
-                    />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endDate')"><i
-                            class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
+                       is-open="vm.datePickerOpenStatus.endDate" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="vm.openCalendar('endDate')"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+                </span>
             </div>
+            <field-errors field="editForm.endDate"></field-errors>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="starPointsApp.scale.value" for="field_value">Value</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
             <input type="number" class="form-control" name="value" id="field_value"
-                   ng-model="vm.scale.value" required />
+                   ng-model="vm.scale.value" min="0" max="9999" required/>
+            <field-errors field="editForm.value" min="0" max="9999" ></field-errors>
         </div>
 
         <div class="form-group">
             <label data-translate="starPointsApp.scale.activity" for="field_activity">Activity</label>
-            <strong><abbr title="Champs obligatoire">*</abbr></strong>
             <select class="form-control" id="field_activity" name="activity" ng-model="vm.scale.activity"
                     ng-options="activity as activity.name for activity in vm.activities | orderBy:'id' track by activity.id"
                     required>
                 <option value=""></option>
             </select>
+            <field-errors field="editForm.activity"></field-errors>
         </div>
     </div>
     <div class="modal-footer">
@@ -64,7 +65,7 @@
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
             data-translate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" ng-disabled="vm.isSaving" class="btn btn-primary">
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </button>
     </div>

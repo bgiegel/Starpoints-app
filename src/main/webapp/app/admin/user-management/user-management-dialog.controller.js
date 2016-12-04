@@ -10,13 +10,14 @@
     function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User, JhiLanguageService) {
         var vm = this;
 
-        vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
-        vm.clear = clear;
-        vm.languages = null;
         vm.save = save;
+        vm.clear = clear;
+        vm.openCalendar = openCalendar;
+
+        vm.authorities = ['ROLE_USER', 'ROLE_LEADER', 'ROLE_ADMIN'];
+        vm.languages = null;
         vm.user = entity;
         vm.datePickerOpenStatus = {};
-        vm.openCalendar = openCalendar;
 
 
         JhiLanguageService.getAll().then(function (languages) {
