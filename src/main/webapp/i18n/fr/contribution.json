@@ -26,12 +26,13 @@
             "community": "Communauté",
             "author": "Auteur"
         },
-        "mycontributions": {
-            "title": "Mes Contributions",
+        "contributions": {
+            "mycontributions.title": "Mes contributions",
+            "allcontributions.title": "Toutes les contributions",
             "noresults": "Aucune contribution n'a été trouvée.",
             "filter": "Filtrer",
             "displayAll": "Tout afficher",
-            "filterByQuarter": "Filtrer par trimestre"
+            "shouldFilter": "Filtrer par trimestre"
         }
     }
 }

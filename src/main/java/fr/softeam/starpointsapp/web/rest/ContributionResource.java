@@ -114,7 +114,7 @@ public class ContributionResource {
     public ResponseEntity<?> getAllContributionsFromAnAuthor(@PathVariable String login, Pageable pageable) throws URISyntaxException {
         log.debug("REST request to getAllContributionsFromAnAuthor");
         Page<Contribution> page = contributionRepository.findAllFromAnAuthor(login, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-by-quarter");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions/author");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -135,7 +135,7 @@ public class ContributionResource {
     }
 
     /**
-     * GET  contributions-by-quarter/:login : Récupère toutes les contributions par trimestre.
+     * GET  contributions-by-quarter/:quarter/:login : Récupère toutes les contributions par trimestre d'un utilisateur.
      *
      */
     @RequestMapping(value = "/contributions-by-quarter/{quarter}/{login}",
@@ -149,6 +149,30 @@ public class ContributionResource {
         Page<Contribution> page;
         try {
             page = contributionService.getUserContributionsByQuarter(quarter, login, pageable);
+        } catch (QuarterFormatException e) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
+                "wrongQuarterFormat",
+                "Le format du trimestre est incorrect. Ex: Q3-2016")).build();
+        }
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/contributions-by-quarter");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    /**
+     * GET  contributions-by-quarter/:quarter : Récupère toutes les contributions par trimestre.
+     *
+     */
+    @RequestMapping(value = "/contributions-by-quarter/{quarter}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<?> getContributionsByQuarter(@PathVariable String quarter, Pageable pageable) throws URISyntaxException {
+        log.debug("REST request to get all Contributions");
+
+        Page<Contribution> page;
+        try {
+            page = contributionService.getContributionsByQuarter(quarter, pageable);
         } catch (QuarterFormatException e) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(
                 "wrongQuarterFormat",

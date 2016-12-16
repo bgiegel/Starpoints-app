@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('MyContributionsController', MyContributionsController);
 
-    MyContributionsController.$inject = ['$stateParams', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal', 'Contribution'];
+    MyContributionsController.$inject = ['ParseLinks', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal', 'Contribution'];
 
-    function MyContributionsController ($stateParams, ParseLinks, AlertService, $state, pagingParams, paginationConstants, Principal, Contribution) {
+    function MyContributionsController (ParseLinks, $stateParams, AlertService, $state, pagingParams, paginationConstants, Principal, Contribution) {
         var vm = this;
 
         //pagination
@@ -17,39 +17,24 @@
         vm.loadPage = loadPage;
         vm.transition = transition;
 
-        //datePicker
-        vm.popup = {
-            opened:false
-        };
-        vm.format= 'yyyy';
-        vm.dateOptions = {
-            formatYear: 'yyyy',
-            maxDate: new Date(),
-            minDate: new Date(2000, 1, 1),
-            startingDay: 1,
-            minMode: 'year'
-        };
-
         //model
         vm.contributions = [];
-        vm.filterByQuarter=$stateParams.filterByQuarter;
-        vm.quarterId = $stateParams.quarterId;
-        vm.year = $stateParams.year;
+
+        vm.quarter = {
+            shouldFilter: $stateParams.shouldFilter,
+            id: $stateParams.quarterId,
+            year: $stateParams.year
+        };
 
         vm.loadContributions = loadContributions;
 
         loadContributions();
 
-        vm.openDatePicker = function() {
-            vm.popup.opened = true;
-        };
-
-        function loadUserContributionsByQuarter(currentUser) {
-            var quarter = vm.quarterId + '-' + vm.year.getFullYear();
+        function loadUserContributionsByQuarter(currentUser, quarterRequest) {
             Contribution.fromUserByQuarter({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
-                quarter:quarter,
+                quarter:quarterRequest,
                 login: currentUser.login
             }, onSuccess, onError);
         }
@@ -67,8 +52,9 @@
              * On récupère l'utilisateur actuellement connecté et appel le service retournant les contributions d'un utilisateur
              */
             Principal.identity().then(function(currentUser) {
-                if(vm.filterByQuarter){
-                    loadUserContributionsByQuarter(currentUser);
+                if(vm.quarter.shouldFilter){
+                    var quarterRequest = vm.quarter.id + '-' + vm.quarter.year.getFullYear();
+                    loadUserContributionsByQuarter(currentUser, quarterRequest);
                 }else {
                     loadUserContributions(currentUser);
                 }
@@ -83,8 +69,8 @@
         function transition () {
             $state.transitionTo($state.$current, {
                 page: vm.page,
-                filterByQuarter: vm.filterByQuarter,
-                quarterId: vm.quarterId,
+                filterByQuarter: vm.shouldFilter,
+                quarterId: vm.id,
                 year:vm.year
             });
         }

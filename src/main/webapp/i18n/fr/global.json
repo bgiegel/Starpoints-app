@@ -36,6 +36,17 @@
                 "database": "Base de données",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
+            "contributions": {
+                "title": "Contributions",
+                "my": "Mes contributions",
+                "all": "Toutes les contributions"
+            },
+            "starpoints": {
+                "title": "Starpoints",
+                "my": "Mes Starpoints",
+                "mycommunities": "Starpoints de mes communautés",
+                "allcommunities": "Starpoints par communautés"
+            },
             "language": "Langue"
         },
         "form": {

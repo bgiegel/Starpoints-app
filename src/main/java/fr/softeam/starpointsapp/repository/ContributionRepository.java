@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * Spring Data JPA repository for the Contribution entity.
+ * Spring Data JPA repository for the Contribution entity.c
  */
 public interface ContributionRepository extends JpaRepository<Contribution,Long> {
 
@@ -43,4 +43,12 @@ public interface ContributionRepository extends JpaRepository<Contribution,Long>
         "and year(c.deliverableDate) = :year " +
         "order by c.deliverableDate desc")
     Page<Contribution> findAllFromAnAuthorByQuarter(@Param("login") String login, @Param("startMonth") Integer startMonth, @Param("endMonth") Integer endMonth, @Param("year") Integer year, Pageable pageable);
+
+    @Query("select c " +
+        "from Contribution c " +
+        "where month(c.deliverableDate) <= :endMonth " +
+        "and month(c.deliverableDate) >= :startMonth " +
+        "and year(c.deliverableDate) = :year " +
+        "order by c.deliverableDate desc")
+    Page<Contribution> findAllByQuarter(@Param("startMonth") Integer startMonth, @Param("endMonth") Integer endMonth, @Param("year") Integer year, Pageable pageable);
 }

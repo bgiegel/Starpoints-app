@@ -29,4 +29,13 @@ public class ContributionService {
         return contributionRepository.findAllFromAnAuthorByQuarter(login, quarterDTO.getStartMonth(), quarterDTO.getEndMonth(), quarterDTO.getYear(), pageable);
     }
 
+    /**
+     * Récupère les contributions par trimestre.
+     */
+    public Page<Contribution> getContributionsByQuarter(String quarter, Pageable pageable) {
+
+        QuarterDTO quarterDTO = QuarterUtil.convertToQuarterDTO(quarter);
+        return contributionRepository.findAllByQuarter(quarterDTO.getStartMonth(), quarterDTO.getEndMonth(), quarterDTO.getYear(), pageable);
+    }
+
 }

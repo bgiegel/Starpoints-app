@@ -1,0 +1,39 @@
+<button type="button" class="btn btn-primary" ng-click="quarter.shouldFilter = !quarter.shouldFilter">
+    <span data-translate="starPointsApp.contributions.shouldFilter">Filtrer par trimestre</span>
+</button>
+<div uib-collapse="!quarter.shouldFilter">
+    <form name="filterForm" role="form" ng-submit="loadContributions()" show-validation>
+        <div class="form-group">
+            <field-errors field="filterForm.year"></field-errors>
+            <div class="row">
+                <div class="col-xs-4 col-md-2">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{vm.format}}"
+                               ng-model="quarter.year" is-open="vm.popup.opened" datepicker-options="vm.dateOptions"
+                               close-text="Fermer" name="year" ng-required="true"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="input-group col-xs-8">
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="quarter.id" uib-btn-radio="'Q1'">Q1</label>
+                        <label class="btn btn-primary" ng-model="quarter.id" uib-btn-radio="'Q2'">Q2</label>
+                        <label class="btn btn-primary" ng-model="quarter.id" uib-btn-radio="'Q3'">Q3</label>
+                        <label class="btn btn-primary" ng-model="quarter.id" uib-btn-radio="'Q4'">Q4</label>
+                    </div>
+                    <button type="submit" class="btn btn-success" ng-disabled="filterForm.$invalid">
+                        <span data-translate="starPointsApp.contributions.filter">Filtrer</span>
+                    </button>
+                    <button type="submit" class="btn btn-success" ng-click="quarter.shouldFilter=false;">
+                        <span data-translate="starPointsApp.contributions.displayAll">Tout afficher</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

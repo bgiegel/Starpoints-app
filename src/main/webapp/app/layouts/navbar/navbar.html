@@ -68,7 +68,7 @@
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="starpoints-menu">
                         <span>
                             <span class="glyphicon glyphicon-star"></span>
-                            <span class="hidden-sm">
+                            <span class="hidden-sm" data-translate="global.menu.starpoints.title">
                                 StarPoints
                             </span>
                             <b class="caret"></b>
@@ -78,20 +78,20 @@
                         <li ui-sref-active="active">
                             <a ui-sref="my-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Mes Starpoints</span>
+                                <span data-translate="global.menu.starpoints.my>Mes Starpoints</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" has-authority="ROLE_LEADER">
                             <a ui-sref="my-communities-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Starpoints de mes communautés</span>
+                                <span data-translate="global.menu.starpoints.mycommunities">From my Communities</span>
                             </a>
                         </li>
 
                         <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="all-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Starpoints par communautés</span>
+                                <span data-translate="global.menu.starpoints.allcommunities">From all communities</span>
                             </a>
                         </li>
                     </ul>
@@ -100,7 +100,7 @@
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="contributions-menu">
                         <span>
                             <span class="glyphicon glyphicon-file"></span>
-                            <span class="hidden-sm">
+                            <span class="hidden-sm" data-translate="global.menu.contributions.title">
                                 Contributions
                             </span>
                             <b class="caret"></b>
@@ -110,7 +110,13 @@
                         <li ui-sref-active="active">
                             <a ui-sref="my-contributions" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span>Mes Contributions</span>
+                                <span data-translate="global.menu.contributions.my">My Contributions</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="all-contributions" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="global.menu.contributions.all">All Contributions</span>
                             </a>
                         </li>
                     </ul>

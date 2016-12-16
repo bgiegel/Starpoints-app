@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -55,12 +56,13 @@ public class ContributionServiceIntTest {
     private Contribution julyContrib;
     private Contribution augustContrib;
     private Contribution septemberContrib;
+    private Contribution user2Contribution;
 
     private User user, user2;
 
     @Test
     public void should_get_all_user_contribution_of_a_quarter(){
-        givenAUserWithSeveralContributions();
+        givenMultipleContributions();
 
         //when
         Page<Contribution> contributions = contributionService.getUserContributionsByQuarter(Q3_2016, DEFAULT_LOGIN, PAGE_REQUEST);
@@ -69,7 +71,7 @@ public class ContributionServiceIntTest {
     }
 
     @Test
-    public void should_return_empty_list_when_no_contributions_is_found(){
+    public void should_return_empty_list_when_no_contributions_is_found_for_a_user(){
         givenNoContributionsAssignedToUser();
 
         //when
@@ -78,11 +80,44 @@ public class ContributionServiceIntTest {
         assertThat(contributions.getContent()).hasSize(0);
     }
 
+    @Test
+    public void should_get_all_contributions_of_a_quarter(){
+        givenMultipleContributions();
+
+        //when
+        Page<Contribution> contributions = contributionService.getContributionsByQuarter(Q3_2016, PAGE_REQUEST);
+
+        List<Contribution> testContributions = keepOnlyTestContributions(contributions);
+        assertThat(testContributions).containsExactly(septemberContrib,augustContrib,julyContrib, user2Contribution);
+    }
+
+
+    /**
+     * Je filtre uniquement les contributions qui sont créé lors du test.. Pas terrible je trouve:S
+     * A voir du coups si il ne faut vraiment chargé les données dans le context des tests d'intégrations...
+     */
+    private List<Contribution> keepOnlyTestContributions(Page<Contribution> contributions) {
+        return contributions.getContent().stream().
+                filter(contribution -> Arrays.asList(user, user2).contains(contribution.getAuthor())).
+                collect(Collectors.toList());
+    }
+
+    @Test
+    public void should_return_empty_list_when_no_contributions_is_found(){
+        givenNoContributionsAssignedToUser();
+
+        //when
+        Page<Contribution> contributions = contributionService.getContributionsByQuarter(Q3_2016, PAGE_REQUEST);
+
+        List<Contribution> testContributions = keepOnlyTestContributions(contributions);
+        assertThat(testContributions).hasSize(0);
+    }
+
     private void givenNoContributionsAssignedToUser() {
         buildUsers();
     }
 
-    private void givenAUserWithSeveralContributions() {
+    private void givenMultipleContributions() {
         buildUsers();
         buildContributions();
     }
@@ -102,7 +137,7 @@ public class ContributionServiceIntTest {
 
         julyContrib = new ContributionBuilder(activity, community, user).
             withDeliverableName("july contribution").
-            withDeliverableDate(LocalDate.of(2016, 7, 1)).
+            withDeliverableDate(LocalDate.of(2016, 7, 2)).
             build();
         Contribution july2015Contrib = new ContributionBuilder(activity, community, user).
             withDeliverableName("july 2015 contribution").
@@ -120,8 +155,8 @@ public class ContributionServiceIntTest {
             withDeliverableName("june contribution").
             withDeliverableDate(LocalDate.of(2016, 6, 30)).
             build();
-        Contribution user2Contribution = new ContributionBuilder(activity, community, user2).
-            withDeliverableName("Not concerned user contribution").
+        user2Contribution = new ContributionBuilder(activity, community, user2).
+            withDeliverableName("User 2 contribution").
             withDeliverableDate(LocalDate.of(2016,7,1)).
             build();
 

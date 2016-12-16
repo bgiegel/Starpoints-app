@@ -1,10 +1,9 @@
 <div>
-    <h2><span data-translate="starPointsApp.contributions.mycontributions.title">My Contributions</span></h2>
+    <h2><span data-translate="starPointsApp.contributions.allcontributions.title">All Contributions</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <br/>
     <filter-by-quarter quarter="vm.quarter" load-contributions="vm.loadContributions()"></filter-by-quarter>
-
 
     <div ng-if="vm.contributions.length>0">
         <contributions-table contributions="vm.contributions"></contributions-table>
@@ -14,6 +13,7 @@
                             ng-change="vm.transition()"></uib-pagination>
         </div>
     </div>
+
     <div class="alert alert-info" ng-if="vm.contributions.length<=0">
         <span data-translate="starPointsApp.contributions.noresults">No contributions found.</span>
     </div>

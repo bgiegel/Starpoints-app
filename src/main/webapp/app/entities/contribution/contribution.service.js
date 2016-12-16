@@ -30,6 +30,14 @@
                     return data;
                 }
             },
+            'all': {
+                method: 'GET',
+                isArray: true,
+                url:'api/contributions',
+                transformResponse: function (data) {
+                    return parseJson(data);
+                }
+            },
             'fromCommunitiesLeadedBy': {
                 method: 'GET',
                 isArray: true,
@@ -50,6 +58,14 @@
                 method: 'GET',
                 isArray: true,
                 url:'api/contributions-by-quarter/:quarter/:login',
+                transformResponse: function (data) {
+                    return parseJson(data);
+                }
+            },
+            'byQuarter': {
+                method: 'GET',
+                isArray: true,
+                url:'api/contributions-by-quarter/:quarter',
                 transformResponse: function (data) {
                     return parseJson(data);
                 }
