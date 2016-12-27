@@ -27,10 +27,11 @@
         };
 
         vm.loadContributions = loadContributions;
+        vm.exportContributions = exportContributions;
 
         loadContributions();
 
-        function loadUserContributionsByQuarter(quarterRequest) {
+        function loadAllContributionsByQuarter(quarterRequest) {
             Contribution.byQuarter({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
@@ -38,21 +39,46 @@
             }, onSuccess, onError);
         }
 
-        function loadUserContributions() {
-            Contribution.all({
+        function loadAllContributions() {
+            Contribution.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage
             } ,onSuccess, onError);
         }
 
+        function exportAllContributionsByQuarter(quarterRequest) {
+            return Contribution.byQuarter({
+                page: 0,
+                size: 100000,
+                quarter: quarterRequest
+            }).$promise.then(onExportSuccess).catch(onError);
+        }
+
+        function exportAllContributions() {
+            return Contribution.query({
+                page: 0,
+                size: 10000
+            }).$promise.then(onExportSuccess).catch(onError);
+        }
+
         function loadContributions() {
             if (vm.quarter.shouldFilter) {
                 var quarterRequest = vm.quarter.id + '-' + vm.quarter.year.getFullYear();
-                loadUserContributionsByQuarter(quarterRequest);
+                loadAllContributionsByQuarter(quarterRequest);
             } else {
-                loadUserContributions();
+                loadAllContributions();
             }
         }
+
+        function exportContributions() {
+            if (vm.quarter.shouldFilter) {
+                var quarterRequest = vm.quarter.id + '-' + vm.quarter.year.getFullYear();
+                return exportAllContributionsByQuarter(quarterRequest);
+            } else {
+                return exportAllContributions();
+            }
+        }
+
 
         function loadPage(page) {
             vm.page = page;
@@ -74,6 +100,16 @@
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.contributions = data;
+        }
+
+        function onExportSuccess(data) {
+            data.forEach(function(element) {
+                element.activity = element.activity.name;
+                element.community = element.community.name;
+                element.author = element.author.firstName + ' ' + element.author.lastName;
+            });
+
+            return data;
         }
 
         function onError(error) {

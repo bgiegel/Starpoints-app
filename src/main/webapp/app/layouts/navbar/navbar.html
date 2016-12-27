@@ -78,7 +78,7 @@
                         <li ui-sref-active="active">
                             <a ui-sref="my-starpoints" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
-                                <span data-translate="global.menu.starpoints.my>Mes Starpoints</span>
+                                <span data-translate="global.menu.starpoints.my">Mes Starpoints</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" has-authority="ROLE_LEADER">
@@ -113,7 +113,7 @@
                                 <span data-translate="global.menu.contributions.my">My Contributions</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active">
+                        <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="all-contributions" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.contributions.all">All Contributions</span>

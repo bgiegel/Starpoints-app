@@ -30,14 +30,6 @@
                     return data;
                 }
             },
-            'all': {
-                method: 'GET',
-                isArray: true,
-                url:'api/contributions',
-                transformResponse: function (data) {
-                    return parseJson(data);
-                }
-            },
             'fromCommunitiesLeadedBy': {
                 method: 'GET',
                 isArray: true,
