@@ -67,7 +67,7 @@ class ContributionGatlingTest extends Simulation {
             .exec(http("Create new contribution")
             .post("/api/contributions")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "deliverableDate":"2020-01-01T00:00:00.000Z", "deliverableUrl":"SAMPLE_TEXT", "deliverableName":"SAMPLE_TEXT", "comment":"SAMPLE_TEXT", "preparatoryDate1":"2020-01-01T00:00:00.000Z", "preparatoryDate2":"2020-01-01T00:00:00.000Z"}""")).asJSON
+            .body(StringBody("""{"id":null, "deliverableDate":"2020-01-01T00:00:00.000Z", "deliverableUrl":"SAMPLE_TEXT", "deliverableName":"SAMPLE_TEXT", "comment":"SAMPLE_TEXT", "preparatoryDate1":"2020-01-01T00:00:00.000Z", "preparatoryDate2":"2020-01-01T00:00:00.000Z", "status":null}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_contribution_url"))).exitHereIfFailed
             .pause(10)

@@ -192,7 +192,6 @@ public class ContributionResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Contribution> getContribution(@PathVariable Long id) {
         log.debug("REST request to get Contribution : {}", id);
         Contribution contribution = contributionRepository.findOneWithCommunityMembers(id);
@@ -213,7 +212,6 @@ public class ContributionResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured({AuthoritiesConstants.USER, AuthoritiesConstants.ADMIN, AuthoritiesConstants.LEADER})
     public ResponseEntity<Void> deleteContribution(@PathVariable Long id) {
         log.debug("REST request to delete Contribution : {}", id);
         contributionRepository.delete(id);

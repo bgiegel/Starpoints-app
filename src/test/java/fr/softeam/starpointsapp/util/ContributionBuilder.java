@@ -4,6 +4,7 @@ import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.domain.enumeration.ContributionStatusType;
 
 import java.time.LocalDate;
 
@@ -48,6 +49,11 @@ public class ContributionBuilder {
 
     public ContributionBuilder withPreparatoryDate2(LocalDate date) {
         contribution.setPreparatoryDate2(date);
+        return this;
+    }
+
+    public ContributionBuilder withStatus(ContributionStatusType status) {
+        contribution.setStatus(status);
         return this;
     }
 

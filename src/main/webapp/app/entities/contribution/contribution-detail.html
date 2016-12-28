@@ -28,6 +28,10 @@
         <dd>
             <span>{{vm.contribution.preparatoryDate2 | date:'mediumDate'}}</span>
         </dd>
+        <dt><span data-translate="starPointsApp.contribution.status">Status</span></dt>
+        <dd>
+            <span data-translate="{{'starPointsApp.ContributionStatusType.' + vm.contribution.status}}">{{vm.contribution.status}}</span>
+        </dd>
         <dt><span data-translate="starPointsApp.contribution.activity">Activity</span></dt>
         <dd>
             <a ui-sref="activity-detail({id:vm.contribution.activity.id})">{{vm.contribution.activity.name}}</a>
@@ -38,7 +42,7 @@
         </dd>
         <dt><span data-translate="starPointsApp.contribution.author">Author</span></dt>
         <dd>
-            <a ui-sref="person-detail({id:vm.contribution.author.id})">{{vm.contribution.author.firstName}} {{vm.contribution.author.lastName}}</a>
+            {{vm.contribution.author.firstName}}
         </dd>
     </dl>
 

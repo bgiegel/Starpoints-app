@@ -5,6 +5,7 @@ import fr.softeam.starpointsapp.domain.Activity;
 import fr.softeam.starpointsapp.domain.Community;
 import fr.softeam.starpointsapp.domain.Contribution;
 import fr.softeam.starpointsapp.domain.User;
+import fr.softeam.starpointsapp.domain.enumeration.ContributionStatusType;
 import fr.softeam.starpointsapp.repository.ActivityRepository;
 import fr.softeam.starpointsapp.repository.CommunityRepository;
 import fr.softeam.starpointsapp.repository.ContributionRepository;
@@ -37,8 +38,8 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -66,6 +67,11 @@ public class ContributionResourceIntTest {
 
     private static final LocalDate DEFAULT_PREPARATORY_DATE_2 = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_PREPARATORY_DATE_2 = LocalDate.now(ZoneId.systemDefault());
+
+    private static final ContributionStatusType DEFAULT_STATUS = ContributionStatusType.CREATED;
+    private static final ContributionStatusType UPDATED_STATUS = ContributionStatusType.VALIDATED;
+
+
     public static final String USER1_LOGIN = "user1";
 
     @Inject
@@ -129,6 +135,7 @@ public class ContributionResourceIntTest {
             withComment(DEFAULT_COMMENT).
             withPreparatoryDate1(DEFAULT_PREPARATORY_DATE_1).
             withPreparatoryDate2(DEFAULT_PREPARATORY_DATE_2).
+            withStatus(DEFAULT_STATUS).
             build();
     }
 
@@ -159,6 +166,7 @@ public class ContributionResourceIntTest {
         assertThat(testContribution.getComment()).isEqualTo(DEFAULT_COMMENT);
         assertThat(testContribution.getPreparatoryDate1()).isEqualTo(DEFAULT_PREPARATORY_DATE_1);
         assertThat(testContribution.getPreparatoryDate2()).isEqualTo(DEFAULT_PREPARATORY_DATE_2);
+        assertThat(testContribution.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -208,6 +216,7 @@ public class ContributionResourceIntTest {
         updatedContribution.setComment(UPDATED_COMMENT);
         updatedContribution.setPreparatoryDate1(UPDATED_PREPARATORY_DATE_1);
         updatedContribution.setPreparatoryDate2(UPDATED_PREPARATORY_DATE_2);
+        updatedContribution.setStatus(UPDATED_STATUS);
 
         restContributionMockMvc.perform(put("/api/contributions")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -224,6 +233,7 @@ public class ContributionResourceIntTest {
         assertThat(testContribution.getComment()).isEqualTo(UPDATED_COMMENT);
         assertThat(testContribution.getPreparatoryDate1()).isEqualTo(UPDATED_PREPARATORY_DATE_1);
         assertThat(testContribution.getPreparatoryDate2()).isEqualTo(UPDATED_PREPARATORY_DATE_2);
+        assertThat(testContribution.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

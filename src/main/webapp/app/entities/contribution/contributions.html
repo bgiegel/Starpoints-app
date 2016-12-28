@@ -23,6 +23,7 @@
                     <th><span data-translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
                     <th><span data-translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
                     <th><span data-translate="starPointsApp.contribution.comment">Comment</span></th>
+                    <th><span data-translate="starPointsApp.contribution.status">Status</span></th>
                     <th><span data-translate="starPointsApp.contribution.activity">Activity</span></th>
                     <th><span data-translate="starPointsApp.contribution.community">Community</span></th>
                     <th><span data-translate="starPointsApp.contribution.author" has-any-authority="ROLE_ADMIN,ROLE_LEADER">Author</span></th>
@@ -36,6 +37,7 @@
                     <td>{{contribution.deliverableUrl}}</td>
                     <td>{{contribution.deliverableName}}</td>
                     <td>{{contribution.comment}}</td>
+                    <td data-translate="{{'starPointsApp.ContributionStatusType.' + contribution.status}}">{{contribution.status}}</td>
                     <td>
                         <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.name}}</a>
                     </td>

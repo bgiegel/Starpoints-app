@@ -121,6 +121,7 @@
                                     comment: null,
                                     preparatoryDate1: null,
                                     preparatoryDate2: null,
+                                    status: null,
                                     id: null
                                 };
                             },

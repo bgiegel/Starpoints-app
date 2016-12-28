@@ -61,6 +61,13 @@
             "fieldName": "preparatoryDate2",
             "javadoc": "Date pour la presentation a blanc",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldId": 7,
+            "fieldName": "status",
+            "javadoc": "Status de la contribution (créée, validée, rejetée).",
+            "fieldType": "ContributionStatusType",
+            "fieldValues": "CREATED, VALIDATED, REJECTED"
         }
     ],
     "changelogDate": "20160620202525",

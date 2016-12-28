@@ -22,6 +22,7 @@
             "comment": "Commentaire",
             "preparatoryDate1": "Date de préparation 1",
             "preparatoryDate2": "Date de préparation 2",
+            "status": "Status",
             "activity": "Activité",
             "community": "Communauté",
             "author": "Auteur"

@@ -1,5 +1,6 @@
 package fr.softeam.starpointsapp.domain;
 
+import fr.softeam.starpointsapp.domain.enumeration.ContributionStatusType;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -76,13 +77,24 @@ public class Contribution implements Serializable {
     @Column(name = "preparatory_date_2")
     private LocalDate preparatoryDate2;
 
-    @ManyToOne(optional = false)
+    /**
+     * Status de la contribution (créée, validée, rejetée).
+     *
+     */
+    @ApiModelProperty(value = ""
+        + "Status de la contribution (créée, validée, rejetée).               "
+        + "")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ContributionStatusType status;
+
+    @ManyToOne
     private Activity activity;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Community community;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User author;
 
     public Long getId() {
@@ -141,6 +153,14 @@ public class Contribution implements Serializable {
         this.preparatoryDate2 = preparatoryDate2;
     }
 
+    public ContributionStatusType getStatus() {
+        return status;
+    }
+
+    public void setStatus(ContributionStatusType status) {
+        this.status = status;
+    }
+
     public Activity getActivity() {
         return activity;
     }
@@ -195,6 +215,7 @@ public class Contribution implements Serializable {
             ", comment='" + comment + "'" +
             ", preparatoryDate1='" + preparatoryDate1 + "'" +
             ", preparatoryDate2='" + preparatoryDate2 + "'" +
+            ", status='" + status + "'" +
             '}';
     }
 }

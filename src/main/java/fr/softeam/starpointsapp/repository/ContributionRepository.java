@@ -1,18 +1,17 @@
 package fr.softeam.starpointsapp.repository;
 
 import fr.softeam.starpointsapp.domain.Contribution;
-import fr.softeam.starpointsapp.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 
 /**
- * Spring Data JPA repository for the Contribution entity.c
+ * Spring Data JPA repository for the Contribution entity.
  */
+@SuppressWarnings("unused")
 public interface ContributionRepository extends JpaRepository<Contribution,Long> {
 
     @Query(value = "select distinct contribution from Contribution contribution order by contribution.deliverableDate desc",
