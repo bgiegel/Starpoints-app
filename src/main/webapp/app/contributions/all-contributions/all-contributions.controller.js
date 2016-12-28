@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('AllContributionsController', AllContributionsController);
 
-    AllContributionsController.$inject = ['Contribution', 'ParseLinks', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal'];
+    AllContributionsController.$inject = ['Contribution', 'moment', 'ParseLinks', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal'];
 
-    function AllContributionsController(Contribution, ParseLinks, $stateParams, AlertService, $state, pagingParams, paginationConstants) {
+    function AllContributionsController(Contribution, moment, ParseLinks, $stateParams, AlertService, $state, pagingParams, paginationConstants) {
         var vm = this;
 
         //pagination
@@ -71,10 +71,13 @@
         }
 
         function exportContributions() {
+            var datetime = moment().format("DDMMYYYY_HHmmss");
             if (vm.quarter.shouldFilter) {
                 var quarterRequest = vm.quarter.id + '-' + vm.quarter.year.getFullYear();
+                vm.filename= 'export_contributions_'+quarterRequest+'_'+datetime;
                 return exportAllContributionsByQuarter(quarterRequest);
             } else {
+                vm.filename= 'export_contributions_complet_'+datetime;
                 return exportAllContributions();
             }
         }

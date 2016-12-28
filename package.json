@@ -65,5 +65,9 @@
   },
   "scripts": {
     "test": "gulp test"
+  },
+  "dependencies": {
+    "angular-moment": "^1.0.1",
+    "moment": "^2.17.1"
   }
 }
