@@ -105,8 +105,14 @@
         </div>
         <div class="form-group">
             <label data-translate="starPointsApp.contribution.author">Author</label>
+            <div ng-if="vm.fromUser">
+                <input id="author" type="text" class="form-control" ng-model="vm.authorName" disabled>
+            </div>
 
-            <find-user users="vm.members" ng-model="vm.contribution.author" required="true"></find-user>
+            <div ng-if="!vm.fromUser">
+                <find-user users="vm.members" ng-model="vm.contribution.author" required="true" ></find-user>
+            </div>
+
         </div>
     </div>
     <div class="modal-footer">

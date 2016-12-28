@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('ContributionDialogController', ContributionDialogController);
 
-    ContributionDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'Contribution', 'Activity', 'Community', 'Principal'];
+    ContributionDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'fromUser', 'Contribution', 'Activity', 'Community', 'Principal'];
 
-    function ContributionDialogController ($timeout, $scope, $uibModalInstance, entity, Contribution, Activity, Community, Principal) {
+    function ContributionDialogController ($timeout, $scope, $uibModalInstance, entity, fromUser, Contribution, Activity, Community, Principal) {
         var vm = this;
 
         vm.clear = clear;
@@ -18,6 +18,7 @@
         vm.contribution = entity;
         vm.activities = Activity.query();
         vm.communities = Community.query();
+        vm.fromUser = fromUser;
         vm.members = [];
 
         vm.datePickerOpenStatus = {};
@@ -77,6 +78,10 @@
                         loadCommunityMembers();
                     }
                 });
+            }
+            if(fromUser){
+                vm.contribution.author = currentUser;
+                vm.authorName = vm.contribution.author.firstName +' '+vm.contribution.author.lastName;
             }
         });
     }

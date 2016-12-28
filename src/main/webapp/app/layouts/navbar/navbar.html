@@ -20,8 +20,9 @@
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true" uib-dropdown class="dropdown pointer">
-                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
+                <li ng-class="{active: vm.$state.includes('entity')}" ng-switch-when="true"
+                    uib-dropdown class="dropdown pointer" has-any-authority="ROLE_ADMIN, ROLE_LEADER">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu" >
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
                             <span class="hidden-sm" data-translate="global.menu.entities.main">
@@ -55,7 +56,7 @@
                                 <span data-translate="global.menu.entities.community">Community</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active">
+                        <li ui-sref-active="active" has-any-authority="ROLE_ADMIN, ROLE_LEADER">
                             <a ui-sref="contribution" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
                                 <span data-translate="global.menu.entities.contribution">Contribution</span>

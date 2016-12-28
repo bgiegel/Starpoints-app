@@ -7,6 +7,13 @@
 
 
     <div ng-if="vm.contributions.length>0">
+        <button class="btn btn-success float-right" ui-sref="my-contributions.new" has-authority="ROLE_USER">
+            <span class="glyphicon glyphicon-plus"></span>
+                <span  data-translate="starPointsApp.contribution.home.createLabel">
+                    Create new Contribution
+                </span>
+        </button>
+        <div class="clearfix"></div>
         <contributions-table contributions="vm.contributions"></contributions-table>
         <div class="text-center">
             <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>

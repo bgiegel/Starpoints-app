@@ -123,7 +123,8 @@
                                     preparatoryDate2: null,
                                     id: null
                                 };
-                            }
+                            },
+                            fromUser:false
                         }
                     }).result.then(function () {
                             $state.go('contribution', null, {reload: 'contribution'});
@@ -148,7 +149,8 @@
                         resolve: {
                             entity: ['Contribution', function (Contribution) {
                                 return Contribution.get({id: $stateParams.id}).$promise;
-                            }]
+                            }],
+                            fromUser:false
                         }
                     }).result.then(function () {
                             $state.go('contribution', null, {reload: 'contribution'});
