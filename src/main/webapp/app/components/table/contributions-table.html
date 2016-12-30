@@ -24,7 +24,7 @@
                 <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.name}}</a>
             </td>
             <td>
-                <a ui-sref="person-detail({id:contribution.author.id})">{{contribution.author.firstName}}
+                <a ui-sref="user-management-detail({login:contribution.author.login})">{{contribution.author.firstName}}
                     {{contribution.author.lastName}}</a>
             </td>
         </tr>

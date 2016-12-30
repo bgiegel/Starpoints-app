@@ -42,17 +42,18 @@
         </dd>
         <dt><span data-translate="starPointsApp.contribution.author">Author</span></dt>
         <dd>
-            {{vm.contribution.author.firstName}}
+            <a ui-sref="user-management-detail({login:vm.contribution.author.login})">{{vm.contribution.author.firstName}} {{vm.contribution.author.lastName}}</a>
         </dd>
     </dl>
 
     <button type="submit"
-            ui-sref="{{ vm.previousState }}"
+            onclick="window.history.back()"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button" ui-sref="contribution-detail.edit({id:vm.contribution.id})" class="btn btn-primary">
+    <button type="button" ui-sref="contribution-detail.edit({id:vm.contribution.id})" class="btn btn-primary"
+        has-authority="ROLE_ADMIN">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>

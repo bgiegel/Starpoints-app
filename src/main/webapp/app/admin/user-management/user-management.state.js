@@ -52,7 +52,7 @@
             parent: 'admin',
             url: '/user/:login',
             data: {
-                authorities: ['ROLE_ADMIN', 'ROLE_LEADER'],
+                authorities: ['ROLE_ADMIN', 'ROLE_LEADER', 'ROLE_USER'],
                 pageTitle: 'user-management.detail.title'
             },
             views: {

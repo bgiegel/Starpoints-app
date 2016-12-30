@@ -45,7 +45,7 @@
                         <a ui-sref="community-detail({id:contribution.community.id})">{{contribution.community.name}}</a>
                     </td>
                     <td has-any-authority="ROLE_ADMIN,ROLE_LEADER">
-                        <a ui-sref="person-detail({id:contribution.author.id})">{{contribution.author.firstName}} {{contribution.author.lastName}}</a>
+                        <a ui-sref="user-management-detail({login:contribution.author.login})">{{contribution.author.firstName}} {{contribution.author.lastName}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

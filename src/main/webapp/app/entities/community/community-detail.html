@@ -11,22 +11,23 @@
         <dt><span data-translate="starPointsApp.community.members">Members</span></dt>
         <dd>
             <span ng-repeat="members in vm.community.members">
-                <a ui-sref="person-detail({id: members.id})">{{members.firstName}} {{members.lastName}}</a>{{$last ? '' : ', '}}
+                <a ui-sref="user-management-detail({login: members.login})">{{members.firstName}} {{members.lastName}}</a>{{$last ? '' : ', '}}
             </span>
         </dd>
         <dt><span data-translate="starPointsApp.community.leader">Leader</span></dt>
         <dd>
-            <a ui-sref="person-detail({id:vm.community.leader.id})">{{vm.community.leader.firstName}} {{vm.community.leader.lastName}}</a>
+            <a ui-sref="user-management-detail({login:vm.community.leader.login})">{{vm.community.leader.firstName}} {{vm.community.leader.lastName}}</a>
         </dd>
     </dl>
 
     <button type="submit"
-            ui-sref="{{ vm.previousState }}"
+            onclick="window.history.back()"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
     </button>
 
-    <button type="button" ui-sref="community-detail.edit({id:vm.community.id})" class="btn btn-primary">
+    <button type="button" ui-sref="community-detail.edit({id:vm.community.id})" class="btn btn-primary"
+        has-authority="ROLE_ADMIN">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
