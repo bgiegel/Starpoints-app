@@ -21,7 +21,7 @@ public interface ContributionRepository extends JpaRepository<Contribution,Long>
     @Query("select c from Contribution c left join fetch c.community community left join fetch community.members where c.id = :id")
     Contribution findOneWithCommunityMembers(@Param("id") Long id);
 
-    @Query(value = "select c from Contribution c left join fetch c.community community where community.leader.login = :leader",
+    @Query(value = "select c from Contribution c left join fetch c.community community where community.leader.login = :leader order by c.deliverableDate desc",
         countQuery = "select count(c) from Contribution c left join c.community community where community.leader.login = :leader")
     Page<Contribution> findAllFromCommunitiesLeadedBy(@Param("leader") String leader, Pageable pageable);
 

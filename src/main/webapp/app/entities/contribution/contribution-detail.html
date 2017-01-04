@@ -46,15 +46,27 @@
         </dd>
     </dl>
 
-    <button type="submit"
+    <button type="button"
             onclick="window.history.back()"
             class="btn btn-info">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
     </button>
 
+
     <button type="button" ui-sref="contribution-detail.edit({id:vm.contribution.id})" class="btn btn-primary"
-        has-authority="ROLE_ADMIN">
+            has-any-authority="ROLE_ADMIN, ROLE_LEADER">
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+    <button type="button" class="btn btn-success" ng-disabled="vm.contribution.status=='VALIDATED'" ng-click="vm.updateStatus('VALIDATED')"
+            has-any-authority="ROLE_ADMIN, ROLE_LEADER">
+        <span class="glyphicon glyphicon-check"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.validate"> Validate</span>
+    </button>
+
+    <button type="button" class="btn btn-danger" ng-disabled="vm.contribution.status=='REJECTED'" ng-click="vm.updateStatus('REJECTED')"
+            has-any-authority="ROLE_ADMIN, ROLE_LEADER">
+        <span class="glyphicon glyphicon-ban-circle"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.reject"> Reject</span>
     </button>
 </div>

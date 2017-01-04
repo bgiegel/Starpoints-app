@@ -32,11 +32,12 @@
                 resolve: {
                     pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
                         return {
-                            page: PaginationUtil.parsePage($stateParams.page),
+                            page: PaginationUtil.parsePage($stateParams.page)
                         };
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('contribution');
+                        $translatePartialLoader.addPart('contributionStatusType');
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }]
@@ -59,18 +60,18 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('contribution');
+                        $translatePartialLoader.addPart('contributionStatusType');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Contribution', function ($stateParams, Contribution) {
-                        return Contribution.get({id: $stateParams.id}).$promise;
+                            return Contribution.get({id: $stateParams.id}).$promise;
                     }],
                     previousState: ["$state", function ($state) {
-                        var currentStateData = {
+                        return {
                             name: $state.current.name || 'contribution',
                             params: $state.params,
                             url: $state.href($state.current.name, $state.params)
                         };
-                        return currentStateData;
                     }]
                 }
             })
@@ -124,8 +125,7 @@
                                     status: null,
                                     id: null
                                 };
-                            },
-                            fromUser:false
+                            }
                         }
                     }).result.then(function () {
                             $state.go('contribution', null, {reload: 'contribution'});
@@ -150,8 +150,7 @@
                         resolve: {
                             entity: ['Contribution', function (Contribution) {
                                 return Contribution.get({id: $stateParams.id}).$promise;
-                            }],
-                            fromUser:false
+                            }]
                         }
                     }).result.then(function () {
                             $state.go('contribution', null, {reload: 'contribution'});

@@ -20,9 +20,7 @@
                 <tr>
                     <th><span data-translate="global.field.id">ID</span></th>
                     <th><span data-translate="starPointsApp.contribution.deliverableDate">Deliverable Date</span></th>
-                    <th><span data-translate="starPointsApp.contribution.deliverableUrl">Deliverable Url</span></th>
                     <th><span data-translate="starPointsApp.contribution.deliverableName">Deliverable Name</span></th>
-                    <th><span data-translate="starPointsApp.contribution.comment">Comment</span></th>
                     <th><span data-translate="starPointsApp.contribution.status">Status</span></th>
                     <th><span data-translate="starPointsApp.contribution.activity">Activity</span></th>
                     <th><span data-translate="starPointsApp.contribution.community">Community</span></th>
@@ -34,10 +32,21 @@
                 <tr ng-repeat="contribution in vm.contributions track by contribution.id">
                     <td><a ui-sref="contribution-detail({id:contribution.id})">{{contribution.id}}</a></td>
                         <td>{{contribution.deliverableDate | date:'mediumDate'}}</td>
-                    <td>{{contribution.deliverableUrl}}</td>
                     <td>{{contribution.deliverableName}}</td>
-                    <td>{{contribution.comment}}</td>
-                    <td data-translate="{{'starPointsApp.ContributionStatusType.' + contribution.status}}">{{contribution.status}}</td>
+                    <td>
+                        <span class="label label-success" ng-show="contribution.status==='VALIDATED'"
+                              data-translate="{{'starPointsApp.ContributionStatusType.' + contribution.status}}">
+                            {{contribution.status}}
+                        </span>
+                        <span class="label label-danger" ng-show="contribution.status==='REJECTED'"
+                              data-translate="{{'starPointsApp.ContributionStatusType.' + contribution.status}}">
+                            {{contribution.status}}
+                        </span>
+                        <span class="label label-info" ng-show="contribution.status==='CREATED'"
+                              data-translate="{{'starPointsApp.ContributionStatusType.' + contribution.status}}">
+                            {{contribution.status}}
+                        </span>
+                    </td>
                     <td>
                         <a ui-sref="activity-detail({id:contribution.activity.id})">{{contribution.activity.name}}</a>
                     </td>

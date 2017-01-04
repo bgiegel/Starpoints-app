@@ -18,6 +18,7 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
         "from Scale s, Contribution c " +
         "join c.community com " +
         "where s.activity=c.activity " +
+        "and c.status='VALIDATED' "+
         "and c.author.id = :userId " +
         "and s.startDate <= c.deliverableDate " +
         "and (s.endDate >= c.deliverableDate or s.endDate is null) " +
@@ -33,6 +34,7 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
         "from Scale s, Contribution c " +
         "join c.community com " +
         "where s.activity=c.activity " +
+        "and c.status='VALIDATED' "+
         "and s.startDate <= c.deliverableDate " +
         "and (s.endDate >= c.deliverableDate or s.endDate is null) " +
         "and com.id in ( " +
@@ -46,6 +48,7 @@ public interface StarPointsRepository extends JpaRepository<Contribution, Long> 
         "from Scale s, Contribution c " +
         "join c.community com " +
         "where s.activity=c.activity " +
+        "and c.status='VALIDATED' "+
         "and s.startDate <= c.deliverableDate " +
         "and (s.endDate >= c.deliverableDate or s.endDate is null) " +
         "and com.id in ( " +

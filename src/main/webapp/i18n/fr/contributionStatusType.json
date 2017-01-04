@@ -2,9 +2,9 @@
     "starPointsApp": {
         "ContributionStatusType" : {
             "null": "",
-            "CREATED": "CREATED",
-            "VALIDATED": "VALIDATED",
-            "REJECTED": "REJECTED"
+            "CREATED": "Créée",
+            "VALIDATED": "Validée",
+            "REJECTED": "Rejetée"
         }
     }
 }

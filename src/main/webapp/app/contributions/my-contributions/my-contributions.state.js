@@ -46,6 +46,7 @@
                 }],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('contribution');
+                    $translatePartialLoader.addPart('contributionStatusType');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]
@@ -74,8 +75,7 @@
                                     preparatoryDate2: null,
                                     id: null
                                 };
-                            },
-                            fromUser:true
+                            }
                         }
                     }).result.then(function () {
                             $state.go('my-contributions', null, {reload: 'my-contributions'});

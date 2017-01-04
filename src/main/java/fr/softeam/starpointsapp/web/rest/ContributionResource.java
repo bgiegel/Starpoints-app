@@ -54,7 +54,8 @@ public class ContributionResource {
     public ResponseEntity<Contribution> createContribution(@RequestBody Contribution contribution) throws URISyntaxException {
         log.debug("REST request to save Contribution : {}", contribution);
         if (contribution.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("contribution", "idexists", "A new contribution cannot already have an ID")).body(null);
+            HttpHeaders failureAlert = HeaderUtil.createFailureAlert("contribution", "idexists", "A new contribution cannot already have an ID");
+            return ResponseEntity.badRequest().headers(failureAlert).body(null);
         }
         Contribution result = contributionRepository.save(contribution);
         return ResponseEntity.created(new URI("/api/contributions/" + result.getId()))
