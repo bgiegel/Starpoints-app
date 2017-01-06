@@ -84,11 +84,12 @@
 
         <div class="form-group" ng-if="!vm.fromUser">
             <label class="control-label" data-translate="starPointsApp.contribution.status" for="field_status">Status</label>
-            <select class="form-control" name="status" ng-model="vm.contribution.status" id="field_status">
+            <select class="form-control" name="status" ng-model="vm.contribution.status" id="field_status" required>
                 <option value="CREATED" data-translate="starPointsApp.ContributionStatusType.CREATED">CREATED</option>
                 <option value="VALIDATED" data-translate="starPointsApp.ContributionStatusType.VALIDATED">VALIDATED</option>
                 <option value="REJECTED" data-translate="starPointsApp.ContributionStatusType.REJECTED">REJECTED</option>
             </select>
+            <field-errors field="editForm.activity"></field-errors>
         </div>
 
         <div class="form-group">

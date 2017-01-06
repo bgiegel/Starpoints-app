@@ -1,11 +1,14 @@
-<input type="text" ng-model="searchedUser" name="userSearchField" placeholder="Commencer à saisir le nom d'une personne"
-       uib-typeahead="person as (person.firstName+' '+person.lastName)
+<ng-form name="innerForm">
+    <input type="text" ng-model="searchedUser" name="userSearchField"
+           placeholder="Commencer à saisir le nom d'une personne"
+           uib-typeahead="person as (person.firstName+' '+person.lastName)
                       for person in filterByName(usersList, $viewValue) | limitTo:8"
-       class="form-control" typeahead-on-select="onSelectAction({user: $item})" ng-required="required">
+           class="form-control" typeahead-on-select="onSelectAction({user: $item})"
+           ng-required="required">
 
-<p class="help-block"
-   ng-show="searchedUser.length>0" data-translate="global.form.finduser.emptylist">
-    No users has been found
-</p>
+    <p class="help-block" ng-show="searchedUser.length>0" data-translate="global.form.finduser.emptylist">
+        No users has been found
+    </p>
 
-<field-errors field="form.userSearchField"></field-errors>
+    <field-errors field="innerForm.userSearchField"></field-errors>
+</ng-form>

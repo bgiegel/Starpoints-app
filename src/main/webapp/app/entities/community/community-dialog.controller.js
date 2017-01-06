@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('CommunityDialogController', CommunityDialogController);
 
-    CommunityDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'Community', 'User', 'Principal'];
+    CommunityDialogController.$inject = ['$timeout', '$scope', '$uibModalInstance', 'entity', 'Community', 'User', 'Principal', 'AlertService'];
 
-    function CommunityDialogController($timeout, $scope, $uibModalInstance, entity, Community, User, Principal) {
+    function CommunityDialogController($timeout, $scope, $uibModalInstance, entity, Community, User, Principal, AlertService) {
         var vm = this;
 
         vm.clear = clear;
@@ -36,10 +36,15 @@
 
         function save() {
             vm.isSaving = true;
-            if (vm.community.id !== null) {
-                Community.update(vm.community, onSaveSuccess, onSaveError);
-            } else {
-                Community.save(vm.community, onSaveSuccess, onSaveError);
+
+            if(!vm.community.leader.id) {
+                AlertService.error("Ce leader est inconnu. Veuillez en sélectionner un dans la liste.");
+            }else {
+                if (vm.community.id !== null) {
+                    Community.update(vm.community, onSaveSuccess, onSaveError);
+                } else {
+                    Community.save(vm.community, onSaveSuccess, onSaveError);
+                }
             }
         }
 
@@ -72,15 +77,14 @@
          * @param selectedUser l'utilisateur sélectionné par la composant de recherche d'utilisateur.
          */
         function addMember(selectedUser) {
-            var members = vm.community.members;
             if(!members){
                 vm.community.members = [];
             }
-            if(members.length==0 ||  notAlreadyMember(selectedUser)){
+            var members = vm.community.members;
+            if(members.length==0 || notAlreadyMember(selectedUser)){
                 members.push(selectedUser);
             }
             vm.userSearchFieldValue = "";
         }
-
     }
 })();

@@ -79,7 +79,7 @@
                 });
             }
             vm.fromUser = false;
-            if(currentUser.authorities.indexOf("ROLE_USER") >= 0){
+            if(currentUser.authorities.indexOf("ROLE_ADMIN") < 0 && currentUser.authorities.indexOf("ROLE_LEADER") < 0){
                 vm.contribution.author = currentUser;
                 vm.authorName = vm.contribution.author.firstName +' '+vm.contribution.author.lastName;
                 vm.contribution.status = 'CREATED';
