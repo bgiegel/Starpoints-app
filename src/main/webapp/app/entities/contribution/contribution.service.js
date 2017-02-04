@@ -6,11 +6,19 @@
 
     Contribution.$inject = ['$resource', 'DateUtils'];
 
-    function parseJson(data) {
+    function parseJson(data, headers) {
+        var response = {};
         if (data) {
-            data = angular.fromJson(data);
+            response.data = angular.fromJson(data);
+            if(headers){
+                response.headers = {
+                    totalItems:headers('X-Total-Count'),
+                    links:headers('link')
+                };
+            }
+
         }
-        return data;
+        return response;
     }
 
     function Contribution ($resource, DateUtils) {
@@ -30,36 +38,38 @@
                     return data;
                 }
             },
+            'getAll': {
+                method: 'GET',
+                transformResponse: function (data, headers) {
+                    return parseJson(data, headers);
+                }
+            },
             'fromCommunitiesLeadedBy': {
                 method: 'GET',
-                isArray: true,
                 url:'api/contributions-from-communities-leaded-by/:leader',
-                transformResponse: function (data) {
-                    return parseJson(data);
+                transformResponse: function (data, headers) {
+                    return parseJson(data, headers);
                 }
             },
             'getAllFromAnAuthor': {
                 method: 'GET',
-                isArray: true,
                 url:'api/contributions/author/:login',
-                transformResponse: function (data) {
-                    return parseJson(data);
+                transformResponse: function (data, headers) {
+                    return parseJson(data, headers);
                 }
             },
             'fromUserByQuarter': {
                 method: 'GET',
-                isArray: true,
                 url:'api/contributions-by-quarter/:quarter/:login',
-                transformResponse: function (data) {
-                    return parseJson(data);
+                transformResponse: function (data, headers) {
+                    return parseJson(data, headers);
                 }
             },
             'byQuarter': {
                 method: 'GET',
-                isArray: true,
                 url:'api/contributions-by-quarter/:quarter',
-                transformResponse: function (data) {
-                    return parseJson(data);
+                transformResponse: function (data, headers) {
+                    return parseJson(data, headers);
                 }
             },
             'update': {

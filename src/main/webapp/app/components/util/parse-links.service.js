@@ -7,11 +7,9 @@
 
     function ParseLinks () {
 
-        var service = {
-            parse : parse
+        return {
+            parse: parse
         };
-
-        return service;
 
         function parse(header) {
             if (header.length === 0) {

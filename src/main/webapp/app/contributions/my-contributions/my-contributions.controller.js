@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('MyContributionsController', MyContributionsController);
 
-    MyContributionsController.$inject = ['ParseLinks', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal', 'Contribution'];
+    MyContributionsController.$inject = ['$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal', 'Contribution'];
 
-    function MyContributionsController (ParseLinks, $stateParams, AlertService, $state, pagingParams, paginationConstants, Principal, Contribution) {
+    function MyContributionsController ($stateParams, AlertService, $state, pagingParams, paginationConstants, Principal, Contribution) {
         var vm = this;
 
         //pagination
@@ -31,20 +31,26 @@
         loadContributions();
 
         function loadUserContributionsByQuarter(currentUser, quarterRequest) {
-            Contribution.fromUserByQuarter({
+            var request = {
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
-                quarter:quarterRequest,
+                quarter: quarterRequest,
                 login: currentUser.login
-            }, onSuccess, onError);
+            };
+            Contribution.fromUserByQuarter(request).$promise
+                .then(displayContributions)
+                .catch(displayErrorMessage);
         }
 
         function loadUserContributions(currentUser) {
-            Contribution.getAllFromAnAuthor({
+            var request = {
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 login: currentUser.login
-            }, onSuccess, onError);
+            };
+            Contribution.getAllFromAnAuthor(request).$promise
+                .then(displayContributions)
+                .catch(displayErrorMessage);
         }
 
         function loadContributions() {
@@ -69,21 +75,20 @@
         function transition () {
             $state.transitionTo($state.$current, {
                 page: vm.page,
-                filterByQuarter: vm.shouldFilter,
-                quarterId: vm.id,
-                year:vm.year
+                shouldFilter: vm.quarter.shouldFilter,
+                quarterId: vm.quarter.id,
+                year:vm.quarter.year
             });
         }
 
-        function onSuccess(data, headers) {
-            vm.links = ParseLinks.parse(headers('link'));
-            vm.totalItems = headers('X-Total-Count');
+        function displayContributions(response) {
+            vm.totalItems = response.headers.totalItems;
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.contributions = data;
+            vm.contributions = response.data;
         }
 
-        function onError(error) {
+        function displayErrorMessage(error) {
             AlertService.error(error.data.message);
         }
     }

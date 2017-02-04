@@ -31,7 +31,7 @@
                     value: 'id,asc',
                     squash: true
                 },
-                filterByQuarter:false,
+                shouldFilter:false,
                 quarterId:'Q1',
                 year:new Date()
             },

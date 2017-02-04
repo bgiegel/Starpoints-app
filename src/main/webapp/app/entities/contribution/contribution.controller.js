@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('ContributionController', ContributionController);
 
-    ContributionController.$inject = ['Contribution', '$state', 'Principal', 'ParseLinks', 'pagingParams', 'paginationConstants'];
+    ContributionController.$inject = ['Contribution', '$state', 'Principal', 'pagingParams', 'paginationConstants'];
 
-    function ContributionController(Contribution, $state, Principal, ParseLinks, pagingParams, paginationConstants) {
+    function ContributionController(Contribution, $state, Principal, pagingParams, paginationConstants) {
         var vm = this;
 
         vm.contributions = [];
@@ -28,22 +28,22 @@
              */
             Principal.identity().then(function (currentUser) {
                 if (currentUser.authorities.indexOf("ROLE_ADMIN") !== -1) {
-                    Contribution.query({
+                    Contribution.getAll({
                         page: pagingParams.page - 1,
                         size: vm.itemsPerPage
-                    } ,onSuccess);
+                    }).$promise.then(displayContributions);
                 } else if (currentUser.authorities.indexOf("ROLE_LEADER") !== -1) {
                     Contribution.fromCommunitiesLeadedBy({
                         leader: currentUser.login,
                         page: pagingParams.page - 1,
                         size: vm.itemsPerPage
-                    }, onSuccess);
+                    }).$promise.then(displayContributions);
                 } else {
                     Contribution.getAllFromAnAuthor({
                         login: currentUser.login,
                         page: pagingParams.page - 1,
                         size: vm.itemsPerPage
-                    }, onSuccess);
+                    }).$promise.then(displayContributions);
                 }
             });
         }
@@ -59,12 +59,11 @@
             });
         }
 
-        function onSuccess(contributions, headers) {
-            vm.links = ParseLinks.parse(headers('link'));
-            vm.totalItems = headers('X-Total-Count');
+        function displayContributions(response) {
+            vm.totalItems = response.headers.totalItems;
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.contributions = contributions;
+            vm.contributions = response.data;
         }
     }
 })();
