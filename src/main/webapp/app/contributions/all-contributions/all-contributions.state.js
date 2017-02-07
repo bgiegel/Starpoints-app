@@ -31,7 +31,7 @@
                     value: 'id,asc',
                     squash: true
                 },
-                filterByQuarter:false,
+                shouldFilter:false,
                 quarterId:'Q1',
                 year:new Date()
             },
@@ -46,6 +46,7 @@
                 }],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('contribution');
+                    $translatePartialLoader.addPart('contributionStatusType');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }]

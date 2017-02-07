@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('AllContributionsController', AllContributionsController);
 
-    AllContributionsController.$inject = ['Contribution', 'moment', 'ParseLinks', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'Principal'];
+    AllContributionsController.$inject = ['Contribution', 'moment', '$stateParams', 'AlertService', '$state', 'pagingParams', 'paginationConstants'];
 
-    function AllContributionsController(Contribution, moment, ParseLinks, $stateParams, AlertService, $state, pagingParams, paginationConstants) {
+    function AllContributionsController(Contribution, moment, $stateParams, AlertService, $state, pagingParams, paginationConstants) {
         var vm = this;
 
         //pagination
@@ -32,33 +32,45 @@
         loadContributions();
 
         function loadAllContributionsByQuarter(quarterRequest) {
-            Contribution.byQuarter({
+            var request = {
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 quarter: quarterRequest
-            }, onSuccess, onError);
+            };
+            Contribution.byQuarter(request).$promise
+                .then(displayContributions)
+                .catch(displayErrorMessage);
         }
 
         function loadAllContributions() {
-            Contribution.query({
+            var request = {
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage
-            } ,onSuccess, onError);
+            };
+            Contribution.getAll(request).$promise
+                .then(displayContributions)
+                .catch(displayErrorMessage);
         }
 
         function exportAllContributionsByQuarter(quarterRequest) {
-            return Contribution.byQuarter({
+            var request = {
                 page: 0,
                 size: 100000,
                 quarter: quarterRequest
-            }).$promise.then(onExportSuccess).catch(onError);
+            };
+            return Contribution.byQuarter(request).$promise
+                .then(formatData)
+                .catch(displayErrorMessage);
         }
 
         function exportAllContributions() {
-            return Contribution.query({
+            var request = {
                 page: 0,
-                size: 10000
-            }).$promise.then(onExportSuccess).catch(onError);
+                size: 100000
+            };
+            return Contribution.getAll(request).$promise
+                .then(formatData)
+                .catch(displayErrorMessage);
         }
 
         function loadContributions() {
@@ -88,34 +100,37 @@
             vm.transition();
         }
 
-        function transition() {
+        function transition () {
             $state.transitionTo($state.$current, {
                 page: vm.page,
-                filterByQuarter: vm.shouldFilter,
-                quarterId: vm.id,
-                year: vm.year
+                shouldFilter: vm.quarter.shouldFilter,
+                quarterId: vm.quarter.id,
+                year:vm.quarter.year
             });
         }
 
-        function onSuccess(data, headers) {
-            vm.links = ParseLinks.parse(headers('link'));
-            vm.totalItems = headers('X-Total-Count');
+        function displayContributions(response) {
+            vm.totalItems = response.headers.totalItems;
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.contributions = data;
+            vm.contributions = response.data;
         }
 
-        function onExportSuccess(data) {
-            data.forEach(function(element) {
+        /**
+         * Formatte les champs activité, communauté et auteur pour ne garder que les informations
+         * qu'on veut afficher.
+         */
+        function formatData(response) {
+            response.data.forEach(function(element) {
                 element.activity = element.activity.name;
                 element.community = element.community.name;
                 element.author = element.author.firstName + ' ' + element.author.lastName;
             });
 
-            return data;
+            return response.data;
         }
 
-        function onError(error) {
+        function displayErrorMessage(error) {
             AlertService.error(error.data.message);
         }
     }

@@ -5,12 +5,11 @@ describe('Controller Tests', function(){
     beforeEach(mockApiAccountCall);
     beforeEach(mockI18nCalls);
 
-    describe('MyContributionsController', function(){
+    describe('AllContributionsController', function(){
 
         var $scope, createController, q;
-        var MockStateParams, MockPrincipal, MockContribution, MockPagingParams,
+        var MockStateParams, MockContribution, MockPagingParams,
             MockPaginationConstants, MockAlertService, MockState;
-        var testUser = {login: 'testLogin'};
         var expectedResponse = {
             data:[{id:'1', name:'contrib1'}, {id:'2', name:'contrib2'}],
             headers:[{'X-Total-Count':'5'}]
@@ -23,14 +22,12 @@ describe('Controller Tests', function(){
             MockAlertService = jasmine.createSpyObj('MockAlertService', ['error']);
             MockState = jasmine.createSpyObj('MockState', ['transitionTo']);
             MockState.$current = 'currentState';
-            MockPrincipal = jasmine.createSpyObj('MockPrincipal', ['identity']);
 
-            MockContribution = jasmine.createSpyObj('MockContribution', ['getAllFromAnAuthor', 'fromUserByQuarter']);
+            MockContribution = jasmine.createSpyObj('MockContribution', ['getAll', 'byQuarter']);
             MockPagingParams = jasmine.createSpy('MockPagingParams');
-
             MockPagingParams.page = 1;
-            MockPaginationConstants = jasmine.createSpy('MockPaginationConstants');
 
+            MockPaginationConstants = jasmine.createSpy('MockPaginationConstants');
             MockPaginationConstants.itemsPerPage = 10;
         }
 
@@ -47,50 +44,46 @@ describe('Controller Tests', function(){
                 '$state':MockState,
                 'pagingParams':MockPagingParams,
                 'paginationConstants':MockPaginationConstants,
-                'Principal':MockPrincipal,
                 'Contribution':MockContribution
             };
 
             createController = function(){
-                return $controller('MyContributionsController as vm',locals);
+                return $controller('AllContributionsController as vm',locals);
             };
         }));
 
         it ('should load contributions without filtering by quarter',  function(){
 
             //given
-            givenAConnectedUser();
-            givenGetAllFromAnAuthorCallSuccessful();
+            givenGetAllCallSuccessful();
             givenFilterByQuarterIsNotActivated();
 
             //when
             whenControllerIsExecuted();
 
             //then
-            expectGetAllFromAnAuthorHasBeenCalled();
+            expectGetAllHasBeenCalled();
             expectContributionsHasBeenUpdated();
         });
 
         it ('should filter contributions by quarter',  function(){
 
             //given
-            givenAConnectedUser();
-            givenFromUserByQuarterCallSuccessful();
+            givenByQuarterCallSuccessful();
             givenFilterByQuarterIsActivated();
 
             //when
             whenControllerIsExecuted();
 
             //then
-            expectFromUserByQuarterHasBeenCalledWithQuarterRequest();
+            expectByQuarterHasBeenCalled();
             expectContributionsHasBeenUpdated();
         });
 
         it ('should display a message if Contribution service call is not successful',  function(){
 
             //given
-            givenAConnectedUser();
-            givenGetAllFromAnAuthorCallUnsuccessful();
+            givenGetAllCallUnsuccessful();
             givenFilterByQuarterIsNotActivated();
 
             //when
@@ -100,21 +93,9 @@ describe('Controller Tests', function(){
             expect(MockAlertService.error).toHaveBeenCalledWith(error.data.message)
         });
 
-        function expectTranstionHasBeenMadeWithPageAndCurrentQuarterParams() {
-            var expectedParams = {
-                page: 2,
-                shouldFilter: true,
-                quarterId: 'Q1',
-                year: new Date(2016, 1, 1)
-            };
-            expect(MockState.transitionTo).toHaveBeenCalledWith('currentState', expectedParams)
-        }
-
         it ('should display page number 2 with current quarter filtering params',  function(){
-
             //given
-            givenAConnectedUser();
-            givenFromUserByQuarterCallSuccessful();
+            givenByQuarterCallSuccessful();
             givenFilterByQuarterIsActivated();
             MockState.transitionTo.and.callThrough();
 
@@ -124,28 +105,53 @@ describe('Controller Tests', function(){
 
             //then
             expect($scope.vm.page).toEqual(2);
-            expectTranstionHasBeenMadeWithPageAndCurrentQuarterParams();
+            expectTransitionHasBeenMadeWithPageAndCurrentQuarterParams();
         });
 
-        function givenAConnectedUser() {
-            MockPrincipal.identity.and.returnValue(q.resolve(testUser));
+        it ('should export all contributions',  function(){
+            //given
+            givenGetAllCallSuccessful();
+            givenFilterByQuarterIsNotActivated();
+
+            //when
+            whenControllerIsExecuted();
+            controller.exportContributions();
+
+            //then
+            expectFileNameHasBeenSet();
+            expectGetAllHasBeenCalledToReturnAllContributions()
+        });
+
+        it ('should export specific quarter contributions',  function(){
+            //given
+            givenByQuarterCallSuccessful();
+            givenFilterByQuarterIsActivated();
+
+            //when
+            whenControllerIsExecuted();
+            controller.exportContributions();
+
+            //then
+            expectFileNameHasBeenSetWithQuarterRequest();
+            expectByQuarterHasBeenCalledWithQuarterRequest();
+        });
+
+        function givenGetAllCallSuccessful() {
+            MockContribution.getAll.and.returnValue({$promise: q.when(expectedResponse)});
         }
 
-        function givenGetAllFromAnAuthorCallSuccessful() {
-            MockContribution.getAllFromAnAuthor.and.returnValue({$promise: q.when(expectedResponse)});
+        function givenGetAllCallUnsuccessful() {
+            MockContribution.getAll.and.returnValue({$promise: q.reject(error)});
         }
 
-        function givenGetAllFromAnAuthorCallUnsuccessful() {
-            MockContribution.getAllFromAnAuthor.and.returnValue({$promise: q.reject(error)});
-        }
-
-        function givenFromUserByQuarterCallSuccessful() {
-            MockContribution.fromUserByQuarter.and.returnValue({$promise: q.when(expectedResponse)});
+        function givenByQuarterCallSuccessful() {
+            MockContribution.byQuarter.and.returnValue({$promise: q.when(expectedResponse)});
         }
 
         function givenFilterByQuarterIsNotActivated() {
             buildQuarter(false);
         }
+
         function givenFilterByQuarterIsActivated() {
             buildQuarter(true);
         }
@@ -160,27 +166,64 @@ describe('Controller Tests', function(){
             controller = $scope.$apply(createController);
         }
 
-        function expectGetAllFromAnAuthorHasBeenCalled() {
+        function expectTransitionHasBeenMadeWithPageAndCurrentQuarterParams() {
             var expectedParams = {
-                page: 0,
-                size: 10,
-                login: testUser.login
+                page: 2,
+                shouldFilter: true,
+                quarterId: 'Q1',
+                year: new Date(2016, 1, 1)
             };
-            expect(MockContribution.getAllFromAnAuthor).toHaveBeenCalledWith(expectedParams);
+            expect(MockState.transitionTo).toHaveBeenCalledWith('currentState', expectedParams)
         }
-        function expectFromUserByQuarterHasBeenCalledWithQuarterRequest() {
+        function expectGetAllHasBeenCalled() {
+            var expectedParams = {
+                page: 0,
+                size: 10
+            };
+            expect(MockContribution.getAll).toHaveBeenCalledWith(expectedParams);
+        }
+
+        function expectGetAllHasBeenCalledToReturnAllContributions() {
+            var expectedParams = {
+                page: 0,
+                size: 100000
+            };
+            expect(MockContribution.getAll).toHaveBeenCalledWith(expectedParams);
+        }
+
+        function expectByQuarterHasBeenCalled() {
             var expectedParams = {
                 page: 0,
                 size: 10,
-                login: testUser.login,
                 quarter:'Q1-2016'
             };
-            expect(MockContribution.fromUserByQuarter).toHaveBeenCalledWith(expectedParams);
+            expect(MockContribution.byQuarter).toHaveBeenCalledWith(expectedParams);
+        }
+
+        function expectByQuarterHasBeenCalledWithQuarterRequest() {
+            var expectedParams = {
+                page: 0,
+                size: 100000,
+                quarter:'Q1-2016'
+            };
+            expect(MockContribution.byQuarter).toHaveBeenCalledWith(expectedParams);
         }
 
         function expectContributionsHasBeenUpdated() {
             expect($scope.vm.contributions).toBe(expectedResponse.data);
         }
+
+        function expectFileNameHasBeenSet() {
+            var datetime = moment().format('DDMMYYYY_HHmmss');
+            expect($scope.vm.filename).toEqual('export_contributions_complet_' + datetime);
+        }
+
+        function expectFileNameHasBeenSetWithQuarterRequest() {
+            var datetime = moment().format('DDMMYYYY_HHmmss');
+            var quarterRequest='Q1-2016';
+            expect($scope.vm.filename).toEqual('export_contributions_' + quarterRequest + '_' + datetime);
+        }
     });
+
 
 });
