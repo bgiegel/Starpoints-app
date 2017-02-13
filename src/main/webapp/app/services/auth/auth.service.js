@@ -8,7 +8,7 @@
     Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish'];
 
     function Auth ($rootScope, $state, $sessionStorage, $q, $translate, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish) {
-        var service = {
+        return {
             activateAccount: activateAccount,
             authorize: authorize,
             changePassword: changePassword,
@@ -22,8 +22,6 @@
             storePreviousState: storePreviousState,
             updateAccount: updateAccount
         };
-
-        return service;
 
         function activateAccount (key, callback) {
             var cb = callback || angular.noop;

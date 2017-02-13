@@ -5,9 +5,9 @@
         .module('starPointsApp')
         .controller('AllStarPointsController', AllStarPointsController);
 
-    AllStarPointsController.$inject = ['$scope', '$stateParams', 'Starpoints'];
+    AllStarPointsController.$inject = ['Starpoints'];
 
-    function AllStarPointsController($scope, $stateParams, Starpoints) {
+    function AllStarPointsController(Starpoints) {
         var vm = this;
 
         vm.allStarpointsByCommunity = [];
@@ -15,9 +15,12 @@
         loadAll();
 
         function loadAll() {
-            Starpoints.byCommunityForAllUsers(function (result) {
-                vm.allStarpointsByCommunity = result;
-            });
+            Starpoints.byCommunityForAllUsers().$promise
+                .then(displayStarpointsByCommunity);
+        }
+
+        function displayStarpointsByCommunity(response) {
+            vm.allStarpointsByCommunity = response;
         }
     }
 })();

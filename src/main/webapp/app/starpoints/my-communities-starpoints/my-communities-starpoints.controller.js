@@ -12,17 +12,20 @@
 
         vm.starpointsByCommunity = [];
 
-        loadAll();
+        loadStarpoints();
 
-        function loadAll() {
+        function loadStarpoints() {
             /**
-             * On récupère l'utilisateur actuellement connecté et appel le service Starpoints.byCommunityLeadedBy
+             * On récupère l'utilisateur actuellement connecté et on appelle le service Starpoints.byCommunityLeadedBy
              */
             Principal.identity().then(function(currentUser) {
-                Starpoints.byCommunityLeadedBy({leaderId:currentUser.id}, function(result) {
-                    vm.starpointsByCommunity = result;
-                });
+                Starpoints.byCommunityLeadedBy({leaderId:currentUser.id}).$promise
+                    .then(displayStarpoints);
             });
+        }
+
+        function displayStarpoints(result) {
+            vm.starpointsByCommunity = result;
         }
     }
 })();

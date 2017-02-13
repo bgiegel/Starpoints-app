@@ -19,10 +19,13 @@
              * On récupère l'utilisateur actuellement connecté et appel le service Starpoints.byCommunity
              */
             Principal.identity().then(function(currentUser) {
-                Starpoints.byCommunity({userId:currentUser.id}, function(result) {
-                    vm.starpointsByCommunity = result;
-                });
+                Starpoints.byCommunity({userId:currentUser.id}).$promise
+                    .then(displayStarpointsByCommunity);
             });
+        }
+
+        function displayStarpointsByCommunity(response) {
+            vm.starpointsByCommunity = response;
         }
     }
 })();
