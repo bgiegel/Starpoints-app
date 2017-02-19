@@ -3,29 +3,21 @@
  *  - champs est obligatoire
  *  - nombre max de caractères dépassé
  *  - nombre en dehors de limites minimum et maximum
+ *  - etc...
  */
 (function () {
     'use strict';
 
     angular
         .module('starPointsApp')
-        .directive('fieldErrors', fieldErrors);
-
-    function fieldErrors() {
-        return {
-            restrict: 'E',
+        .component('fieldErrors', {
             templateUrl: 'app/components/form/field-errors.html',
-            controller: ['$scope', fieldErrorsController],
-            scope: {
-                field: '=',
+            bindings: {
+                field: '<',
                 maxLengthValue:'@',
                 min:'@',
                 max:'@'
             }
-        };
-    }
-
-    function fieldErrorsController($scope) {
-    }
+        });
 
 })();

@@ -1,29 +1,29 @@
-<div ng-show="field.$invalid">
+<div ng-show="$ctrl.field.$invalid">
     <p class="help-block"
-       ng-show="field.$error.required" data-translate="entity.validation.required">
+       ng-show="$ctrl.field.$error.required" data-translate="entity.validation.required">
         This field is required.
     </p>
 
     <p class="help-block"
-       ng-show="field.$error.maxlength" data-translate="entity.validation.maxlength"
-       translate-value-max="{{maxLengthValue}}">
-        This field cannot be longer than {{maxLengthValue}} characters.
+       ng-show="$ctrl.field.$error.maxlength" data-translate="entity.validation.maxlength"
+       translate-value-max="{{$ctrl.maxLengthValue}}">
+        This field cannot be longer than {{$ctrl.maxLengthValue}} characters.
     </p>
 
     <p class="help-block"
-       ng-show="field.$error.min" data-translate="entity.validation.min"
-       translate-value-min="{{min}}">
-        This field cannot be longer than {{min}} characters.
+       ng-show="$ctrl.field.$error.min" data-translate="entity.validation.min"
+       translate-value-min="{{$ctrl.min}}">
+        This field cannot be longer than {{$ctrl.min}} characters.
     </p>
 
     <p class="help-block"
-       ng-show="field.$error.max" data-translate="entity.validation.max"
-       translate-value-max="{{max}}">
-        This field cannot be longer than {{max}} characters.
+       ng-show="$ctrl.field.$error.max" data-translate="entity.validation.max"
+       translate-value-max="{{$ctrl.max}}">
+        This field cannot be longer than {{$ctrl.max}} characters.
     </p>
 
     <p class="help-block"
-       ng-show="field.$error.email" data-translate="global.messages.validate.email.invalid">
+       ng-show="$ctrl.field.$error.email" data-translate="global.messages.validate.email.invalid">
         Your e-mail is invalid.
     </p>
 </div>

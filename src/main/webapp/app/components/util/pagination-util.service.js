@@ -7,13 +7,11 @@
 
     function PaginationUtil () {
 
-        var service = {
-            parseAscending : parseAscending,
-            parsePage : parsePage,
-            parsePredicate : parsePredicate
+        return {
+            parseAscending: parseAscending,
+            parsePage: parsePage,
+            parsePredicate: parsePredicate
         };
-
-        return service;
 
         function parseAscending (sort) {
             var sortArray = sort.split(',');

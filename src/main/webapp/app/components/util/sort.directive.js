@@ -6,7 +6,7 @@
         .directive('jhSort', jhSort);
 
     function jhSort () {
-        var directive = {
+        return {
             restrict: 'A',
             scope: {
                 predicate: '=jhSort',
@@ -17,8 +17,6 @@
             controllerAs: 'vm',
             bindToController: true
         };
-
-        return directive;
     }
 
     SortController.$inject = ['$scope', '$element'];

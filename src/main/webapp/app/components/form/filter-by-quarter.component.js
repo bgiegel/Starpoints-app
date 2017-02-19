@@ -3,20 +3,15 @@
 
     angular
         .module('starPointsApp')
-        .directive('filterByQuarter', filterByQuarter);
-
-    function filterByQuarter() {
-        return {
-            restrict: 'E',
+        .component('filterByQuarter', {
             templateUrl: 'app/components/form/filter-by-quarter.html',
             controller: filterByQuarterController,
-            controllerAs:'vm',
-            scope: {
-                quarter:'=',
+            bindings: {
+                quarter:'<',
                 loadContributions:'&'
             }
-        };
-    }
+        });
+
 
     function filterByQuarterController() {
         var vm = this;

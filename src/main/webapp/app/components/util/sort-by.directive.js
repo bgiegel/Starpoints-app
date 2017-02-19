@@ -6,14 +6,12 @@
         .directive('jhSortBy', jhSortBy);
 
     function jhSortBy() {
-        var directive = {
+        return {
             restrict: 'A',
             scope: false,
             require: '^jhSort',
             link: linkFunc
         };
-
-        return directive;
 
         function linkFunc(scope, element, attrs, parentCtrl) {
             element.bind('click', function () {

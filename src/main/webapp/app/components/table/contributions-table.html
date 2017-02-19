@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="contribution in contributions track by contribution.id">
+        <tr ng-repeat="contribution in $ctrl.contributions track by contribution.id">
             <td><a ui-sref="contribution-detail({id:contribution.id})">{{contribution.id}}</a></td>
             <td>{{contribution.deliverableDate | date:'mediumDate'}}</td>
             <td>{{contribution.deliverableName}}</td>
