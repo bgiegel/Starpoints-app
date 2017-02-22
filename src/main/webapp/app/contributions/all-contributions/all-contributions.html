@@ -3,7 +3,7 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <br/>
-    <filter-by-quarter quarter="vm.quarter" load-contributions="vm.loadContributions()"></filter-by-quarter>
+    <filter-by-quarter quarter="vm.quarter" filter-contributions="vm.filterContributions()"></filter-by-quarter>
 
     <div ng-if="vm.contributions.length>0">
         <button type="button" ng-csv="vm.exportContributions()" filename="{{vm.filename}}.csv"
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="alert alert-info" ng-if="vm.contributions.length<=0">
+    <div class="alert alert-info" ng-if="vm.contributions.length == 0 && !vm.isLoading">
         <span data-translate="starPointsApp.contributions.noresults">No contributions found.</span>
     </div>
 </div>

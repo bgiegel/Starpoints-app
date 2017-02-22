@@ -8,7 +8,7 @@
             controller: filterByQuarterController,
             bindings: {
                 quarter:'<',
-                loadContributions:'&'
+                filterContributions:'&'
             }
         });
 

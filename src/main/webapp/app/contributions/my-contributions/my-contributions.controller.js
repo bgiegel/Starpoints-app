@@ -27,6 +27,7 @@
         };
 
         vm.loadContributions = loadContributions;
+        vm.filterContributions = filterContributions;
 
         loadContributions();
 
@@ -39,7 +40,8 @@
             };
             Contribution.fromUserByQuarter(request).$promise
                 .then(displayContributions)
-                .catch(displayErrorMessage);
+                .catch(displayErrorMessage)
+                .finally(function(){vm.isLoading = false;});
         }
 
         function loadUserContributions(currentUser) {
@@ -50,10 +52,26 @@
             };
             Contribution.getAllFromAnAuthor(request).$promise
                 .then(displayContributions)
-                .catch(displayErrorMessage);
+                .catch(displayErrorMessage)
+                .finally(function(){vm.isLoading = false;});
+        }
+
+        /**
+         * Méthode appelée par le filtre trimestriel.
+         * On effectue un transitionTo pour réinitialiser la page à 1
+         */
+        function filterContributions() {
+            $state.transitionTo($state.$current, {
+                page: 1,
+                shouldFilter: vm.quarter.shouldFilter,
+                quarterId: vm.quarter.id,
+                year:vm.quarter.year
+            });
+            loadContributions();
         }
 
         function loadContributions() {
+            vm.isLoading = true;
             /**
              * On récupère l'utilisateur actuellement connecté et appel le service retournant les contributions d'un utilisateur
              */

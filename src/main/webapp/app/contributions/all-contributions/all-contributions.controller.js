@@ -27,6 +27,7 @@
         };
 
         vm.loadContributions = loadContributions;
+        vm.filterContributions = filterContributions;
         vm.exportContributions = exportContributions;
 
         loadContributions();
@@ -39,7 +40,8 @@
             };
             Contribution.byQuarter(request).$promise
                 .then(displayContributions)
-                .catch(displayErrorMessage);
+                .catch(displayErrorMessage)
+                .finally(function(){vm.isLoading = false;});
         }
 
         function loadAllContributions() {
@@ -49,7 +51,8 @@
             };
             Contribution.getAll(request).$promise
                 .then(displayContributions)
-                .catch(displayErrorMessage);
+                .catch(displayErrorMessage)
+                .finally(function(){vm.isLoading = false;});
         }
 
         function exportAllContributionsByQuarter(quarterRequest) {
@@ -73,7 +76,22 @@
                 .catch(displayErrorMessage);
         }
 
+        /**
+         * Méthode appelée par le filtre trimestriel.
+         * On effectue un transitionTo pour réinitialiser la page à 1
+         */
+        function filterContributions(){
+            $state.transitionTo($state.$current, {
+                page: 1,
+                shouldFilter: vm.quarter.shouldFilter,
+                quarterId: vm.quarter.id,
+                year:vm.quarter.year
+            });
+            loadContributions();
+        }
+
         function loadContributions() {
+            vm.isLoading = true;
             if (vm.quarter.shouldFilter) {
                 var quarterRequest = vm.quarter.id + '-' + vm.quarter.year.getFullYear();
                 loadAllContributionsByQuarter(quarterRequest);

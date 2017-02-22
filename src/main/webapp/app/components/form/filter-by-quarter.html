@@ -2,7 +2,7 @@
     <span data-translate="starPointsApp.contributions.shouldFilter">Filtrer par trimestre</span>
 </button>
 <div uib-collapse="!$ctrl.quarter.shouldFilter">
-    <form name="filterForm" role="form" ng-submit="$ctrl.loadContributions()" show-validation>
+    <form name="filterForm" role="form" ng-submit="$ctrl.filterContributions()" show-validation>
         <div class="form-group">
             <field-errors field="filterForm.year"></field-errors>
             <div class="row">
